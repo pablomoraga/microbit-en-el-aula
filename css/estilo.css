@@ -226,3 +226,10 @@ figure.captura figcaption{font-size:.86rem;color:var(--muted);padding:6px 4px 0}
 .proy-qr svg{width:min(70vw,420px);height:auto}.proy-qr p{font:13px var(--mono);word-break:break-all}
 .proy-qr button{font:700 14px var(--mono);border:1.5px solid var(--ink);background:#fff;border-radius:9px;padding:8px 14px;cursor:pointer}
 @media print{.proy-btn{display:none}}
+
+/* simulador incrustado */
+details.sim{margin:10px 0 14px;border:1.5px solid var(--ink);border-radius:12px;background:#15202b;color:#fff;padding:8px 12px}
+details.sim>summary{cursor:pointer;font:700 14px var(--mono);color:#ffd27a;display:flex;align-items:center;gap:8px}
+details.sim .hint{color:#c9d2dc;margin:6px 0 2px}
+.sim-marco{margin-top:10px;width:100%;max-width:380px;aspect-ratio:1.18;background:#fff;border-radius:8px;overflow:hidden}
+.sim-marco iframe{width:100%;height:100%;border:0;display:block}
