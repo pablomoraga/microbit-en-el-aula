@@ -243,3 +243,63 @@ def anatomia():
         s += '<text x="%d" y="%d" text-anchor="%s" font-size="13" fill="#5b6675">%s</text>' % (tx, ly + 20, anchor, sub)
     s += '<text x="450" y="490" text-anchor="middle" font-size="13" fill="#5b6675">micro:bit V2 · anverso</text>'
     return s + '</svg>'
+
+
+def hero():
+    """Portada (estilo vintage): la placa en perspectiva sobre una mesa, dos cocodrilos a la derecha
+    y LED y pulsadores sueltos delante, a la izquierda."""
+    import math
+    W, H = 680, 560
+    ink = '#3b2a20'
+    s = ('<svg class="placa-svg hero-vintage" viewBox="0 0 %d %d" role="img" aria-label="Ilustración de estilo vintage: una micro:bit sobre una mesa '
+         'con dos cables de cocodrilo y varios LED y pulsadores">' % (W, H))
+    s += ('<defs>'
+          '<filter id="vint" x="-5%" y="-5%" width="110%" height="110%">'
+          '<feColorMatrix type="matrix" values=".85 .12 .03 0 .04  .08 .80 .08 0 .03  .06 .10 .62 0 .02  0 0 0 1 0" result="c"/>'
+          '<feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" result="n"/>'
+          '<feColorMatrix in="n" type="matrix" values="0 0 0 0 .23  0 0 0 0 .16  0 0 0 0 .1  0 0 0 .16 0" result="g"/>'
+          '<feComposite in="g" in2="c" operator="in" result="g2"/><feMerge><feMergeNode in="c"/><feMergeNode in="g2"/></feMerge></filter>'
+          '<filter id="somb" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="9"/></filter>'
+          '<pattern id="cuad" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" fill="none" stroke="#c9b48c" stroke-width="1"/></pattern>'
+          '</defs><g filter="url(#vint)">')
+    # mesa: tapete de dibujo en perspectiva
+    s += '<path d="M60 150 L640 110 L670 520 L20 545 Z" fill="#efe2c4" stroke="%s" stroke-width="2"/>' % ink
+    s += '<path d="M60 150 L640 110 L670 520 L20 545 Z" fill="url(#cuad)" opacity=".7"/>'
+    s += '<path d="M78 168 L622 130 L648 505 L40 528 Z" fill="none" stroke="#b5482e" stroke-width="1.5" stroke-dasharray="7 5" opacity=".7"/>'
+    # transformación de la placa: girada y aplastada para simular que está tumbada
+    bw = 380.0; k = bw / 540.0; ang = math.radians(-12); sy = .74; X, Y = 340, 250
+    def T(x, y):
+        px, py = (x - 270) * k, (y - 225) * k
+        rx = px * math.cos(ang) - py * math.sin(ang); ry = px * math.sin(ang) + py * math.cos(ang)
+        return X + rx, Y + ry * sy
+    tr = 'translate(%d %d) scale(1 %.2f) rotate(%.1f) translate(%.1f %.1f)' % (X, Y, sy, math.degrees(ang), -bw / 2, -450 * k / 2)
+    # sombra de la placa
+    s += '<g transform="%s"><rect x="10" y="22" width="%.0f" height="%.0f" rx="18" fill="#5a4030" opacity=".45" filter="url(#somb)"/></g>' % (tr, bw, 450 * k)
+    # cables (detrás de las pinzas): salen hacia la derecha
+    for f, col, end in ((0.7, '#b5482e', (700, 210)), (0.9, '#2f2a26', (700, 330))):
+        x, y = T(20 + 500 * f, 395)
+        s += '<path d="M%.1f %.1f C %.1f %.1f, %.1f %.1f, %d %d" stroke="%s" stroke-width="8" fill="none" stroke-linecap="round"/>' % (
+            x + 30, y + 22, x + 120, y + 70, end[0] - 120, end[1] + 40, end[0], end[1], col)
+        s += '<path d="M%.1f %.1f C %.1f %.1f, %.1f %.1f, %d %d" stroke="#fff" stroke-opacity=".25" stroke-width="2" fill="none"/>' % (
+            x + 30, y + 20, x + 120, y + 66, end[0] - 120, end[1] + 36, end[0], end[1])
+    # la placa
+    s += '<g transform="%s">%s</g>' % (tr, _nested(frente(callouts=False, lit=CORAZON, uid='hv'), 0, 0, bw, 450 * k))
+    # pinzas de cocodrilo sobre 3V y GND
+    for f, col in ((0.7, '#b5482e'), (0.9, '#2f2a26')):
+        x, y = T(20 + 500 * f, 385)
+        s += '<g transform="translate(%.1f %.1f) scale(1.45) translate(%.1f %.1f)">%s</g>' % (x + 12, y + 6, -(x + 12), -(y + 6), _clip(x + 12, y + 6, 238, col))
+    # componentes sueltos delante, a la izquierda
+    s += '<g stroke="%s" stroke-width="1.2">' % ink
+    for cx, cy in ((110, 470), (205, 505), (300, 480), (165, 410), (60, 400)):
+        s += '<ellipse cx="%d" cy="%d" rx="20" ry="6" fill="#5a4030" opacity=".25" stroke="none"/>' % (cx + 6, cy + 30)
+    s += '</g>'
+    s += '<g transform="rotate(-18 110 455)">%s</g>' % '<g transform="translate(110 455) scale(1.4) translate(-110 -455)">' + _led(110, 455, '#c8553d') + '</g>'
+    s += '<g transform="rotate(64 205 500)">%s</g>' % '<g transform="translate(205 500) scale(1.4) translate(-205 -500)">' + _led(205, 500, '#e0a83a') + '</g>'
+    s += '<g transform="rotate(10 60 385)">%s</g>' % '<g transform="translate(60 385) scale(1.4) translate(-60 -385)">' + _led(60, 385, '#3d8b87') + '</g>'
+    s += '<g transform="rotate(14 300 482)">%s</g>' % '<g transform="translate(300 482) scale(1.4) translate(-300 -482)">' + _boton(300, 482, '#e0a83a') + '</g>'
+    s += '<g transform="rotate(-22 165 412)">%s</g>' % '<g transform="translate(165 412) scale(1.4) translate(-165 -412)">' + _boton(165, 412, '#c8553d') + '</g>'
+    # una resistencia
+    s += ('<g transform="rotate(-30 330 410)"><path d="M290 410 H370" stroke="#9aa1aa" stroke-width="2.4"/>'
+          '<rect x="312" y="403" width="36" height="14" rx="6" fill="#d9c39a" stroke="%s" stroke-width="1"/>'
+          '<path d="M320 403v14M327 403v14M334 403v14M341 403v14" stroke-width="3" stroke="#b5482e"/></g>') % ink
+    return s + '</g></svg>'
