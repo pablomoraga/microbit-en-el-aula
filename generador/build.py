@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common, makecode, placa, placa_pro, tarjetas
 from common import PAGES, e, P
 from iconos import icon, svg_file, logo_lapiz
-import c_empezar, c_conoce, c_comenzamos, c_errores, c_experto, c_talleres, c_ia, c_celebrar, c_imprime, c_saber
+import c_empezar, c_conoce, c_comenzamos, c_errores, c_matematicas, c_experto, c_talleres, c_ia, c_celebrar, c_imprime, c_saber
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.environ.get('SALIDA', os.path.join(HERE, '..', '_salida'))
@@ -19,12 +19,13 @@ SECTIONS = [
     ('conoce', '02', 'Conoce micro:bit', 'chip', 'La placa V2 parte a parte, los editores MakeCode, MicroBlocks y Python, y sus extensiones.'),
     ('comenzamos', '03', 'Comenzamos', 'led', '30 prácticas progresivas con objetivo, paso a paso, ayuda, simulador y solución en los tres editores.'),
     ('errores', '04', 'Encuentra el error', 'lupa', '10 programas con un fallo escondido para aprender a depurar como detectives.'),
-    ('experto', '05', 'Modo experto', 'cohete', 'Juegos, retos, cables de cocodrilo y sensores externos para ir más lejos.'),
-    ('talleres', '06', 'Talleres', 'engranaje', 'Proyectos tipo (invernadero, estación meteorológica…) y talleres con kits y robots.'),
-    ('ia', '07', 'Inteligencia artificial', 'cerebro', 'Entrena un modelo con tus movimientos usando micro:bit CreateAI y úsalo en MakeCode.'),
-    ('celebrar', '08', 'Para celebrar', 'calendario', 'Pequeñas actividades para Halloween, el Día de la Niña en la Ciencia, Navidad y verano.'),
-    ('imprime', '09', 'Imprime en 3D', 'caja', 'Mis diseños 3D, ideas de carcasas y soportes y dónde buscar más.'),
-    ('saber', '10', 'Para saber más', 'libro', 'Problemas frecuentes, glosario, evaluación, tarjetas imprimibles y enlaces.'),
+    ('matematicas', '05', 'Matemáticas', 'calculadora', 'Tablas, fracciones, coordenadas, velocidad, binario, probabilidad y estadística con la placa.'),
+    ('experto', '06', 'Modo experto', 'cohete', 'Juegos, retos, cables de cocodrilo y sensores externos para ir más lejos.'),
+    ('talleres', '07', 'Talleres', 'engranaje', 'Proyectos tipo (invernadero, estación meteorológica…) y talleres con kits y robots.'),
+    ('ia', '08', 'Inteligencia artificial', 'cerebro', 'Entrena un modelo con tus movimientos usando micro:bit CreateAI y úsalo en MakeCode.'),
+    ('celebrar', '09', 'Para celebrar', 'calendario', 'Pequeñas actividades para Halloween, el Día de la Niña en la Ciencia, Navidad y verano.'),
+    ('imprime', '10', 'Imprime en 3D', 'caja', 'Mis diseños 3D, ideas de carcasas y soportes y dónde buscar más.'),
+    ('saber', '11', 'Para saber más', 'libro', 'Problemas frecuentes, glosario, evaluación, tarjetas imprimibles y enlaces.'),
 ]
 SEC = {s[0]: s for s in SECTIONS}
 INTRO = {
@@ -41,6 +42,7 @@ INTRO = {
     'saber': P('Recursos para resolver dudas, evaluar y seguir aprendiendo.'),
     'errores': P('Cada programa tiene un fallo escondido. Pruébalo en el simulador, descubre qué falla y arréglalo. Encontrar y corregir errores (<b>depurar</b>) es una de las habilidades más importantes de la programación. '
                  'Se pueden hacer al terminar Comenzamos o intercaladas con sus prácticas.'),
+    'matematicas': P('Actividades para trabajar las matemáticas con la micro:bit, organizadas por los sentidos del currículo. Cada una tiene simulador y solución en los tres editores.'),
     'ia': P('La inteligencia artificial también se aprende haciendo. Con <b>micro:bit CreateAI</b> el alumnado recoge datos de movimiento, entrena un modelo y lo usa en un programa.'),
     'imprime': P('Diseños imprimibles para proteger la placa y completar los proyectos.'),
 }
