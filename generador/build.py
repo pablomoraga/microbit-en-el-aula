@@ -2,7 +2,7 @@
 """Construye la web completa en _salida/web (o en la carpeta indicada en la variable SALIDA)."""
 import os, re, shutil, json, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import common, makecode, placa
+import common, makecode, placa, placa_pro
 from common import PAGES, e, P
 from iconos import icon, svg_file, logo_lapiz
 import c_empezar, c_conoce, c_comenzamos, c_experto, c_talleres, c_celebrar, c_imprime, c_saber
@@ -199,7 +199,7 @@ def build():
             '<div>%s<h3>Elige editor</h3><p>Cada solución aparece en MakeCode, MicroBlocks y Python. Elige una pestaña y la web la recordará.</p></div>'
             '<div>%s<h3>Avanza a tu ritmo</h3><p>Las prácticas van de menos a más. Marca las que termines: se guarda en tu navegador.</p></div>'
             '<div>%s<h3>Descarga y prueba</h3><p>Todos los programas se pueden copiar, descargar o abrir directamente en el editor.</p></div></div></section>') % (
-        npr, nproj, placa.hero(), cards, icon('bloques', 30), icon('trofeo', 30), icon('descarga', 30))
+        npr, nproj, placa_pro.hero(), cards, icon('bloques', 30), icon('trofeo', 30), icon('descarga', 30))
     open(os.path.join(SITE, 'index.html'), 'w', encoding='utf-8').write(doc('Inicio', home, '', None).replace('{{ROOT}}', ''))
     # programas
     for name, txt in common.UBP.items():
