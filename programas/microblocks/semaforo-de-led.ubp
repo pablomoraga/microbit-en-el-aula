@@ -1,0 +1,21 @@
+module main
+author 'Pablo Moraga'
+version 1 0 
+description 'Semáforo de LED'
+
+script 50 50 {
+whenStarted
+forever {
+  digitalWriteOp 2 true
+  digitalWriteOp 1 false
+  digitalWriteOp 0 false
+  waitMillis 4000
+  digitalWriteOp 2 false
+  digitalWriteOp 1 true
+  waitMillis 1000
+  digitalWriteOp 1 false
+  digitalWriteOp 0 true
+  waitMillis 4000
+}
+}
+
