@@ -2,10 +2,10 @@
 """Construye la web completa en _salida/web (o en la carpeta indicada en la variable SALIDA)."""
 import os, re, shutil, json, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import common, makecode, placa, placa_pro
+import common, makecode, placa, placa_pro, tarjetas
 from common import PAGES, e, P
 from iconos import icon, svg_file, logo_lapiz
-import c_empezar, c_conoce, c_comenzamos, c_experto, c_talleres, c_celebrar, c_imprime, c_saber
+import c_empezar, c_conoce, c_comenzamos, c_errores, c_experto, c_talleres, c_ia, c_celebrar, c_imprime, c_saber
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.environ.get('SALIDA', os.path.join(HERE, '..', '_salida'))
@@ -17,23 +17,31 @@ VER = hashlib.sha1((open(os.path.join(HERE, 'estilo.css'), 'rb').read() + open(o
 SECTIONS = [
     ('empezar', '01', 'Para empezar', 'placa', 'Qué es programar, por qué micro:bit, bloques frente a texto y pensamiento computacional.'),
     ('conoce', '02', 'Conoce micro:bit', 'chip', 'La placa V2 parte a parte, los editores MakeCode, MicroBlocks y Python, y sus extensiones.'),
-    ('comenzamos', '03', 'Comenzamos', 'led', '30 prácticas progresivas con objetivo, paso a paso, ayuda y solución en los tres editores.'),
-    ('experto', '04', 'Modo experto', 'cohete', 'Juegos, retos, cables de cocodrilo y sensores externos para ir más lejos.'),
-    ('talleres', '05', 'Talleres', 'engranaje', 'Proyectos tipo (invernadero, estación meteorológica…) y talleres con kits y robots.'),
-    ('celebrar', '06', 'Para celebrar', 'calendario', 'Pequeñas actividades para Halloween, el Día de la Niña en la Ciencia, Navidad y verano.'),
-    ('imprime', '07', 'Imprime en 3D', 'caja', 'Mis diseños 3D, ideas de carcasas y soportes y dónde buscar más.'),
-    ('saber', '08', 'Para saber más', 'libro', 'Problemas frecuentes, glosario, evaluación y enlaces a recursos.'),
+    ('comenzamos', '03', 'Comenzamos', 'led', '30 prácticas progresivas con objetivo, paso a paso, ayuda, simulador y solución en los tres editores.'),
+    ('errores', '04', 'Encuentra el error', 'lupa', '10 programas con un fallo escondido para aprender a depurar como detectives.'),
+    ('experto', '05', 'Modo experto', 'cohete', 'Juegos, retos, cables de cocodrilo y sensores externos para ir más lejos.'),
+    ('talleres', '06', 'Talleres', 'engranaje', 'Proyectos tipo (invernadero, estación meteorológica…) y talleres con kits y robots.'),
+    ('ia', '07', 'Inteligencia artificial', 'cerebro', 'Entrena un modelo con tus movimientos usando micro:bit CreateAI y úsalo en MakeCode.'),
+    ('celebrar', '08', 'Para celebrar', 'calendario', 'Pequeñas actividades para Halloween, el Día de la Niña en la Ciencia, Navidad y verano.'),
+    ('imprime', '09', 'Imprime en 3D', 'caja', 'Mis diseños 3D, ideas de carcasas y soportes y dónde buscar más.'),
+    ('saber', '10', 'Para saber más', 'libro', 'Problemas frecuentes, glosario, evaluación, tarjetas imprimibles y enlaces.'),
 ]
 SEC = {s[0]: s for s in SECTIONS}
 INTRO = {
     'empezar': P('Antes de conectar la placa conviene saber qué es programar y por qué usamos micro:bit. Este apartado sirve para el alumnado y para el profesorado.'),
     'conoce': P('Un recorrido por la placa micro:bit V2 y por los tres editores que usamos en el material. Cada práctica tiene su solución en los tres, así que puedes elegir el que mejor encaje con tu grupo.'),
     'comenzamos': P('Treinta prácticas ordenadas de menos a más, agrupadas en seis bloques. Cada una se hace en 15-30 minutos y tiene objetivo, paso a paso, pistas y una solución en <b>MakeCode</b>, <b>MicroBlocks</b> y <b>Python</b>.',
-                    'Las primeras están pensadas para Primaria; las últimas sirven para ESO. Solo necesitas la micro:bit y un cable USB (y en la radio, dos placas).'),
+                    'Las primeras están pensadas para Primaria; las últimas sirven para ESO. Solo necesitas la micro:bit y un cable USB (y en la radio, dos placas).') +
+                  '<p class="acciones"><a class="btn-sec" href="../recursos/tarjetas-comenzamos.pdf" download>' + icon('descarga', 16) +
+                  ' Tarjetas imprimibles de las 30 prácticas (PDF)</a></p><p class="hint">Dos tarjetas A5 por hoja: delante, objetivo y pasos; detrás, pistas, bloques y «¿Y si…?». '
+                  'Imprime a doble cara (borde largo) y corta por la línea discontinua.</p>',
     'experto': P('Proyectos más abiertos, organizados en cuatro bloques. Los dos últimos necesitan material: cables de cocodrilo y algunos sensores sencillos. Lo encontrarás indicado en cada proyecto.'),
     'talleres': P('Talleres cerrados de una o dos sesiones. En <b>Proyectos tipo</b> se construye un sistema completo con la placa y pocos componentes. En <b>Kits y robots</b> se usan productos concretos de ELECFREAKS y DFRobot con sus extensiones oficiales de MakeCode.'),
     'celebrar': P('Actividades cortas (de 15 a 45 minutos) para celebrar fechas especiales del curso con la micro:bit. Este apartado irá creciendo con nuevas fechas.'),
     'saber': P('Recursos para resolver dudas, evaluar y seguir aprendiendo.'),
+    'errores': P('Cada programa tiene un fallo escondido. Pruébalo en el simulador, descubre qué falla y arréglalo. Encontrar y corregir errores (<b>depurar</b>) es una de las habilidades más importantes de la programación. '
+                 'Se pueden hacer al terminar Comenzamos o intercaladas con sus prácticas.'),
+    'ia': P('La inteligencia artificial también se aprende haciendo. Con <b>micro:bit CreateAI</b> el alumnado recoge datos de movimiento, entrena un modelo y lo usa en un programa.'),
     'imprime': P('Diseños imprimibles para proteger la placa y completar los proyectos.'),
 }
 GROUP_INFO = {}   # título de grupo -> (intro html)
@@ -211,6 +219,7 @@ def build():
         shutil.copytree(est, SITE, dirs_exist_ok=True)
     open(os.path.join(SITE, '.nojekyll'), 'w').close()
     # MakeCode: lista de imágenes para el renderizador
+    tarjetas.build_html(os.path.join(OUT, 'tarjetas-comenzamos.html'))
     json.dump(makecode.all_jobs(), open(os.path.join(OUT, 'makecode-pendientes.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     falta = makecode.missing()
     # imágenes que ya no se usan

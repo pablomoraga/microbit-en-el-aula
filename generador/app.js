@@ -169,3 +169,23 @@ var AQR=(function(){
     else if (ev.key === 'ArrowLeft' || ev.key === 'PageUp') { ev.preventDefault(); i = (i - 1 + S.length) % S.length; show(); }
   });
 })();
+
+// ---- Simulador oficial de MakeCode incrustado (el programa se envía por mensaje, no se publica en ningún sitio)
+(function () {
+  var SIM = 'https://makecode.microbit.org/---run?server=1&single=1';
+  document.querySelectorAll('details.sim').forEach(function (d) {
+    d.addEventListener('toggle', function () {
+      var box = d.querySelector('.sim-marco');
+      if (!d.open || box.querySelector('iframe')) return;
+      var f = document.createElement('iframe');
+      f.title = 'Simulador de micro:bit'; f.setAttribute('loading', 'lazy'); f.setAttribute('allow', 'autoplay');
+      f.src = SIM;
+      f.addEventListener('load', function () {
+        f.contentWindow.postMessage({type: 'simulateproject', project: {
+          'main.ts': box.getAttribute('data-code'),
+          'pxt.json': JSON.stringify({dependencies: {core: '*', radio: '*', microphone: '*'}})}}, '*');
+      });
+      box.appendChild(f);
+    });
+  });
+})();

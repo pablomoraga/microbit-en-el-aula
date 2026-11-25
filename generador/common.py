@@ -61,7 +61,12 @@ def panel_makecode(code, pkgs=(), nota=''):
     if pkgs:
         names = ', '.join('<b>%s</b> (busca <code>%s</code>)' % (makecode.EXT_BUSCAR[p][0], e(makecode.EXT_BUSCAR[p][1])) for p in pkgs)
         ext = '<p class="ext">%s Antes de empezar añade la extensión %s: <b>Extensiones</b> (al final de la lista de categorías) y escribe el nombre en el buscador.</p>' % (icon('pieza', 18), names)
-    return ('%s%s%s<details class="codigo-js"><summary>Ver y copiar el código JavaScript</summary>'
+    sim = ''
+    if not pkgs:
+        sim = ('<details class="sim"><summary>%s Probar en el simulador</summary><div class="sim-marco" data-code="%s"></div>'
+               '<p class="hint">Es el simulador oficial de MakeCode: pulsa sus botones, toca el logotipo o mueve los controles de los sensores.</p></details>') % (
+            icon('placa', 18), e(code.strip(), quote=True))
+    return ('%s%s' + sim.replace('%', '%%') + '%s<details class="codigo-js"><summary>Ver y copiar el código JavaScript</summary>'
             '<pre class="code"><code>%s</code></pre><button class="copiar" type="button">Copiar</button>'
             '<p class="hint">En MakeCode abre la pestaña <b>JavaScript</b>, borra lo que haya, pega el código y vuelve a <b>Bloques</b>.</p></details>'
             '<p class="acciones"><a class="btn-sec" href="https://makecode.microbit.org/#editor" target="_blank" rel="noopener">%s Abrir MakeCode</a></p>') % (
@@ -119,7 +124,9 @@ def practica(section, num, slug, title, nivel, etapa, tiempo, conceptos, objetiv
                  icon('check', 18), soluciones(slug, mc, mb, py, pkgs, title, mc_nota), ('<p>%s</p>' % explica) if explica else ''))
     if ampliar:
         body += box('reto', '¿Y si…?', ul(ampliar))
-    FICHAS.append(dict(slug=slug, num=num, title=title, section=section))
+    FICHAS.append(dict(slug=slug, num=num, title=title, section=section, group=group, objetivo=objetivo, pasos=pasos, pistas=pistas,
+                       ampliar=ampliar or [], nivel=nivel, etapa=etapa, tiempo=tiempo, conceptos=conceptos, materiales=materiales or [],
+                       mc=makecode.key(mc, pkgs)[0] if mc else None))
     page(section, slug, title, body, group=group, kind='practica', meta=dict(num=num, nivel=nivel, tiempo=tiempo, etapa=etapa), icono=icono)
 
 def proyecto(section, slug, title, group, intro, materiales, conexiones, fases, mc=None, mb=None, py=None, pkgs=(),
