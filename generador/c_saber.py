@@ -66,7 +66,13 @@ GUIAS = [
     ('Proyectos en Instructables', 'https://www.instructables.com/search/?q=microbit&projects=all', 'Miles de proyectos de la comunidad (en inglés) para inspirarse.'),
     ('Wiki de ELECFREAKS', 'https://wiki.elecfreaks.com/en/microbit/', 'Guías y casos de Cutebot, Wonder Building Kit, Smart Agriculture Kit y más.'),
     ('Wiki de DFRobot', 'https://wiki.dfrobot.com', 'Documentación de Maqueen, Maqueen Plus y sus sensores.'),
-    ('Programamos la microbit (jajulca.net)', 'https://www.jajulca.net/microbit/index.html', 'Retos de micro:bit del IES Aricel: gráficos, sensores, juegos, radio y estación meteorológica.'),
+]
+JAJULCA = [
+    ('TecnoJajulca', 'https://jajulca.eu', 'Portal de recursos de tecnología, robótica y programación de Eufrasio Cabrera.'),
+    ('Programamos la microbit', 'https://jajulca.eu/microbit/', 'Retos del IES Aricel: gráficos, sensores, juegos, radio, estación meteorológica…'),
+    ('Retos con Maqueen', 'http://jajulca.net/maqueen/index.html', 'Motores, neopíxeles, ultrasonidos, mando IR, seguidor de línea y más.'),
+    ('Robótica y programación', 'http://jajulca.net/computacionyrobotica/index.html', 'Ejercicios y manuales de micro:bit, Maqueen con MicroBlocks, Scratch y Arduino.'),
+    ('Artículos sobre micro:bit', 'https://jajulca.eu/category/microbit/', 'Entradas del blog con proyectos de micro:bit.'),
 ]
 PEDRO = [
     ('Retos de micro:bit con MicroBlocks', 'https://pedroruizf.github.io/retos_microbit_microblocks/index.html', 'Retos con animaciones, pulsadores, sensores, servos y radio, con sus ficheros de programa.'),
@@ -81,7 +87,7 @@ CREDITOS = ul([
     '<b>Datos técnicos de la placa</b>: documentación oficial de micro:bit (microbit.org y tech.microbit.org).',
     '<b>Kits y robots</b>: datos, puertos y funciones tomados del wiki de ELECFREAKS, del wiki de DFRobot y del código de sus extensiones oficiales de MakeCode. Las ilustraciones son esquemas propios.',
     '<b>Inteligencia artificial</b>: según la guía de usuario oficial de micro:bit CreateAI.',
-    '<b>Recursos recomendados</b>: los retos de Pedro Ruiz (pedroruizf) y de jajulca.net se citan como referencia y enlace. Este material no reproduce sus contenidos; si en el futuro se adapta alguno, se indicará en la propia actividad.',
+    '<b>Recursos recomendados</b>: los recursos de Pedro Ruiz (pedroruizf) y de TecnoJajulca (jajulca.eu, Eufrasio Cabrera) se citan como referencia y enlace. Este material no reproduce sus contenidos; si en el futuro se adapta alguno, se indicará en la propia actividad.',
     'Ilustraciones, iconos, prácticas, programas y textos: elaboración propia de Pablo Moraga (CC BY-NC-ND 4.0).',
 ])
 PROPIOS = [
@@ -95,5 +101,5 @@ PROPIOS = [
     ('Impresión 3D Código 4.0', 'https://pablomoraga.github.io/impresion-3d-codigo-4.0/', 'Manual de diseño e impresión 3D en el aula.'),
 ]
 page(S, 'enlaces', 'Enlaces y recursos', h2('Oficiales') + enlaces(OFICIAL) + h2('Guías y comunidad') + enlaces(GUIAS) +
-    h2('Recursos de Pedro Ruiz') + enlaces(PEDRO) + h2('Mis recursos') + enlaces(PROPIOS), icono='enlace')
+    h2('Recursos de TecnoJajulca (Eufrasio Cabrera)') + enlaces(JAJULCA) + h2('Recursos de Pedro Ruiz') + enlaces(PEDRO) + h2('Mis recursos') + enlaces(PROPIOS), icono='enlace')
 page(S, 'creditos', 'Créditos y licencias', P('Este material es de elaboración propia. Estas son las fuentes y herramientas utilizadas:') + CREDITOS, icono='libro')

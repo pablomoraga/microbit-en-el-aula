@@ -149,11 +149,14 @@ def practica(section, num, slug, title, nivel, etapa, tiempo, conceptos, objetiv
                        mc=makecode.key(mc, pkgs)[0] if mc else None))
     page(section, slug, title, body, group=group, kind='practica', meta=dict(num=num, nivel=nivel, tiempo=tiempo, etapa=etapa), icono=icono)
 
+ESCENAS = {}          # slug -> función que dibuja la escena del proyecto
+
 def proyecto(section, slug, title, group, intro, materiales, conexiones, fases, mc=None, mb=None, py=None, pkgs=(),
              ampliar=None, docente=None, icono='chip', tiempo='60 min', etapa='P2', mc_nota='', extra=''):
     """Proyecto de taller o de modo experto, con fases."""
     head = '<div class="ficha"><span class="chip">%s %s</span><span class="chip">%s</span></div>' % (icon('reloj', 14), e(tiempo), e(ETAPA[etapa]))
     body = head + P(intro)
+    if slug in ESCENAS: body += ESCENAS[slug]()
     if materiales: body += box('material', 'Necesitas', ul(materiales))
     if conexiones: body += '<h2>Conexiones</h2>' + conexiones
     if fases: body += '<h2>Paso a paso</h2>' + SELECTOR + ol([expand(x) for x in fases])
