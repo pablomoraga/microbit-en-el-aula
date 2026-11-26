@@ -293,3 +293,23 @@ figure.escena{margin:14px 0 6px;background:#fff;border:1.5px solid var(--ink);bo
 figure.escena svg{width:100%;height:auto;display:block}
 figure.escena figcaption{font-size:.86rem;color:var(--muted);text-align:center;margin-top:4px}
 figure.escena .pt{cursor:help}
+
+/* kits: carrusel de montaje, visor oficial y anatomía de placas */
+.carr{position:relative;margin:14px 0 4px}
+.carr-t{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;scrollbar-width:thin}
+.sl{flex:0 0 100%;scroll-snap-align:center;margin:0;background:#fff;border:1.5px solid var(--ink);border-radius:var(--r);padding:10px;box-shadow:4px 4px 0 var(--ink)}
+.sl img,.sl .crop{width:100%;max-height:430px;object-fit:contain;display:block;border-radius:8px;background:#fff}
+.sl .crop{background-repeat:no-repeat}
+.sl figcaption{margin-top:8px;font-size:.95rem;text-align:center}
+.sl figcaption b{display:inline-block;min-width:26px;margin-right:6px;padding:1px 6px;border-radius:6px;background:var(--ink);color:#fff;font:700 13px/1.5 var(--mono)}
+.carr-b{position:absolute;top:45%;transform:translateY(-50%);z-index:2;width:42px;height:42px;border-radius:50%;border:2px solid var(--ink);background:#fff;font:700 24px/1 system-ui;cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
+.carr-b:hover{background:var(--ink);color:#fff}.carr .prev{left:-8px}.carr .next{right:-8px}
+.carr-n{text-align:center;font:600 12px var(--mono);margin:8px 0 2px}
+.carr-n a{display:inline-block;min-width:28px;padding:3px 5px;margin:2px;border:1.5px solid var(--ink);border-radius:6px;background:#fff;color:var(--ink);text-decoration:none}
+.carr-n a.on,.carr-n a:hover{background:var(--ink);color:#fff}
+.fuente{font-size:.84rem;color:var(--muted);margin:4px 0 14px}
+.visor{margin:12px 0 4px;border:1.5px solid var(--ink);border-radius:var(--r);overflow:hidden;box-shadow:4px 4px 0 var(--ink);background:#fff}
+.visor-cab{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 12px;background:var(--ink);color:#fff;font:600 13px var(--mono)}
+.visor-cab a{margin-left:auto;color:#fff;border:1.5px solid #fff;border-radius:8px;padding:3px 9px;text-decoration:none}
+.visor iframe{width:100%;height:560px;border:0;display:block}
+.anat-wrap svg{width:100%;height:auto;display:block}

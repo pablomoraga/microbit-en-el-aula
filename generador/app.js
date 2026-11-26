@@ -191,3 +191,15 @@ var AQR=(function(){
     });
   });
 })();
+
+// Carrusel de montaje: flechas, deslizar y números
+document.querySelectorAll('.carr').forEach(function (c) {
+  var t = c.querySelector('.carr-t'), nums = c.parentNode.querySelectorAll('.carr-n[data-c="' + c.id + '"] a');
+  function idx() { return Math.round(t.scrollLeft / t.clientWidth); }
+  function go(i) { t.scrollTo({ left: i * t.clientWidth, behavior: 'smooth' }); }
+  c.querySelector('.prev').onclick = function () { go(Math.max(0, idx() - 1)); };
+  c.querySelector('.next').onclick = function () { go(Math.min(t.children.length - 1, idx() + 1)); };
+  nums.forEach(function (a, i) { a.onclick = function (ev) { ev.preventDefault(); go(i); }; });
+  function mark() { var i = idx(); nums.forEach(function (a, j) { a.classList.toggle('on', i === j); }); }
+  t.addEventListener('scroll', function () { clearTimeout(t._m); t._m = setTimeout(mark, 80); }); mark();
+});

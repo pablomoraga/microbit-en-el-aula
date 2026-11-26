@@ -19,6 +19,6 @@ h1{font-weight:800;font-size:84px;line-height:.95;margin:.15em 0 .1em;color:#152
 html = ('<!doctype html><html><head><meta charset="utf-8"><style>%s</style></head><body>'
         '<svg width="0" height="0" style="position:absolute"><filter id="lapiz"><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="2" seed="7" result="n"/>'
         '<feDisplacementMap in="SourceGraphic" in2="n" scale="2.4"/></filter></svg>'
-        '<div class="t"><div class="k">Primaria · ampliable a ESO</div><h1>micro:bit</h1><span class="l">en el aula</span><br>'
+        '<div class="t"><div class="k">Primaria y ESO</div><h1>micro:bit</h1><span class="l">en el aula</span><br>'
         '<span class="c">MakeCode · MicroBlocks · Python</span></div><div class="i">%s</div></body></html>') % (CSS, placa_pro.hero())
 open(sys.argv[1], 'w', encoding='utf-8').write(html)

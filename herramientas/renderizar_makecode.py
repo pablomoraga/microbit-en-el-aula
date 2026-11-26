@@ -34,7 +34,12 @@ function next() {
 }
 window.addEventListener('message', async ev => {
   const m = ev.data; if (!m || !m.type) return;
-  if (m.type === 'renderready' && !ready) { ready = true; st.textContent = 'Renderizando ' + jobs.length + ' programas…'; for (let i = 0; i < 3; i++) next(); }
+  if (m.type === 'renderready' && !ready) { ready = true; st.textContent = 'Preparando extensiones…';
+    // calentamiento: carga cada extensión con un programa mínimo antes de los trabajos reales
+    const pk = [...new Set(jobs.map(j => j.pkg).filter(Boolean))];
+    pk.forEach((p, i) => f.contentWindow.postMessage({type: 'renderblocks', id: 'warm' + i, code: 'basic.showNumber(0)', options: {package: p}}, '*'));
+    setTimeout(() => { st.textContent = 'Renderizando ' + jobs.length + ' programas…'; for (let i = 0; i < 3; i++) next(); }, pk.length ? 8000 : 0); }
+  if (m.type === 'renderblocks' && String(m.id).startsWith('warm')) return;
   if (m.type === 'renderblocks') {
     const texts = []; const tmp = document.createElement('div'); tmp.innerHTML = m.svg || '';
     tmp.querySelectorAll('text').forEach(t => texts.push(t.textContent));

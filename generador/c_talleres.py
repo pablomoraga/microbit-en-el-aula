@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Talleres: proyectos tipo y kits de ELECFREAKS y DFRobot."""
-import conexiones, kits, escenas, escenas_kits as ek, common
+import conexiones, escenas, common
 common.ESCENAS.update({'invernadero-inteligente': escenas.invernadero, 'estacion-meteorologica': escenas.estacion,
     'semaforo-inteligente': escenas.semaforo, 'casa-segura': escenas.casa, 'votacion-por-radio': escenas.votacion, 'orquesta': escenas.orquesta})
 from common import page, proyecto, P, ul, ol, box, tabla, h2, kbd
@@ -11,8 +11,8 @@ G1, G2 = 'Proyectos tipo', 'Kits y robots'
 GRUPOS = {
     G1: P('Seis proyectos completos que se construyen con la placa y pocos componentes. Sirven como proyecto final de trimestre o como reto por equipos. '
           'Cada uno se puede repartir en fases: diseño en papel, montaje, programación, prueba y presentación.'),
-    G2: P('Talleres con productos concretos. Usan las extensiones oficiales de cada fabricante (comprobadas en su documentación y en su código). '
-          'Empieza por la página <b>Extensiones y bibliotecas de los kits</b>.'),
+    G2: P('Antes de usar un kit, revisa qué extensión necesita en cada editor. Cada kit tiene después su propio apartado: '
+          'empieza por su ficha (la placa en modo anatomía, sensores y montaje) y sigue con sus actividades.'),
 }
 DOC_FASES = ul(['<b>10 min</b>: presentación del reto y del material.', '<b>15 min</b>: diseño en papel (qué mide, qué decide, qué hace).',
                 '<b>25 min</b>: montaje y programación por fases.', '<b>10 min</b>: prueba, mejora y presentación al grupo.'])
@@ -469,7 +469,7 @@ EXT_ROWS = [
     ['<b>Maqueen</b> (DFRobot)', '<code>maqueen</code> · <a href="https://github.com/DFRobot/pxt-maqueen" target="_blank" rel="noopener">github.com/DFRobot/pxt-maqueen</a>', 'Biblioteca <b>Maqueen</b> (Robots)'],
     ['<b>Maqueen Plus V2</b> (DFRobot)', 'Pega <code>https://github.com/DFRobot/pxt-DFRobot_MaqueenPlus_v20</code>', 'No hay biblioteca específica: usa MakeCode'],
     ['<b>Wonder Building Kit</b> (ELECFREAKS, placa WuKong)', '<code>wukong</code> · <a href="https://github.com/elecfreaks/pxt-wukong" target="_blank" rel="noopener">github.com/elecfreaks/pxt-wukong</a>; para el ultrasonido, <code>https://github.com/elecfreaks/pxt-sonarbit</code>', 'Biblioteca <b>Wukong</b> (Kits y placas)'],
-    ['<b>Smart Agriculture Kit</b> (ELECFREAKS, placa IoT:bit)', '<code>iot-environment-kit</code> · <a href="https://github.com/elecfreaks/pxt-iot-environment-kit" target="_blank" rel="noopener">github.com/elecfreaks/pxt-iot-environment-kit</a>; además <code>neopixel</code> y <code>servo</code>', 'Sensores con bloques de Pines (lectura analógica)'],
+    ['<b>Smart Agriculture Kit</b> (ELECFREAKS, placa IoT:bit)', '<code>iot-environment-kit</code> · <a href="https://github.com/tinkertanker/pxt-iot-environment-kit" target="_blank" rel="noopener">github.com/tinkertanker/pxt-iot-environment-kit</a>; además <code>neopixel</code> y <code>servo</code>', 'Sensores con bloques de Pines (lectura analógica)'],
 ]
 page(S, 'extensiones-de-los-kits', 'Extensiones y bibliotecas de los kits', P(
     'Cada kit necesita sus propios bloques. Esta tabla reúne lo que hay que añadir en cada editor antes de empezar. En MakeCode, pulsa <b>Extensiones</b> y escribe el nombre en el buscador '
@@ -481,133 +481,4 @@ page(S, 'extensiones-de-los-kits', 'Extensiones y bibliotecas de los kits', P(
     box('idea', 'Python', P('Los fabricantes ofrecen bibliotecas de MicroPython para algunos robots (por ejemplo, Cutebot), pero los talleres de este apartado usan MakeCode, que es lo que documentan sus guías.')),
     group=G2, icono='pieza')
 
-proyecto(S, 'taller-cutebot', 'Cutebot: sigue la línea y esquiva obstáculos', G2,
-    'Cutebot es un coche robot de ELECFREAKS con dos motores, sensor de ultrasonidos, dos sensores de línea y faros de colores. En este taller lo programamos para seguir una línea negra y para frenar ante obstáculos.',
-    ['Robot Cutebot con su micro:bit', 'Pilas para el robot', 'Cinta aislante negra sobre un suelo claro (circuito)'],
-    ek.cutebot() + tabla(['Elemento', 'Dónde está'], [['Sensores de línea', 'Abajo, delante (P13 izquierdo y P14 derecho)'], ['Ultrasonidos', 'Delante (P8 y P12)'], ['Faros RGB', 'Controlados por la placa del robot (I2C)']]),
-    ['Añade la extensión <b>cutebot</b>.', 'Prueba los motores: avanza 2 segundos y para.',
-     'Con A, activa el modo <b>seguir la línea</b>: si los dos sensores ven línea, recto; si solo la ve el izquierdo, gira a la izquierda; si solo el derecho, a la derecha.',
-     'Si un obstáculo está a menos de 10 cm, para y enciende los faros en rojo.', 'Con B, detén el robot.'],
-    mc='''let activo = false
-input.onButtonPressed(Button.A, function () {
-    activo = true
-})
-input.onButtonPressed(Button.B, function () {
-    activo = false
-    cuteBot.stopcar()
-})
-basic.forever(function () {
-    if (activo) {
-        if (cuteBot.ultrasonic(cuteBot.SonarUnit.Centimeters) < 10) {
-            cuteBot.stopcar()
-            cuteBot.colorLight(cuteBot.RGBLights.ALL, 0xff0000)
-        } else {
-            cuteBot.colorLight(cuteBot.RGBLights.ALL, 0x00ff00)
-            if (cuteBot.tracking(cuteBot.TrackingState.L_R_line)) {
-                cuteBot.motors(30, 30)
-            } else if (cuteBot.tracking(cuteBot.TrackingState.L_line_R_unline)) {
-                cuteBot.motors(0, 30)
-            } else if (cuteBot.tracking(cuteBot.TrackingState.L_unline_R_line)) {
-                cuteBot.motors(30, 0)
-            }
-        }
-    }
-})''', pkgs=('cutebot',),
-    ampliar=['Ajusta la velocidad: ¿cuál es la más rápida a la que no se sale?', 'Haz una carrera de seguidores de línea por equipos.'],
-    docente=P('Basado en las funciones de la extensión oficial <code>pxt-cutebot</code>. Si el robot se sale en las curvas, baja la velocidad: los sensores necesitan tiempo para detectar la línea.'),
-    icono='coche', tiempo='2 sesiones', etapa='P2')
 
-proyecto(S, 'taller-maqueen', 'Maqueen: robot que esquiva obstáculos', G2,
-    'Maqueen (Lite) es un robot de DFRobot para la micro:bit. Lo programamos para avanzar, detectar obstáculos con el ultrasonido, encender sus LED y girar para esquivarlos.',
-    ['Robot Maqueen con su micro:bit y el sensor de ultrasonidos montado', 'Pilas para el robot', 'Cajas o libros como obstáculos'],
-    ek.maqueen(),
-    ['Añade la extensión <b>maqueen</b>.', 'Lee la distancia del ultrasonido y muéstrala para comprobar que funciona.',
-     'Si la distancia es mayor que 15 cm, avanza con los LED apagados.', 'Si es menor, enciende los LED, retrocede un poco y gira hacia un lado.'],
-    mc='''basic.forever(function () {
-    if (maqueen.Ultrasonic() > 15) {
-        maqueen.writeLED(maqueen.LED.LEDLeft, maqueen.LEDswitch.turnOff)
-        maqueen.writeLED(maqueen.LED.LEDRight, maqueen.LEDswitch.turnOff)
-        maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 80)
-    } else {
-        maqueen.writeLED(maqueen.LED.LEDLeft, maqueen.LEDswitch.turnOn)
-        maqueen.writeLED(maqueen.LED.LEDRight, maqueen.LEDswitch.turnOn)
-        maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CCW, 60)
-        basic.pause(400)
-        maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, 80)
-        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CCW, 80)
-        basic.pause(400)
-    }
-})''', pkgs=('maqueen',),
-    ampliar=['Elige el lado del giro al azar.', 'Haz que pite antes de retroceder, como un camión.'],
-    docente=P('Basado en las funciones de la extensión oficial <code>pxt-maqueen</code> (motor M1 = izquierdo, M2 = derecho). Si tu Maqueen es de una versión más nueva, revisa la extensión en la página de extensiones.'),
-    icono='robot', tiempo='1 sesión', etapa='P2')
-
-proyecto(S, 'taller-maqueen-plus', 'Maqueen Plus V2: seguidor de línea', G2,
-    'Maqueen Plus V2 tiene cinco sensores de línea, faros, LED RGB y conector para ultrasonidos. Lo programamos para seguir una línea con el sensor central y los dos interiores.',
-    ['Robot Maqueen Plus V2 con su micro:bit', 'Pilas para el robot', 'Circuito de cinta negra'],
-    ek.maqueen_plus(),
-    ['Añade la extensión pegando <code>https://github.com/DFRobot/pxt-DFRobot_MaqueenPlus_v20</code> en el buscador de extensiones.',
-     'Al iniciar, llama a %s.' % kbd('I2CInit'),
-     'Si el sensor central (M) ve la línea (vale 1), avanza recto.',
-     'Si la ve el sensor derecho interior (R1) y no el izquierdo (L1), corrige hacia la derecha; si es al revés, hacia la izquierda.'],
-    mc='''maqueenPlusV2.I2CInit()
-basic.forever(function () {
-    if (maqueenPlusV2.readLineSensorState(maqueenPlusV2.MyEnumLineSensor.SensorM) == 1) {
-        maqueenPlusV2.controlMotor(maqueenPlusV2.MyEnumMotor.AllMotor, maqueenPlusV2.MyEnumDir.Forward, 80)
-    } else if (maqueenPlusV2.readLineSensorState(maqueenPlusV2.MyEnumLineSensor.SensorR1) == 1) {
-        maqueenPlusV2.controlMotor(maqueenPlusV2.MyEnumMotor.LeftMotor, maqueenPlusV2.MyEnumDir.Forward, 120)
-        maqueenPlusV2.controlMotor(maqueenPlusV2.MyEnumMotor.RightMotor, maqueenPlusV2.MyEnumDir.Forward, 30)
-    } else if (maqueenPlusV2.readLineSensorState(maqueenPlusV2.MyEnumLineSensor.SensorL1) == 1) {
-        maqueenPlusV2.controlMotor(maqueenPlusV2.MyEnumMotor.LeftMotor, maqueenPlusV2.MyEnumDir.Forward, 30)
-        maqueenPlusV2.controlMotor(maqueenPlusV2.MyEnumMotor.RightMotor, maqueenPlusV2.MyEnumDir.Forward, 120)
-    }
-})''', pkgs=('maqueenplus',),
-    ampliar=['Usa también los sensores exteriores (L2 y R2) para las curvas cerradas.', 'Enciende los faros con %s cuando corrija la dirección.' % kbd('control left led light')],
-    docente=P('Adaptado del ejemplo de seguimiento de línea de la extensión oficial <code>pxt-DFRobot_MaqueenPlus_v20</code>, en el que el estado 1 indica que el sensor detecta la línea.'),
-    icono='robot', tiempo='1-2 sesiones', etapa='ESO')
-
-proyecto(S, 'taller-wonder-building', 'Wonder Building Kit: la moto', G2,
-    'El Wonder Building Kit de ELECFREAKS combina piezas de construcción compatibles con LEGO, la placa de expansión WuKong y motores. Construimos la moto del caso 1 de su guía y la programamos con los botones.',
-    ['Wonder Building Kit (placa WuKong, motores y piezas)', 'micro:bit', 'Instrucciones de montaje del caso «The Motorcycle» en el wiki de ELECFREAKS'],
-    ek.wonder_moto() + tabla(['Componente', 'Puerto de la WuKong'], [['Motor 1', 'M1'], ['Motor 2', 'M2']]),
-    ['Monta la moto siguiendo las instrucciones del wiki de ELECFREAKS.', 'Añade la extensión <b>wukong</b>.',
-     'Con A, los dos motores avanzan; con B, retroceden; con A+B, se paran.', 'Muestra una flecha con el sentido de la marcha.'],
-    mc='''input.onButtonPressed(Button.A, function () {
-    wuKong.setAllMotor(60, 60)
-    basic.showArrow(ArrowNames.North)
-})
-input.onButtonPressed(Button.B, function () {
-    wuKong.setAllMotor(-60, -60)
-    basic.showArrow(ArrowNames.South)
-})
-input.onButtonPressed(Button.AB, function () {
-    wuKong.stopAllMotor()
-    basic.showIcon(IconNames.No)
-})''', pkgs=('wukong',),
-    extra=box('idea', 'Más modelos', P('La guía del kit tiene decenas de modelos (coche seguidor de línea, brazo robot, puertas automáticas, noria…). '
-        'Para el coche que esquiva obstáculos, añade también la extensión <code>https://github.com/elecfreaks/pxt-sonarbit</code> y lee la distancia con %s.' % kbd('Ultrasonic distance in unit cm at pin P1'))),
-    ampliar=['Si los motores giran en sentidos opuestos, cambia el signo de la velocidad de uno de ellos.', 'Controla la moto inclinando otra micro:bit por radio.'],
-    docente=P('Basado en el caso 1 del wiki de ELECFREAKS y en las funciones de la extensión oficial <code>pxt-wukong</code> (velocidad de −100 a 100).'),
-    icono='engranaje', tiempo='2 sesiones', etapa='P2')
-
-proyecto(S, 'taller-smart-agriculture', 'Smart Agriculture Kit: riego automático', G2,
-    'El Smart Agriculture Kit de ELECFREAKS incluye la placa de expansión IoT:bit y sensores para proyectos de agricultura. Montamos un riego automático: si la tierra está seca, un servo abre la válvula; el nivel del depósito se muestra en la pantalla.',
-    ['Smart Agriculture Kit (IoT:bit, sensor de humedad del suelo, sensor de nivel de agua, servo 180°)', 'micro:bit', 'Maceta y un depósito de agua'],
-    ek.smart_agri() + tabla(['Componente', 'Puerto de la IoT:bit'], [['Sensor de humedad del suelo', 'P1'], ['Sensor de nivel de agua', 'P2'], ['Servo', 'P9']]),
-    ['Conecta los sensores y el servo como en la tabla (igual que el caso 1 de la guía del kit).', 'Añade la extensión <b>iot-environment-kit</b>.',
-     'Muestra el nivel del depósito con un gráfico de barras.', 'Si la humedad del suelo baja de 50, gira el servo para regar; si no, ciérralo.'],
-    mc='''basic.forever(function () {
-    led.plotBarGraph(Environment.ReadWaterLevel(AnalogPin.P2), 100)
-    if (Environment.ReadSoilHumidity(AnalogPin.P1) < 50) {
-        pins.servoWritePin(AnalogPin.P9, 90)
-    } else {
-        pins.servoWritePin(AnalogPin.P9, 0)
-    }
-    basic.pause(1000)
-})''', pkgs=('environment',),
-    extra=box('idea', 'Más casos del kit', P('La guía del kit propone 13 casos: control de temperatura y humedad del invernadero (DHT11 y pantalla OLED), luz artificial con LED de colores, '
-        'protección de cultivos con sensor PIR, temperatura del agua (DS18B20), nivel de un estanque, comedero automático y una granja inteligente completa.')),
-    ampliar=['Añade la pantalla OLED para mostrar los valores.', 'Programa un riego por horario además de por humedad.'],
-    docente=P('Basado en el caso 1 del wiki de ELECFREAKS (humedad en P1, nivel en P2, servo en P9) y en las funciones de la extensión oficial <code>pxt-iot-environment-kit</code>, que dan valores de 0 a 100. '
-              'El umbral de 50 es orientativo: calibradlo con vuestra tierra.'),
-    icono='planta', tiempo='2 sesiones', etapa='ESO')

@@ -117,18 +117,17 @@ page(S, 'pensamiento-computacional', 'Pensamiento computacional', P(
     icono='cerebro')
 
 page(S, 'como-usar', 'Cómo usar este material', P(
-    'El material está pensado sobre todo para <b>Primaria, de 1.º a 6.º</b>. Algunas actividades llevan la marca ESO: sirven como reto para el alumnado más avanzado de 5.º y 6.º o como continuación en Secundaria.',
-    'Está organizado de menos a más. No hace falta seguirlo entero: cada docente puede elegir las prácticas que encajen con su grupo.') +
-    tabla(['Apartado', 'Para qué', 'Etapa'], [
-        ['<a href="../conoce/index.html">Conoce micro:bit</a>', 'Conocer la placa y los editores', 'Todas'],
-        ['<a href="../comenzamos/index.html">Comenzamos</a>', '30 prácticas guiadas en 6 bloques', 'Primaria (bloques 1-4) y ESO (todas)'],
-        ['<a href="../experto/index.html">Modo experto</a>', 'Juegos, retos, cables de cocodrilo y sensores', '5.º-6.º de Primaria y ESO'],
-        ['<a href="../talleres/index.html">Talleres</a>', 'Proyectos tipo y kits de robótica', '5.º-6.º de Primaria y ESO'],
-        ['<a href="../celebrar/index.html">Para celebrar</a>', 'Actividades cortas para fechas especiales', 'Todas'],
+    'El material sirve para Primaria y ESO. Está organizado de menos a más, pero no hace falta seguirlo entero: <b>cada docente decide</b> qué prácticas y en qué curso encajan con su grupo.') +
+    tabla(['Apartado', 'Para qué'], [
+        ['<a href="../conoce/index.html">Conoce micro:bit</a>', 'Conocer la placa y los editores'],
+        ['<a href="../comenzamos/index.html">Comenzamos</a>', '30 prácticas guiadas en 6 bloques'],
+        ['<a href="../experto/index.html">Modo experto</a>', 'Juegos, retos, cables de cocodrilo y sensores'],
+        ['<a href="../talleres/index.html">Talleres</a>', 'Proyectos tipo y kits de robótica'],
+        ['<a href="../celebrar/index.html">Para celebrar</a>', 'Actividades cortas para fechas especiales'],
     ]) +
     h2('Qué significa cada marca') +
     ul(['<b>Dificultad</b> ★☆☆ a ★★★: lo exigente que es la práctica dentro de su bloque.',
-        '<b>Etapa</b>: Primaria 6-9, Primaria 10-12 o ESO. Es orientativa: una práctica de Primaria sirve como calentamiento en ESO.',
+        '<b>Etapa</b>: Primaria 6-9, Primaria 10-12 o ESO. Es solo orientativa: cada docente la adapta a su grupo.',
         '<b>Conceptos</b>: las ideas de programación que se trabajan (bucles, variables, eventos…).']) +
     h2('Material necesario') +
     ul(['Una micro:bit V2 por pareja, con su cable USB (mejor si es de datos, no solo de carga).',

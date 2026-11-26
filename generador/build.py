@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common, makecode, placa, placa_pro, tarjetas, recortables
 from common import PAGES, e, P
 from iconos import icon, svg_file, logo_lapiz
-import c_empezar, c_conoce, c_comenzamos, c_errores, c_matematicas, c_matematicas_primaria, c_experto, c_talleres, c_ia, c_celebrar, c_imprime, c_saber
+import c_empezar, c_conoce, c_comenzamos, c_errores, c_matematicas, c_matematicas_primaria, c_experto, c_talleres, c_kits, c_ia, c_celebrar, c_imprime, c_saber
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.environ.get('SALIDA', os.path.join(HERE, '..', '_salida'))
@@ -50,7 +50,7 @@ GROUP_INFO = {}   # título de grupo -> (intro html)
 
 def register_group(title, intro_html):
     GROUP_INFO[title] = intro_html
-for mod in (c_comenzamos, c_experto, c_talleres, c_celebrar, c_conoce):
+for mod in (c_comenzamos, c_experto, c_talleres, c_kits, c_celebrar, c_conoce):
     for t, h in getattr(mod, 'GRUPOS', {}).items():
         register_group(t, h)
 
@@ -197,7 +197,7 @@ def build():
                     % (sid, icon(ic, 30), num, e(t), e(d)) for sid, num, t, ic, d in SECTIONS)
     npr = sum(1 for p in PAGES if p['kind'] == 'practica')
     nproj = sum(1 for p in PAGES if p['kind'] == 'proyecto')
-    home = ('<section class="hero"><div class="hero-txt"><p class="kicker">Programación y robótica · Primaria (de 1.º a 6.º) · ampliable a ESO</p><h1>micro:bit <em class=\"lapiz\">en el aula</em></h1>'
+    home = ('<section class="hero"><div class="hero-txt"><p class="kicker">Programación y robótica · Primaria y ESO</p><h1>micro:bit <em class=\"lapiz\">en el aula</em></h1>'
             '<p class="tagline">Bloques primero, texto después</p>'
             '<p class="lead">Un manual propio para aprender a programar la placa micro:bit V2 con <b>MakeCode</b>, <b>MicroBlocks</b> y <b>Python</b>: '
             'del primer LED encendido a juegos, sensores, robots y proyectos con kits.</p>'
