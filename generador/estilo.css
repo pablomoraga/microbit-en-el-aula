@@ -52,7 +52,7 @@ main p,main li{max-width:78ch}
 .hero h1 em{font-style:normal;color:var(--acc)}
 .tagline{font:700 14px/1.2 var(--mono);display:inline-block;background:var(--ink);color:#ffd27a;padding:8px 12px;border-radius:8px;margin:0 0 12px}
 .lead{font-size:1.18rem;max-width:620px}
-.hero-img{filter:drop-shadow(8px 8px 0 rgba(21,32,43,.18))}
+.hero-img{filter:none}
 .btn{display:inline-block;background:var(--acc);color:#fff;font:700 14px var(--mono);padding:12px 18px;border-radius:10px;text-decoration:none;border:1.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);margin:6px 6px 0 0}
 .btn2{background:#fff;color:var(--ink)}
 .btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
