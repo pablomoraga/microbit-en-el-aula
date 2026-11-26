@@ -6,10 +6,10 @@ from c_experto import S, J, R, C, SE, COCO
 import conexiones
 
 def idea(txt):
-    return '<p class="fuente">Idea inspirada en %s.</p>' % txt
+    return '<b>Referencia</b>: idea inspirada en %s.' % txt
 
 ALMERIBOT = '«¿Hay continuidad?», del <i>Manual de Programación micro:bit</i> de José Francisco Muñoz (Almeribot · Microes.org)'
-PEDRO = 'los <i>Retos de Micro:bit + MakeCode</i> de Pedro Ruiz Fernández'
+PEDRO = '<i>Retos de Micro:bit + MakeCode</i>, de <a href="https://github.com/pedroruizf" target="_blank" rel="noopener">Pedro Ruiz Fernández</a>'
 CEIBAL = 'la actividad «Alerta cinturón» del <i>Cuaderno de proyectos micro:bit</i> de Plan Ceibal'
 MBK = 'la tarjeta «Comprobador de carga de batería» de MicroBlocks (microblocks.fun, CC BY-SA 4.0)'
 
@@ -86,7 +86,7 @@ display.show(Image.SKULL)
 sleep(1000)
 display.scroll("Puntos " + str(puntos))''',
     ['Añade un segundo asteroide que caiga a otra velocidad.', 'Da tres vidas a la nave y muéstralas al chocar.', 'Mueve la nave inclinando la placa en lugar de con los botones.'],
-    group=J, icono='cohete', nota=idea('el reto «Esquiva-enemigos» de ' + PEDRO))
+    group=J, icono='cohete', fuente=idea('el reto 15, «Esquiva-enemigos», de los ' + PEDRO))
 
 # =================================================================== Retos
 practica(S, 'R7', 'detector-de-imanes', 'Detector de imanes', 2, 'P2', '35 min', ['brújula', 'sensores', 'umbral'],
@@ -134,7 +134,7 @@ while True:
         music.pitch(880, 250)''',
     ['Cuenta cuántas veces se ha abierto la caja.', 'Avisa por radio a otra placa en lugar de pitar.', 'Investiga qué objetos de clase tienen imán (estuches, tablets, altavoces).'],
     group=R, icono='brujula', materiales=['Un imán pequeño (de nevera o de neodimio)', 'Cinta adhesiva'],
-    nota=box('ojo', 'Cuidado con los imanes', P('Los imanes de neodimio son muy fuertes: mantenlos lejos de tarjetas, móviles y marcapasos, y no los dejes al alcance de quien pueda tragárselos.')) + idea(CEIBAL))
+    nota=box('ojo', 'Cuidado con los imanes', P('Los imanes de neodimio son muy fuertes: mantenlos lejos de tarjetas, móviles y marcapasos, y no los dejes al alcance de quien pueda tragárselos.')), fuente=idea(CEIBAL))
 
 # =================================================================== Cables de cocodrilo
 practica(S, 'C5', 'conduce-la-electricidad', '¿Conduce la electricidad?', 1, 'P2', '30 min', ['entradas digitales', 'ciencia'],
@@ -169,7 +169,7 @@ while True:
         display.show(Image.NO)''',
     ['Cuenta con A cuántos objetos conductores has encontrado.', 'Dibuja con lápiz blando una línea muy gruesa en un papel y busca hasta qué longitud la detecta.'],
     conexion=conexiones.conduce(), group=C, icono='rayo', materiales=[COCO + ' (2)', 'Objetos para probar: clip, moneda, goma, lápiz, cuchara de madera, papel de aluminio…'],
-    nota=idea(ALMERIBOT))
+    fuente=idea(ALMERIBOT))
 
 practica(S, 'C6', 'comprobador-de-pilas', 'Comprobador de pilas', 2, 'ESO', '40 min', ['entradas analógicas', 'voltaje', 'condicionales'],
     'Medir si una pila de 1,5 V está nueva o gastada. La micro:bit lee el voltaje por un pin y lo muestra con un icono y, al pulsar A, en milivoltios.',
@@ -213,7 +213,7 @@ while True:
     ['Muestra una barra de 0 a 5 filas según la carga.', 'Mide las pilas usadas de la clase y haz una gráfica con los resultados.'],
     conexion=conexiones.pila(), group=C, icono='bateria', materiales=[COCO + ' (2)', 'Una resistencia de 1 kΩ', 'Pilas sueltas de 1,5 V (AA o AAA) nuevas y usadas'],
     nota=box('ojo', 'Solo pilas de 1,5 V', P('Prueba <b>solo una pila de 1,5 V cada vez</b> (AA, AAA, C o D). Nunca pilas de 9 V, pilas en serie, baterías de litio ni cargadores: '
-        'superan los 3,3 V que aguanta el pin y pueden estropear la placa. Repasa <a href="../conoce/precauciones.html">Precauciones y cuidados</a>.')) + idea(MBK))
+        'superan los 3,3 V que aguanta el pin y pueden estropear la placa. Repasa <a href="../conoce/precauciones.html">Precauciones y cuidados</a>.')), fuente=idea(MBK))
 
 # =================================================================== Sensores externos
 practica(S, 'S4', 'aparcamiento', 'Aparcamiento con barrera', 3, 'ESO', '50 min', ['servomotor', 'variables', 'contador'],
@@ -284,4 +284,4 @@ while True:
         display.show(plazas)''',
     ['Detecta los coches con el sensor de luz: cuando un coche tapa la placa, se abre la barrera.', 'Usa dos placas y la radio: una en la entrada y otra en la salida.', 'Construye la maqueta del aparcamiento con cartón.'],
     conexion=conexiones.servo(), group=SE, icono='coche', materiales=[COCO + ' (3) o cables macho para el conector del servo', 'Un microservo SG90', 'Cartón, palitos y cinta para la maqueta'],
-    nota=idea('los retos «Contador de coches en parking» y «Control de barrera servomotor» de ' + PEDRO))
+    fuente=idea('los retos 20, «Contador de coches en parking», y 21, «Control de barrera servomotor con luz», de los ' + PEDRO))

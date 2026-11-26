@@ -126,7 +126,7 @@ def soluciones(name, mc=None, mb=None, py=None, pkgs=(), desc='', mc_nota=''):
 # ------------------------------------------------------------------ prácticas
 FICHAS = []
 def practica(section, num, slug, title, nivel, etapa, tiempo, conceptos, objetivo, pasos, pistas, mc, mb, py, ampliar,
-             group=None, materiales=None, nota=None, explica=None, pkgs=(), icono='chip', mc_nota='', conexion=None):
+             group=None, materiales=None, nota=None, explica=None, pkgs=(), icono='chip', mc_nota='', conexion=None, fuente=None):
     head = ('<div class="ficha"><span class="chip chip-num">%s</span><span class="chip">Dificultad %s</span>'
             '<span class="chip">%s %s</span>%s</div>' % (e(num), NIVEL[nivel], icon('reloj', 14), e(tiempo),
                                                        ''.join('<span class="chip chip-c">%s</span>' % e(c) for c in conceptos)))
@@ -144,6 +144,8 @@ def practica(section, num, slug, title, nivel, etapa, tiempo, conceptos, objetiv
                  icon('check', 18), soluciones(slug, mc, mb, py, pkgs, title, mc_nota), ('<p>%s</p>' % explica) if explica else ''))
     if ampliar:
         body += box('reto', '¿Y si…?', ul(ampliar))
+    if fuente:
+        body += '<p class="fuente referencia">%s</p>' % fuente
     FICHAS.append(dict(slug=slug, num=num, title=title, section=section, group=group, objetivo=objetivo, pasos=pasos, pistas=pistas,
                        ampliar=ampliar or [], nivel=nivel, etapa=etapa, tiempo=tiempo, conceptos=conceptos, materiales=materiales or [],
                        mc=makecode.key(mc, pkgs)[0] if mc else None))
