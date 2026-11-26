@@ -1,6 +1,6 @@
 # micro:bit en el aula
 
-Manual propio para aprender a programar la placa **micro:bit V2** con **MakeCode**, **MicroBlocks** y **Python** en Primaria y ESO: 30 prácticas progresivas, modo experto (juegos, retos, cables de cocodrilo y sensores), talleres con kits, actividades para efemérides, diseños 3D y modo proyección para la pizarra digital.
+Manual propio para aprender a programar la placa **micro:bit V2** con **MakeCode**, **MicroBlocks** y **Python** en Primaria y ESO: 34 prácticas progresivas, modo experto (juegos, retos, cables de cocodrilo y sensores), talleres con kits, actividades para efemérides, diseños 3D y modo proyección para la pizarra digital.
 
 **Web:** https://pablomoraga.github.io/microbit-en-el-aula/
 

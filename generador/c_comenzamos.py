@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Comenzamos: 30 prácticas progresivas en seis bloques."""
+"""Comenzamos: prácticas progresivas en seis bloques (las 31-34 están en c_comenzamos_mas.py)."""
 from common import practica, P, ul, box, kbd
 from iconos import icon
 
@@ -7,11 +7,11 @@ S = 'comenzamos'
 B1, B2, B3, B4, B5, B6 = ('1 · Pantalla y botones', '2 · Sonido', '3 · Sensores de la placa', '4 · Variables y azar',
                           '5 · Bucles, tiempo y listas', '6 · Radio')
 GRUPOS = {
-    B1: P('Las primeras órdenes: escribir en la pantalla, dibujar con los LED y reaccionar a los botones y al logotipo. Ideal para empezar a partir de 6-7 años.'),
+    B1: P('Las primeras órdenes: escribir en la pantalla, dibujar con los LED y reaccionar a los botones y al logotipo. Es el punto de partida.'),
     B2: P('El altavoz de la micro:bit V2 permite tocar notas, melodías y efectos. Si tu placa es una V1, conecta unos auriculares o un zumbador a P0 y GND.'),
     B3: P('La placa mide la luz, la temperatura, el movimiento, la orientación y el sonido. Aprendemos a leer sensores y a tomar decisiones con <b>si… entonces</b>.'),
     B4: P('Las <b>variables</b> guardan datos que cambian (una puntuación, un número de pasos) y el <b>azar</b> hace que cada partida sea distinta.'),
-    B5: P('Bucles dentro de bucles, coordenadas, tiempo y listas: las herramientas de los programas más largos. Pensado para 5.º-6.º y ESO.'),
+    B5: P('Bucles dentro de bucles, coordenadas, tiempo y listas: las herramientas de los programas más largos.'),
     B6: P('Las micro:bits se comunican por radio. Para estas prácticas hacen falta <b>al menos dos placas</b> con el mismo programa y el mismo grupo de radio.') +
         box('ojo', 'El mismo editor en las dos placas', P('MakeCode, MicroBlocks y Python preparan los mensajes de radio de forma distinta. '
             'Para que dos placas se entiendan, prográmalas con el mismo editor.')),

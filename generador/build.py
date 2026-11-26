@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common, makecode, placa, placa_pro, tarjetas, recortables
 from common import PAGES, e, P
 from iconos import icon, svg_file, logo_lapiz
-import c_empezar, c_conoce, c_comenzamos, c_errores, c_matematicas, c_matematicas_primaria, c_experto, c_talleres, c_kits, c_ia, c_celebrar, c_imprime, c_saber
+import c_empezar, c_conoce, c_comenzamos, c_comenzamos_mas, c_errores, c_matematicas, c_matematicas_primaria, c_experto, c_experto_mas, c_talleres, c_kits, c_ia, c_celebrar, c_imprime, c_saber
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.environ.get('SALIDA', os.path.join(HERE, '..', '_salida'))
@@ -17,7 +17,7 @@ VER = hashlib.sha1((open(os.path.join(HERE, 'estilo.css'), 'rb').read() + open(o
 SECTIONS = [
     ('empezar', '01', 'Para empezar', 'placa', 'Qué es programar, por qué micro:bit, bloques frente a texto y pensamiento computacional.'),
     ('conoce', '02', 'Conoce micro:bit', 'chip', 'La placa V2 parte a parte, los editores MakeCode, MicroBlocks y Python, y sus extensiones.'),
-    ('comenzamos', '03', 'Comenzamos', 'led', '30 prácticas progresivas con objetivo, paso a paso, ayuda, simulador y solución en los tres editores.'),
+    ('comenzamos', '03', 'Comenzamos', 'led', '34 prácticas progresivas con objetivo, paso a paso, ayuda, simulador y solución en los tres editores.'),
     ('errores', '04', 'Encuentra el error', 'lupa', '10 programas con un fallo escondido para aprender a depurar como detectives.'),
     ('matematicas', '05', 'Matemáticas', 'calculadora', 'Tablas, fracciones, coordenadas, velocidad, binario, probabilidad y estadística con la placa.'),
     ('experto', '06', 'Modo experto', 'cohete', 'Juegos, retos, cables de cocodrilo y sensores externos para ir más lejos.'),
@@ -34,7 +34,7 @@ INTRO = {
     'comenzamos': P('Treinta prácticas ordenadas de menos a más, agrupadas en seis bloques. Cada una se hace en 15-30 minutos y tiene objetivo, paso a paso, pistas y una solución en <b>MakeCode</b>, <b>MicroBlocks</b> y <b>Python</b>.',
                     'Las primeras están pensadas para Primaria; las últimas sirven para ESO. Solo necesitas la micro:bit y un cable USB (y en la radio, dos placas).') +
                   '<p class="acciones"><a class="btn-sec" href="../recursos/tarjetas-comenzamos.pdf" download>' + icon('descarga', 16) +
-                  ' Tarjetas imprimibles de las 30 prácticas (PDF)</a></p><p class="hint">Dos tarjetas A5 por hoja: delante, objetivo y pasos; detrás, pistas, bloques y «¿Y si…?». '
+                  ' Tarjetas imprimibles de las 34 prácticas (PDF)</a></p><p class="hint">Dos tarjetas A5 por hoja: delante, objetivo y pasos; detrás, pistas, bloques y «¿Y si…?». '
                   'Imprime a doble cara (borde largo) y corta por la línea discontinua.</p>',
     'experto': P('Proyectos más abiertos, organizados en cuatro bloques. Los dos últimos necesitan material: cables de cocodrilo y algunos sensores sencillos. Lo encontrarás indicado en cada proyecto.'),
     'talleres': P('Talleres cerrados de una o dos sesiones. En <b>Proyectos tipo</b> se construye un sistema completo con la placa y pocos componentes. En <b>Kits y robots</b> se usan productos concretos de ELECFREAKS y DFRobot con sus extensiones oficiales de MakeCode.'),
@@ -50,7 +50,7 @@ GROUP_INFO = {}   # título de grupo -> (intro html)
 
 def register_group(title, intro_html):
     GROUP_INFO[title] = intro_html
-for mod in (c_comenzamos, c_experto, c_talleres, c_kits, c_celebrar, c_conoce):
+for mod in (c_comenzamos, c_experto, c_experto_mas, c_talleres, c_kits, c_celebrar, c_conoce):
     for t, h in getattr(mod, 'GRUPOS', {}).items():
         register_group(t, h)
 

@@ -120,7 +120,7 @@ page(S, 'como-usar', 'Cómo usar este material', P(
     'El material sirve para Primaria y ESO. Está organizado de menos a más, pero no hace falta seguirlo entero: <b>cada docente decide</b> qué prácticas y en qué curso encajan con su grupo.') +
     tabla(['Apartado', 'Para qué'], [
         ['<a href="../conoce/index.html">Conoce micro:bit</a>', 'Conocer la placa y los editores'],
-        ['<a href="../comenzamos/index.html">Comenzamos</a>', '30 prácticas guiadas en 6 bloques'],
+        ['<a href="../comenzamos/index.html">Comenzamos</a>', '34 prácticas guiadas en 6 bloques'],
         ['<a href="../experto/index.html">Modo experto</a>', 'Juegos, retos, cables de cocodrilo y sensores'],
         ['<a href="../talleres/index.html">Talleres</a>', 'Proyectos tipo y kits de robótica'],
         ['<a href="../celebrar/index.html">Para celebrar</a>', 'Actividades cortas para fechas especiales'],

@@ -5,7 +5,6 @@ Imágenes: dibujos propios, la foto de WuKong del repositorio pxt-wukong (MIT) y
 Las imágenes del wiki de ELECFREAKS no se copian (no tienen licencia abierta y su servidor no permite enlazarlas):
 el montaje se ve en un visor que abre la página oficial."""
 from common import page, proyecto, P, h2, ul, box, tabla, e, kbd
-import escenas_kits as ek
 
 S = 'talleres'
 GC, GL, GP, GW, GA = 'Cutebot', 'Maqueen Lite', 'Maqueen Plus V2', 'Wonder Building Kit', 'Smart Agriculture Kit'
@@ -65,7 +64,15 @@ page(S, 'cutebot', 'Conoce Cutebot',
     h2('La placa del robot') +
     P('En Cutebot la placa de expansión <b>va integrada en el chasis</b>. La micro:bit se inserta en su ranura y la placa reparte la energía de las pilas '
       'y conecta motores, luces y sensores con los pines de la micro:bit. Encima va la placa del portapilas, con conectores para ampliar. Pasa el ratón por los números.') +
-    ek.cutebot() +
+    anat('img/kits/cutebot-foto.png', 'Foto de Cutebot con la micro:bit', [
+        (25, 50, 'Ultrasonidos HC-SR04', 'Delante. TRIG en P8 y ECHO en P12.'),
+        (40, 34, 'micro:bit', 'Se inserta en la ranura del robot.'),
+        (72, 34, 'Portapilas (3 × AA)', 'Con conectores I2C, servos S1-S2, P1 y P2.'),
+        (85, 57, 'Ruedas traseras', 'Cada una con su micromotor de 300 rpm.'),
+        (10, 57, 'Faros RGB', 'Uno a cada lado del frente.'),
+        (24, 75, 'Debajo del chasis', 'Sensores de línea (P13 y P14), dos LED de colores (P15) y la rueda loca.'),
+    ], 'Cutebot. Foto: %s (captura).' % a(EF + 'microbit-smart-car/microbit-smart-cutebot/cutebot_car', 'wiki de ELECFREAKS')) +
+    P('Detrás están el receptor de infrarrojos (P16) y el interruptor de encendido.') +
     h2('Sensores y componentes') +
     componentes([
         ['2 motores (N20, 300 rpm)', 'Mueven las ruedas traseras; la rueda loca de delante permite girar', 'Placa del robot'],
@@ -212,7 +219,18 @@ page(S, 'maqueen-lite', 'Conoce Maqueen Lite',
     P('Maqueen Lite es un robot pequeño de DFRobot con dos motores, sensores de línea, luces y conector para ultrasonidos.') +
     h2('La placa del robot') +
     P('Como en Cutebot, la placa de expansión <b>es el propio chasis</b>: tiene la ranura de la micro:bit, el control de los motores y los conectores. Pasa el ratón por los números.') +
-    ek.maqueen() +
+    anat('img/kits/maqueen-lite-placa.png', 'Placa de Maqueen Lite vista desde arriba', [
+        (46, 8, 'Receptor de infrarrojos', 'P16.'),
+        (37, 11, 'Luz LED izquierda', 'P8.'),
+        (56, 11, 'Luz LED derecha', 'P12.'),
+        (31, 25, 'Botón de calibración', 'Para los sensores de línea.'),
+        (30, 39, 'Servos S1 y S2', 'Conectores para dos servos.'),
+        (46, 31, 'Conector de ultrasonidos e I2C', 'SR04: TRIG en P1 y ECHO en P2. I2C: P19 y P20.'),
+        (63, 39, 'Puertos P0, P1 y P2', 'Para sensores Gravity.'),
+        (53, 49, 'Zumbador', 'En P0; tiene un interruptor para desconectarlo.'),
+        (38, 69, 'Motores', 'Izquierdo y derecho, controlados por I2C.'),
+        (46, 92, 'Interruptor de encendido', 'Alimentación de 3,5 a 5 V.'),
+    ], 'Maqueen Lite. Imagen: %s (captura del diagrama de pines).' % a(DF_LITE + '#tech_specs', 'wiki de DFRobot')) +
     h2('Sensores y componentes') +
     componentes([
         ['2 motores N20', 'Mueven las ruedas', 'M1 (izquierdo) · M2 (derecho)'],
@@ -330,7 +348,17 @@ page(S, 'maqueen-plus-v2', 'Conoce Maqueen Plus V2',
     P('Maqueen Plus V2 es más grande que Maqueen Lite: tiene cinco sensores de línea calibrables, faros, luces RGB y muchos más conectores.') +
     h2('La placa del robot') +
     P('La placa de expansión es la base del robot. Sobre ella van el portapilas, la ranura de la micro:bit y el sensor de ultrasonidos. Pasa el ratón por los números.') +
-    ek.maqueen_plus() +
+    anat('img/kits/maqueen-plus-v2-foto.png', 'Foto de Maqueen Plus V2 con sus partes', [
+        (41, 21, 'Portapilas', '4 pilas AA (o una batería 18650 en su versión).'),
+        (56, 45, 'micro:bit', 'Compatible con V1 y V2.'),
+        (59, 58, 'Ultrasonidos', 'TRIG en P13 y ECHO en P14.'),
+        (55, 71, 'Faros LED', 'Dos luces delanteras.'),
+        (61, 78, 'Receptor de infrarrojos', 'Para un mando a distancia.'),
+        (47, 78, '4 luces RGB', 'Debajo, en P15.'),
+        (37, 64, '5 sensores de línea', 'Debajo: L2, L1, M, R1 y R2. Dan 1 sobre negro.'),
+        (37, 39, 'Zumbador', 'En P0, con interruptor.'),
+        (36, 28, 'Puertos de expansión', 'E/S de 5 V y 3,3 V e I2C (también para HuskyLens).'),
+    ], 'Maqueen Plus V2 (versión AA). Foto: %s (captura).' % a(DF_PLUS + '#tech_specs', 'wiki de DFRobot')) +
     h2('Sensores y componentes') +
     componentes([
         ['2 motores N20', 'Mueven las ruedas', 'Placa del robot (I2C)'],
@@ -582,45 +610,23 @@ proyecto(S, 'wonder-puerta-automatica', 'Wonder: puerta automática', GW,
 
 # =================================================================== SMART AGRICULTURE KIT
 AG = EF + 'wisdom-life/microbit-smart-agriculture-kit/'
-def _iotbit_svg():
-    """Esquema propio de la IoT:bit (vista desde arriba), dibujado a partir de su ficha oficial."""
-    g = '<svg viewBox="0 0 640 420" role="img" aria-label="Esquema de la placa IoT:bit">'
-    g += '<rect x="20" y="20" width="600" height="380" rx="26" fill="#f7f8fa" stroke="#15202b" stroke-width="3"/>'
-    g += '<rect x="4" y="70" width="44" height="46" rx="6" fill="#9aa1aa"/><text x="66" y="100" font-size="15" fill="#5b6675">USB</text>'
-    g += '<rect x="34" y="150" width="20" height="44" rx="4" fill="#5b6675"/><text x="66" y="178" font-size="15" fill="#5b6675">ON/OFF</text>'
-    g += '<circle cx="300" cy="90" r="44" fill="#d8dde3" stroke="#9aa1aa" stroke-width="3"/><text x="300" y="95" font-size="13" text-anchor="middle" fill="#5b6675">CR1220</text>'
-    g += '<rect x="190" y="62" width="50" height="40" rx="4" fill="#20252c"/><text x="215" y="122" font-size="13" text-anchor="middle" fill="#5b6675">RTC</text>'
-    g += '<rect x="440" y="44" width="150" height="96" rx="6" fill="#20252c"/><path d="M455 60 h20 v18 h20 v-18 h20 v18 h20 v-18 h20" stroke="#d9a93b" stroke-width="4" fill="none"/>'
-    g += '<text x="515" y="125" font-size="15" text-anchor="middle" fill="#fff">WiFi</text>'
-    g += '<circle cx="400" cy="160" r="20" fill="#20252c"/><circle cx="400" cy="160" r="6" fill="#5b6675"/>'
-    g += '<rect x="90" y="200" width="460" height="54" rx="6" fill="#2e78d6"/><rect x="110" y="218" width="420" height="18" rx="4" fill="#15202b"/>'
-    g += '<text x="320" y="196" font-size="13" text-anchor="middle" fill="#5b6675">ranura de la micro:bit</text>'
-    for x0 in (60, 400):
-        for r, c in enumerate(('#e2a400', '#c0392b', '#262a30')):
-            for k in range(8):
-                g += '<rect x="%d" y="%d" width="18" height="18" rx="3" fill="%s"/>' % (x0 + k * 22, 290 + r * 24, c)
-    g += '<text x="72" y="380" font-size="13" fill="#5b6675">S · V · G</text>'
-    for k in range(4):
-        g += '<rect x="%d" y="320" width="20" height="26" rx="3" fill="#15202b"/>' % (282 + k * 24)
-    g += '<text x="320" y="372" font-size="13" text-anchor="middle" fill="#5b6675">I2C</text>'
-    return g + '</svg>'
-
 page(S, 'smart-agriculture-kit', 'Conoce el Smart Agriculture Kit',
     P('Kit de ELECFREAKS con sensores para proyectos de agricultura: regar, vigilar el invernadero, iluminar cultivos o controlar un estanque.') +
     h2('La placa IoT:bit') +
     P('IoT:bit es la placa de expansión del kit. Saca casi todos los pines de la micro:bit en conectores <b>GVS</b> (G tierra, V alimentación, S señal), '
       'así que cada sensor se enchufa con un solo cable de tres hilos. También lleva WiFi, reloj y zumbador. Se alimenta por USB (5 V). Pasa el ratón por los números.') +
-    anat(None, 'Esquema de la IoT:bit', [
-        (5, 22, 'Alimentación USB', 'Entrada de 5 V para toda la placa.'),
-        (6, 41, 'Interruptor', 'Enciende y apaga la placa.'),
-        (47, 21, 'Reloj (RTC) y pila', 'Reloj DS1307 con hueco para una pila CR1220 (no incluida).'),
-        (80, 21, 'Módulo WiFi', 'Para proyectos de internet de las cosas.'),
-        (63, 38, 'Zumbador', 'Suena con los bloques de Música.'),
-        (50, 55, 'Ranura de la micro:bit', 'Fíjate en el sentido de inserción que indica la placa.'),
-        (23, 76, 'Conectores GVS', 'Para los sensores, servos y LED del kit (a izquierda y derecha).'),
-        (50, 79, 'Conector I2C', 'Para la pantalla OLED (pines 19 y 20).'),
-    ], 'Esquema propio de la IoT:bit, dibujado a partir de su %s. Posiciones aproximadas.' % a(EF + 'octopus-series/expansion-board/iot-bit', 'ficha oficial'),
-        svg=_iotbit_svg()) +
+    anat('img/kits/iotbit-foto.png', 'Foto de la placa IoT:bit', [
+        (18, 35, 'Alimentación USB', 'Entrada de 5 V para toda la placa.'),
+        (20, 50, 'Interruptor', 'Enciende y apaga la placa.'),
+        (35, 44, 'Reloj DS1307', 'Guarda la hora (RTC).'),
+        (51, 36, 'Hueco para pila CR1220', 'Mantiene la hora sin USB (pila no incluida).'),
+        (71, 47, 'Módulo WiFi', 'Usa P8 y P12.'),
+        (50, 52, 'Zumbador', 'En P0: suena con los bloques de Música.'),
+        (50, 63, 'Ranura de la micro:bit', 'Fíjate en el sentido de inserción.'),
+        (28, 76, 'Conectores GVS izquierdos', 'P1, P2, P3, P4, P6, P7 y P9 (S señal, V alimentación, G tierra).'),
+        (50, 77, 'Conector I2C', 'G, V, P19 y P20: pantalla OLED.'),
+        (73, 76, 'Conectores GVS derechos', 'P10, P13, P14, P15, P16, P19 y P20.'),
+    ], 'IoT:bit. Foto: %s (captura).' % a(EF + 'octopus-series/expansion-board/iot-bit', 'wiki de ELECFREAKS')) +
     h2('Sensores y componentes') +
     componentes([
         ['Sensor de humedad del suelo', 'Mide si la tierra está seca (0 a 100)', 'GVS (P1 en el caso 1)'],
@@ -728,3 +734,18 @@ basic.forever(function () {
     ampliar=['Como en el caso oficial, añade el LED de colores en P9 (extensión neopixel) y enciéndelo en rojo con la alarma.', 'Cuenta cuántas veces salta la alarma.'],
     docente=P('Basado en el caso 4 del wiki de ELECFREAKS, que además enciende un LED de colores en P9. El PIR tarda unos segundos en estabilizarse al encenderlo.'),
     icono='aviso', tiempo='1-2 sesiones', etapa='P2')
+
+
+# ------------------------------------------------------------------ enlace oficial al final de cada página de kit
+import common as _c
+_DOC = {
+    GC: (EF + 'microbit-smart-car/microbit-smart-cutebot/', 'Cutebot en el wiki de ELECFREAKS', '15 casos'),
+    GL: (DF_LITE, 'Maqueen Lite en el wiki de DFRobot', '16 ejemplos'),
+    GP: (DF_PLUS, 'Maqueen Plus V2 en el wiki de DFRobot', '7 ejemplos'),
+    GW: (WB, 'Wonder Building Kit en el wiki de ELECFREAKS', '48 modelos'),
+    GA: (AG, 'Smart Agriculture Kit en el wiki de ELECFREAKS', '13 casos'),
+}
+for _p in _c.PAGES:
+    if _p['group'] in _DOC:
+        u, t_, n = _DOC[_p['group']]
+        _p['body'] += box('sabias', 'Documentación oficial', P('%s: especificaciones, montaje y %s con su programa.' % (a(u, t_), n)))
