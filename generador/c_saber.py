@@ -87,7 +87,8 @@ CREDITOS = ul([
     '<b>Datos técnicos de la placa</b>: documentación oficial de micro:bit (microbit.org y tech.microbit.org).',
     '<b>Kits y robots</b>: datos, puertos y funciones tomados del wiki de ELECFREAKS, del wiki de DFRobot y del código de sus extensiones oficiales de MakeCode.',
     '<b>Inteligencia artificial</b>: según la guía de usuario oficial de micro:bit CreateAI.',
-    '<b>Recursos recomendados</b>: los recursos de Pedro Ruiz (pedroruizf) y de TecnoJajulca (jajulca.eu, Eufrasio Cabrera) se citan como referencia y enlace. Este material no reproduce sus contenidos; si en el futuro se adapta alguno, se indicará en la propia actividad.',
+    '<b>Recursos recomendados</b>: los recursos de Pedro Ruiz (pedroruizf) y de TecnoJajulca (jajulca.eu, Eufrasio Cabrera) se citan como referencia y enlace.',
+    '<b>Ideas de otros materiales</b>: algunas actividades parten de ideas de los retos de Pedro Ruiz, del <i>Manual de Programación micro:bit</i> de José Francisco Muñoz (Almeribot · Microes.org), del <i>Cuaderno de proyectos micro:bit</i> de Plan Ceibal y de las tarjetas de MicroBlocks. Cada una lo indica al final con «Idea inspirada en…».',
 ])
 PROPIOS = [
     ('Conoce micro:bit', 'https://pablomoraga.github.io/conocemicrobit/', 'La placa V2 y misiones con MakeCode (eXeLearning).'),
@@ -134,7 +135,7 @@ IMAGENES = tabla(['Imagen', 'Dónde aparece', 'Fuente'], [
 ])
 page(S, 'creditos', 'Créditos y licencias',
     h2('Licencia de este material') +
-    P('Textos, prácticas, programas, ilustraciones e iconos son de elaboración propia de <b>Pablo Moraga</b> y se comparten con licencia %s:' % LIC) +
+    P('Este material se comparte con licencia %s:' % LIC) +
     ul(['<b>Puedes</b> copiarlos, compartirlos, adaptarlos y usarlos en tus clases.',
         '<b>Siempre citando al autor</b>: «micro:bit en el aula, Pablo Moraga» con el enlace a la web.',
         '<b>Sin uso comercial</b>: no se pueden vender ni incluir en productos de pago.']) +

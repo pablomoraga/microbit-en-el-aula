@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common, makecode, placa, placa_pro, tarjetas, recortables
 from common import PAGES, e, P
 from iconos import icon, svg_file, logo_lapiz
-import c_empezar, c_conoce, c_comenzamos, c_comenzamos_mas, c_errores, c_matematicas, c_matematicas_primaria, c_experto, c_experto_mas, c_talleres, c_kits, c_ia, c_celebrar, c_imprime, c_saber, conceptos
+import c_empezar, c_conoce, c_comenzamos, c_comenzamos_mas, c_errores, c_matematicas, c_matematicas_primaria, c_experto, c_experto_mas, c_experto_ideas, c_talleres, c_kits, c_ia, c_celebrar, c_imprime, c_saber, conceptos
 conceptos.registrar()
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -52,7 +52,7 @@ GROUP_INFO = {}   # título de grupo -> (intro html)
 
 def register_group(title, intro_html):
     GROUP_INFO[title] = intro_html
-for mod in (c_comenzamos, c_experto, c_experto_mas, c_talleres, c_kits, c_celebrar, c_conoce):
+for mod in (c_comenzamos, c_experto, c_experto_mas, c_experto_ideas, c_talleres, c_kits, c_celebrar, c_conoce):
     for t, h in getattr(mod, 'GRUPOS', {}).items():
         register_group(t, h)
 
@@ -155,7 +155,7 @@ def doc(title, body, root, cur=None, pn=''):
     links = ''.join('<a href="%s%s/index.html" title="%s"%s>%s</a>' % (root, sid, e(t), ' class="on"' if cur and cur.get('section') == sid else '', e(CORTO.get(sid, t))) for sid, _, t, _, _ in SECTIONS)
     side = nav_html(cur) if cur is not None else ''
     return ('<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-            '<title>%s · %s</title><meta name="description" content="Manual propio para aprender a programar la micro:bit V2 con MakeCode, MicroBlocks y Python en Primaria y ESO.">'
+            '<title>%s · %s</title><meta name="description" content="Manual de uso para aprender a programar la placa micro:bit V2 con MakeCode, MicroBlocks y Python: del primer LED encendido a juegos, sensores, robots y proyectos con kits.">'
             '<link rel="icon" href="%simg/icono.svg?v=' + VER + '"><link rel="stylesheet" href="%scss/estilo.css?v=' + VER + '"></head><body>' + LAPIZ + '%s'
             '<div class="layout %s">%s<main id="contenido">%s%s</main></div>%s<script src="%sjs/app.js?v=' + VER + '"></script></body></html>') % (
         e(title), TITLE, root, root, HEADER.format(root=root, links=links), 'with-side' if side else 'home', side, body, pn, FOOTER, root)
@@ -201,7 +201,7 @@ def build():
     nproj = sum(1 for p in PAGES if p['kind'] == 'proyecto')
     home = ('<section class="hero"><div class="hero-txt"><p class="kicker">Programación y robótica · Primaria y ESO</p><h1>micro:bit <em class=\"lapiz\">en el aula</em></h1>'
             '<p class="tagline">Bloques primero, texto después</p>'
-            '<p class="lead">Un manual propio para aprender a programar la placa micro:bit V2 con <b>MakeCode</b>, <b>MicroBlocks</b> y <b>Python</b>: '
+            '<p class="lead">Manual de uso para aprender a programar la placa micro:bit V2 con <b>MakeCode</b>, <b>MicroBlocks</b> y <b>Python</b>: '
             'del primer LED encendido a juegos, sensores, robots y proyectos con kits.</p>'
             '<p><a class="btn" href="empezar/index.html">Empezar</a> <a class="btn btn2" href="comenzamos/index.html">Ir a las prácticas</a></p>'
             '<div class="stats"><span><b>%d</b> prácticas</span><span><b>%d</b> proyectos y talleres</span><span><b>3</b> editores</span></div></div>'

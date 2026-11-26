@@ -160,3 +160,34 @@ def semaforo():
     b += _cable('GND', 560, 364, 'negro')
     b += '<text x="470" y="384" font-size="12" fill="#5b6675">patas cortas (−) a GND</text>'
     return _svg(b, 410, 'Semáforo: cada LED con una resistencia de 220 Ω entre el pin y su pata larga (+); las patas cortas (−) juntas a GND')
+
+
+def _pila(x, y, t):
+    """Pila AA tumbada: + a la izquierda, − a la derecha."""
+    s = ('<rect x="%d" y="%d" width="150" height="46" rx="8" fill="#2b2f36"/><rect x="%d" y="%d" width="46" height="46" rx="8" fill="#c99a2e"/>'
+         '<rect x="%d" y="%d" width="8" height="20" rx="2" fill="#9aa1aa"/>' % (x - 75, y, x - 75, y, x - 83, y + 13))
+    s += '<text x="%d" y="%d" font-size="20" font-weight="800" fill="#fff">+</text>' % (x - 60, y + 30)
+    s += '<text x="%d" y="%d" font-size="20" font-weight="800" fill="#fff">−</text>' % (x + 52, y + 30)
+    s += '<text x="%d" y="%d" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">1,5 V</text>' % (x + 8, y + 28)
+    return s + _etiqueta(x, y + 76, t)
+
+def pila():
+    b = _placa() + _cable('P1', 150, 300, 'rojo') + _cable('GND', 470, 330, 'negro')
+    # resistencia de protección entre el cable de P1 y el polo +
+    b += '<rect x="143" y="300" width="14" height="40" rx="5" fill="#d9c39a" stroke="#8a6d3b"/><path d="M143 309 h14 M143 317 h14 M143 325 h14" stroke="#8b4513" stroke-width="3"/>'
+    b += '<text x="164" y="326" font-size="11" fill="#5b6675">1 kΩ</text><path d="M150 340 V352 H237" stroke="#9aa1aa" stroke-width="3" fill="none"/>'
+    b += '<path d="M470 330 V352 H403" stroke="#9aa1aa" stroke-width="3" fill="none"/>'
+    b += _pila(320, 330, 'pila de 1,5 V: + con la resistencia a P1, − a GND')
+    return _svg(b, 440, 'Comprobador de pilas: el polo + de la pila a P1 a través de una resistencia de 1 kΩ y el polo − a GND')
+
+def _objeto(x, y, t):
+    """Objeto para probar (una moneda) con las dos pinzas tocándolo."""
+    s = '<ellipse cx="%d" cy="%d" rx="70" ry="22" fill="#b88a2d"/><ellipse cx="%d" cy="%d" rx="70" ry="22" fill="#e0b34a" stroke="#9c7420" stroke-width="2"/>' % (x, y + 30, x, y + 24)
+    s += '<ellipse cx="%d" cy="%d" rx="44" ry="12" fill="none" stroke="#b88a2d" stroke-width="2"/>' % (x, y + 24)
+    return s + _etiqueta(x, y + 82, t)
+
+def conduce():
+    b = _placa() + _cable('P0', 270, 300, 'naranja') + _cable('GND', 370, 300, 'negro')
+    b += _objeto(320, 300, 'el objeto que pruebas, tocado por las dos pinzas')
+    b += '<text x="320" y="410" text-anchor="middle" font-size="13" fill="#5b6675">si conduce, une P0 con GND y la placa lo detecta</text>'
+    return _svg(b, 430, '¿Conduce la electricidad?: una pinza de P0 y otra de GND tocando el objeto, sin que se toquen entre ellas')

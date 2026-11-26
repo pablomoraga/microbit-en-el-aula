@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from common import page, P, ul, ol, box, tabla, h2, h3, py_html, e, anatomia
-import makecode, mbk, placa, visual
+import makecode, mbk, placa, visual, python_manual
 from iconos import icon
 
 S = 'conoce'
 G1, G2 = 'La placa micro:bit V2', 'Los editores'
 GRUPOS = {
     G1: P('La placa por delante y por detrás, sus pines, su ficha técnica, las precauciones de uso y cómo cargar un programa.'),
-    G2: P('MakeCode, MicroBlocks y Python: cómo es cada editor, cómo se organizan sus bloques o instrucciones y cómo ampliarlos con extensiones y bibliotecas.'),
+    G2: P('MakeCode, MicroBlocks y Python: cómo es cada editor, cómo se organizan sus bloques o instrucciones, un manual básico de Python y cómo ampliarlos con extensiones y bibliotecas.'),
 }
 
 def leyenda(items, start):
@@ -281,10 +281,13 @@ page(S, 'python', 'Python', P(
         ['Radio', '<code>radio.send("hola")</code>, <code>radio.receive()</code> (con <code>import radio</code>)', 'radio enviar cadena, al recibir radio'],
         ['Pines', '<code>pin0.write_digital(1)</code>, <code>pin1.read_analog()</code>', 'escritura digital, lectura analógica'],
     ]) +
+    box('idea', 'Manual básico de Python', P('Para aprender el lenguaje paso a paso, con un ejemplo en cada apartado, abre el <a href="python-basico.html">Manual básico de Python</a>.')) +
     box('ojo', 'Errores típicos en Python', ul(['Olvidar los dos puntos <code>:</code> al final de <code>while</code>, <code>if</code>, <code>for</code> o <code>def</code>.',
         'Mezclar espacios y tabuladores en la sangría.', 'Escribir <code>Button_a</code> en lugar de <code>button_a</code>: Python distingue mayúsculas y minúsculas.',
         'Usar <code>random</code>, <code>music</code> o <code>radio</code> sin importarlos antes.'])),
     group=G2, icono='codigo')
+
+page(S, 'python-basico', 'Manual básico de Python', python_manual.BODY, group=G2, icono='codigo')
 
 page(S, 'extensiones', 'Extensiones y bibliotecas', P(
     'Los editores traen los bloques de la placa, pero cuando conectamos un robot, una tira de luces o un kit hacen falta bloques nuevos. '
