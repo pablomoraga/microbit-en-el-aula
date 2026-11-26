@@ -212,6 +212,44 @@ basic.forever(function () {
     docente=P('Basado en el caso 10 del wiki de ELECFREAKS. Entre 10 y 20 cm el coche se queda quieto: es la «zona tranquila».'),
     icono='onda', tiempo='1 sesión', etapa='P2')
 
+proyecto(S, 'cutebot-teledirigido', 'Cutebot: teledirigido por radio', GC,
+    'Una micro:bit hace de mando: al inclinarla, el Cutebot avanza, retrocede o gira. Une la práctica '
+    '<a href="../experto/mando-por-inclinacion.html">R6 · Mando por inclinación</a> con los motores del robot.',
+    ['Cutebot con pilas y su micro:bit', 'Otra micro:bit con portapilas (el mando)', 'Un circuito con obstáculos hecho con cajas o vasos'], None,
+    ['Carga en la micro:bit del mando el programa de la práctica R6. Envía 1 (delante), 2 (detrás), 3 (izquierda), 4 (derecha) o 0 (plana) por el grupo de radio 7.',
+     'En la micro:bit del robot pon el mismo %s y, al recibir un número, mueve los motores según el código: para girar, una rueda va más rápida que la otra.' % kbd('radio fijar grupo 7'),
+     'Guarda en %s el momento en que llegó el último mensaje.' % kbd('ultimo'),
+     'En %s, si han pasado más de 500 ms sin mensajes, para el coche: así no se escapa si el mando se apaga o se aleja.' % kbd('para siempre'),
+     'Prueba en el suelo: si al inclinar a la izquierda gira a la derecha, intercambia los códigos 3 y 4 en el robot.'],
+    mc='''let ultimo = 0
+radio.setGroup(7)
+radio.onReceivedNumber(function (receivedNumber) {
+    ultimo = input.runningTime()
+    if (receivedNumber == 1) {
+        cuteBot.motors(50, 50)
+    } else if (receivedNumber == 2) {
+        cuteBot.motors(-40, -40)
+    } else if (receivedNumber == 3) {
+        cuteBot.motors(10, 50)
+    } else if (receivedNumber == 4) {
+        cuteBot.motors(50, 10)
+    } else {
+        cuteBot.stopcar()
+    }
+})
+basic.forever(function () {
+    if (input.runningTime() - ultimo > 500) {
+        cuteBot.stopcar()
+    }
+    basic.pause(100)
+})''', pkgs=('cutebot',),
+    ampliar=['Usa el botón A del mando para tocar el claxon (código 5) y el B para encender los faros (código 6).',
+             'Carrera de obstáculos por equipos: una persona conduce y otra da indicaciones sin tocar el mando.',
+             'Con Maqueen Lite funciona igual: cambia los bloques de motor por los de la extensión maqueen.'],
+    docente=P('Cada pareja debe usar un número de grupo distinto (del 0 al 255): si dos mandos comparten grupo, mueven los dos robots. '
+              'El código 0 y la parada por tiempo son la «seguridad» del robot: conviene comentarlo con el grupo.'),
+    icono='mando', tiempo='1-2 sesiones', etapa='P2')
+
 # =================================================================== MAQUEEN LITE
 DF_LITE = 'https://wiki.dfrobot.com/rob0148-en/'
 TIRA = 'https://dfimg.dfrobot.com/nobody/wiki/1c52b0e9bde2fdc52f3bd068b52ebc60_0x0.jpg.webp'

@@ -5,7 +5,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common, makecode, placa, placa_pro, tarjetas, recortables
 from common import PAGES, e, P
 from iconos import icon, svg_file, logo_lapiz
-import c_empezar, c_conoce, c_comenzamos, c_comenzamos_mas, c_errores, c_matematicas, c_matematicas_primaria, c_experto, c_experto_mas, c_talleres, c_kits, c_ia, c_celebrar, c_imprime, c_saber
+import c_empezar, c_conoce, c_comenzamos, c_comenzamos_mas, c_errores, c_matematicas, c_matematicas_primaria, c_experto, c_experto_mas, c_talleres, c_kits, c_ia, c_celebrar, c_imprime, c_saber, conceptos
+conceptos.registrar()
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.environ.get('SALIDA', os.path.join(HERE, '..', '_salida'))
@@ -25,14 +26,15 @@ SECTIONS = [
     ('ia', '08', 'Inteligencia artificial', 'cerebro', 'Entrena un modelo con tus movimientos usando micro:bit CreateAI y úsalo en MakeCode.'),
     ('celebrar', '09', 'Para celebrar', 'calendario', 'Pequeñas actividades para Halloween, el Día de la Niña en la Ciencia, Navidad y verano.'),
     ('imprime', '10', 'Imprime en 3D', 'caja', 'Mis diseños 3D, ideas de carcasas y soportes y dónde buscar más.'),
-    ('saber', '11', 'Para saber más', 'libro', 'Problemas frecuentes, glosario, evaluación, tarjetas imprimibles y enlaces.'),
+    ('saber', '11', 'Para saber más', 'libro', 'Problemas frecuentes, glosario, índice por conceptos, evaluación, descargas, créditos y enlaces.'),
 ]
 SEC = {s[0]: s for s in SECTIONS}
+CORTO = {'empezar': 'Empezar', 'conoce': 'Conoce', 'errores': 'Errores', 'experto': 'Experto', 'ia': 'IA', 'celebrar': 'Celebrar', 'imprime': '3D', 'saber': 'Saber más'}
 INTRO = {
     'empezar': P('Antes de conectar la placa conviene saber qué es programar y por qué usamos micro:bit. Este apartado sirve para el alumnado y para el profesorado.'),
     'conoce': P('Un recorrido por la placa micro:bit V2 y por los tres editores que usamos en el material. Cada práctica tiene su solución en los tres, así que puedes elegir el que mejor encaje con tu grupo.'),
-    'comenzamos': P('Treinta prácticas ordenadas de menos a más, agrupadas en seis bloques. Cada una se hace en 15-30 minutos y tiene objetivo, paso a paso, pistas y una solución en <b>MakeCode</b>, <b>MicroBlocks</b> y <b>Python</b>.',
-                    'Las primeras están pensadas para Primaria; las últimas sirven para ESO. Solo necesitas la micro:bit y un cable USB (y en la radio, dos placas).') +
+    'comenzamos': P('Treinta y cuatro prácticas ordenadas de menos a más, agrupadas en seis bloques. Cada una se hace en 15-30 minutos y tiene objetivo, paso a paso, pistas y una solución en <b>MakeCode</b>, <b>MicroBlocks</b> y <b>Python</b>.',
+                    'Cada docente elige por dónde empezar según su grupo. Solo necesitas la micro:bit y un cable USB (y en la radio, dos placas).') +
                   '<p class="acciones"><a class="btn-sec" href="../recursos/tarjetas-comenzamos.pdf" download>' + icon('descarga', 16) +
                   ' Tarjetas imprimibles de las 34 prácticas (PDF)</a></p><p class="hint">Dos tarjetas A5 por hoja: delante, objetivo y pasos; detrás, pistas, bloques y «¿Y si…?». '
                   'Imprime a doble cara (borde largo) y corta por la línea discontinua.</p>',
@@ -140,9 +142,9 @@ def nav_html(cur):
 HEADER = ('<header class="top"><a class="brand" href="{root}index.html"><img src="{root}img/icono.svg?v=' + VER + '" alt="" width="38" height="38">'
           '<span class="brand-t">micro:bit <em class="lapiz">en el aula</em></span></a><button class="menu-btn" type="button" aria-label="Abrir el menú">☰</button>'
           '<nav class="topnav">{links}</nav></header>')
-FOOTER = ('<footer class="foot"><p>© Pablo Moraga · Contenidos con licencia <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> · '
+FOOTER = ('<footer class="foot"><p>© Pablo Moraga · Contenidos con licencia <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.es" target="_blank" rel="noopener">CC BY-NC 4.0</a> · '
           '<a href="https://github.com/pablomoraga" target="_blank" rel="noopener">github.com/pablomoraga</a></p>'
-          '<p class="small">Puedes compartir este material y sus programas tal cual, sin modificarlos, sin fines comerciales y citando siempre a su autor.</p>'
+          '<p class="small">Puedes copiar, compartir y adaptar este material y sus programas siempre que cites a su autor (Pablo Moraga) y no lo uses con fines comerciales.</p>'
           '<p class="small">micro:bit es una marca de la Micro:bit Educational Foundation. MakeCode es un proyecto de Microsoft. MicroBlocks es un proyecto de código abierto '
           '(sus bibliotecas se distribuyen con licencia MPL 2.0). Este material es independiente y no está vinculado a ninguna de estas organizaciones ni a los fabricantes de los kits.</p></footer>')
 
@@ -150,7 +152,7 @@ LAPIZ = ('<svg width="0" height="0" style="position:absolute" aria-hidden="true"
          '<feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/></filter></svg>')
 
 def doc(title, body, root, cur=None, pn=''):
-    links = ''.join('<a href="%s%s/index.html">%s</a>' % (root, sid, e(t)) for sid, _, t, _, _ in SECTIONS)
+    links = ''.join('<a href="%s%s/index.html" title="%s"%s>%s</a>' % (root, sid, e(t), ' class="on"' if cur and cur.get('section') == sid else '', e(CORTO.get(sid, t))) for sid, _, t, _, _ in SECTIONS)
     side = nav_html(cur) if cur is not None else ''
     return ('<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             '<title>%s · %s</title><meta name="description" content="Manual propio para aprender a programar la micro:bit V2 con MakeCode, MicroBlocks y Python en Primaria y ESO.">'
@@ -186,7 +188,7 @@ def build():
     for i, p in enumerate(flat):
         if p['kind'] == 'section': body = '<p class="crumbs"><a href="../index.html">Inicio</a></p><h1>%s</h1>%s' % (e(p['title']), section_body(p['section']))
         elif p['kind'] == 'groupidx': body = crumbs(p) + '<h1>%s</h1>%s' % (e(p['title']), group_body(p['group']))
-        else: body = crumbs(p) + '<h1>%s</h1>%s' % (e(p['title']), p['body'])
+        else: body = crumbs(p) + '<h1>%s</h1>%s' % (e(p['title']), conceptos.enlazar(p['body']))
         pages_html.append((p, body, i))
     for p, body, i in pages_html:
         d = os.path.join(SITE, p['section']); os.makedirs(d, exist_ok=True)

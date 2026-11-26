@@ -85,10 +85,9 @@ CREDITOS = ul([
     '<b>MicroBlocks</b>: los nombres de los bloques salen de su traducción oficial al español y los proyectos incluyen sus bibliotecas oficiales, distribuidas con licencia MPL 2.0.',
     '<b>Capturas de los editores</b>: MakeCode, MicroBlocks y el editor de Python de la Micro:bit Educational Foundation, hechas con fines educativos para explicar su uso.',
     '<b>Datos técnicos de la placa</b>: documentación oficial de micro:bit (microbit.org y tech.microbit.org).',
-    '<b>Kits y robots</b>: datos, puertos y funciones tomados del wiki de ELECFREAKS, del wiki de DFRobot y del código de sus extensiones oficiales de MakeCode. Las ilustraciones son esquemas propios.',
+    '<b>Kits y robots</b>: datos, puertos y funciones tomados del wiki de ELECFREAKS, del wiki de DFRobot y del código de sus extensiones oficiales de MakeCode.',
     '<b>Inteligencia artificial</b>: según la guía de usuario oficial de micro:bit CreateAI.',
     '<b>Recursos recomendados</b>: los recursos de Pedro Ruiz (pedroruizf) y de TecnoJajulca (jajulca.eu, Eufrasio Cabrera) se citan como referencia y enlace. Este material no reproduce sus contenidos; si en el futuro se adapta alguno, se indicará en la propia actividad.',
-    'Ilustraciones, iconos, prácticas, programas y textos: elaboración propia de Pablo Moraga (CC BY-NC-ND 4.0).',
 ])
 PROPIOS = [
     ('Conoce micro:bit', 'https://pablomoraga.github.io/conocemicrobit/', 'La placa V2 y misiones con MakeCode (eXeLearning).'),
@@ -100,6 +99,44 @@ PROPIOS = [
     ('Scratch en el aula', 'https://pablomoraga.github.io/scratch-en-el-aula/', 'Manual de Scratch 3.0 para Primaria y ESO, con retos de micro:bit.'),
     ('Impresión 3D Código 4.0', 'https://pablomoraga.github.io/impresion-3d-codigo-4.0/', 'Manual de diseño e impresión 3D en el aula.'),
 ]
+ZIP = 'https://github.com/pablomoraga/microbit-en-el-aula/archive/refs/heads/gh-pages.zip'
+page(S, 'descargas', 'Descargas y uso sin conexión',
+    P('Todo el material se puede descargar para usarlo en aulas con mala conexión o en ordenadores sin internet.') +
+    '<div class="descargas">' +
+    '<a class="card" href="%s"><span class="card-ico">%s</span><span class="card-tag">ZIP · unos 30 MB</span><span class="card-t">La web completa</span>'
+    '<span class="card-d">Todas las páginas, imágenes y programas. Se genera con la última versión publicada.</span></a>' % (ZIP, icon('descarga', 26)) +
+    '<a class="card" href="../recursos/tarjetas-comenzamos.pdf" download><span class="card-ico">%s</span><span class="card-tag">PDF</span><span class="card-t">Tarjetas de Comenzamos</span>'
+    '<span class="card-d">Las 34 prácticas en tarjetas A5 para imprimir a doble cara.</span></a>' % icon('descarga', 26) +
+    '</div>' +
+    h2('Cómo usar la web sin conexión') +
+    ol(['Descarga el ZIP y descomprímelo (botón derecho › <b>Extraer todo</b>).',
+        'Abre la carpeta <b>microbit-en-el-aula-gh-pages</b> y haz doble clic en <b>index.html</b>.',
+        'Para el aula, cópiala en una carpeta compartida o en un pendrive: no hace falta instalar nada.']) +
+    box('ojo', 'Lo que necesita internet', ul([
+        'El <b>simulador</b> de las prácticas y los editores (MakeCode, MicroBlocks y Python) se cargan desde sus webs oficiales.',
+        'Los visores de montaje y las fotos de DFRobot de los kits se muestran desde las webs de los fabricantes.',
+        'Sin conexión puedes leer todo, copiar el código y descargar los programas (.ubp y .py). Para trabajar sin internet, instala '
+        '<a href="https://microblocks.fun/download" target="_blank" rel="noopener">MicroBlocks</a> o la '
+        '<a href="https://makecode.microbit.org/offline-app" target="_blank" rel="noopener">aplicación de MakeCode sin conexión</a> en el ordenador.'])),
+    icono='descarga')
 page(S, 'enlaces', 'Enlaces y recursos', h2('Oficiales') + enlaces(OFICIAL) + h2('Guías y comunidad') + enlaces(GUIAS) +
     h2('Recursos de TecnoJajulca (Eufrasio Cabrera)') + enlaces(JAJULCA) + h2('Recursos de Pedro Ruiz') + enlaces(PEDRO) + h2('Mis recursos') + enlaces(PROPIOS), icono='enlace')
-page(S, 'creditos', 'Créditos y licencias', P('Este material es de elaboración propia. Estas son las fuentes y herramientas utilizadas:') + CREDITOS, icono='libro')
+LIC = ('<a href="https://creativecommons.org/licenses/by-nc/4.0/deed.es" target="_blank" rel="noopener">CC BY-NC 4.0</a>')
+IMAGENES = tabla(['Imagen', 'Dónde aparece', 'Fuente'], [
+    ['Foto del Cutebot', 'Talleres › Cutebot', 'Captura del wiki de ELECFREAKS (wiki.elecfreaks.com)'],
+    ['Diagrama de pines de Maqueen Lite', 'Talleres › Maqueen Lite', 'Captura del wiki de DFRobot (wiki.dfrobot.com/rob0148-en)'],
+    ['Foto de Maqueen Plus V2', 'Talleres › Maqueen Plus V2', 'Captura del wiki de DFRobot (wiki.dfrobot.com/mbt0021-en)'],
+    ['Foto de la placa IoT:bit', 'Talleres › Smart Agriculture Kit', 'Captura del wiki de ELECFREAKS'],
+    ['Foto de la placa WuKong', 'Talleres › Wonder Building Kit', 'Repositorio github.com/elecfreaks/pxt-wukong (licencia MIT)'],
+    ['Carruseles de montaje de Maqueen', 'Talleres › Maqueen Lite y Plus V2', 'Enlazadas desde el servidor de imágenes de DFRobot, sin copiarlas'],
+    ['Montajes del Wonder Building Kit y del Smart Agriculture Kit', 'Actividades de esos kits', 'Página oficial del wiki de ELECFREAKS mostrada en un visor, sin copiarla'],
+    ['Capturas de MakeCode, MicroBlocks y del editor de Python', 'Conoce micro:bit y Comenzamos', 'Hechas por el autor en los editores oficiales'],
+])
+page(S, 'creditos', 'Créditos y licencias',
+    h2('Licencia de este material') +
+    P('Textos, prácticas, programas, ilustraciones e iconos son de elaboración propia de <b>Pablo Moraga</b> y se comparten con licencia %s:' % LIC) +
+    ul(['<b>Puedes</b> copiarlos, compartirlos, adaptarlos y usarlos en tus clases.',
+        '<b>Siempre citando al autor</b>: «micro:bit en el aula, Pablo Moraga» con el enlace a la web.',
+        '<b>Sin uso comercial</b>: no se pueden vender ni incluir en productos de pago.']) +
+    P('Las imágenes de terceros de la tabla de abajo <b>no</b> forman parte de esa licencia: pertenecen a sus autores y se muestran citando la fuente.') +
+    h2('Fuentes y herramientas') + CREDITOS + h2('Imágenes de terceros') + IMAGENES, icono='libro')

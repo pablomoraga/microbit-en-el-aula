@@ -5,7 +5,7 @@
 |---|---|
 | `generador/c_empezar.py` | Para empezar |
 | `generador/c_conoce.py` | Conoce micro:bit (placa, editores, extensiones) |
-| `generador/c_comenzamos.py` | Las 30 prácticas |
+| `generador/c_comenzamos.py` | Las prácticas 1-30 (31-34 en c_comenzamos_mas.py) |
 | `generador/c_experto.py` | Modo experto |
 | `generador/c_talleres.py` | Talleres (proyectos tipo y kits) |
 | `generador/c_celebrar.py` | Para celebrar (efemérides) |

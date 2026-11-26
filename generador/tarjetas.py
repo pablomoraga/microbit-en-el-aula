@@ -32,10 +32,10 @@ def _front(f, logo):
     pasos = ''.join('<li>%s</li>' % expand(p) for p in f['pasos'])
     mat = ('<p class="mat"><b>Necesitas:</b> %s</p>' % ', '.join(f['materiales'])) if f['materiales'] else ''
     return ('<div class="t"><div class="banda"><img src="%s" alt=""><div><div class="num">PRÁCTICA %s</div><div class="grupo">%s</div></div>'
-            '<div class="chips"><span>%s</span><span>%s</span><span>%s</span></div></div>'
+            '<div class="chips"><span>%s</span><span>%s</span></div></div>'
             '<h1>%s</h1><div class="obj"><b>Objetivo:</b> %s</div>%s<h2>Paso a paso</h2><ol>%s</ol>'
             '<div class="pie"><span>micro:bit en el aula · Pablo Moraga</span><span>Solución en MakeCode, MicroBlocks y Python en la web</span></div></div>') % (
-        logo, e(f['num']), e(f['group'] or ''), common.NIVEL[f['nivel']], e(common.ETAPA[f['etapa']]), e(f['tiempo']), e(f['title']), f['objetivo'], mat, pasos)
+        logo, e(f['num']), e(f['group'] or ''), common.NIVEL[f['nivel']], e(f['tiempo']), e(f['title']), f['objetivo'], mat, pasos)
 
 def _back(f, imgdir):
     pistas = ''.join('<li>%s</li>' % expand(p) for p in f['pistas'])

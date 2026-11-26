@@ -90,33 +90,68 @@ def _resistencia(u, v, ang):
         g += '<rect x="%d" y="-13" width="6" height="26" fill="%s"/>' % (x, c)
     return sh + g + '<path d="M-30 -6 H30" stroke="#fff" stroke-width="3" opacity=".45" stroke-linecap="round"/></g></g>'
 
+HEART = [(0, 1), (0, 3), (1, 0), (1, 1), (1, 2), (1, 3), (1, 4), (2, 0), (2, 1), (2, 2), (2, 3), (2, 4), (3, 1), (3, 2), (3, 3), (4, 2)]
+
+def _corazon(x, y, k, col):
+    """Corazón de 5 × 5 puntos (para dentro de los bloques)."""
+    return ''.join('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="1" fill="%s"/>' % (x + c * k, y + f * k, k * .8, k * .8, col) for f, c in HEART)
+
+def _tarjeta(x, y, w, h, titulo, color, cuerpo):
+    s = '<g transform="translate(%d %d) scale(1.25)">' % (x, y)
+    s += '<rect x="0" y="6" width="%d" height="%d" rx="14" fill="#15202b" opacity=".16" filter="url(#hpblur)"/>' % (w, h)
+    s += '<rect width="%d" height="%d" rx="14" fill="#fff" stroke="#15202b" stroke-width="1.5"/>' % (w, h)
+    s += '<circle cx="18" cy="18" r="5" fill="%s"/><text x="30" y="22.5" font-size="12.5" font-weight="700" fill="#15202b" font-family="ui-monospace,Consolas,monospace">%s</text>' % (color, titulo)
+    s += '<path d="M0 34 H%d" stroke="#d5dbe3"/>' % w
+    return s + cuerpo + '</g>'
+
+def _bloque(x, y, w, color, txt, hat=False, heart=False):
+    """Bloque de programación estilizado (tapa redondeada si es un evento)."""
+    h = 30
+    top = 'M%d %d q0 -14 %d -14 h%d q%d 0 %d 14' % (x, y, 34, w - 68, 34, 34) if hat else 'M%d %d h%d' % (x, y, w)
+    d = '%s v%d h-%d z' % (top, h, w) if hat else 'M%d %d h%d v%d h-%d z' % (x, y, w, h, w)
+    s = '<path d="%s" fill="%s"/>' % (d, color)
+    s += '<text x="%d" y="%d" font-size="13" font-weight="700" fill="#fff" font-family="system-ui,sans-serif">%s</text>' % (x + 10, y + 20, txt)
+    if heart:
+        s += '<rect x="%d" y="%d" width="24" height="24" rx="4" fill="#fff" opacity=".95"/>' % (x + w - 32, y + 3) + _corazon(x + w - 29, y + 6.5, 3.6, '#e3204b')
+    return s
+
 def hero():
-    W, H = 700, 560
-    s = ('<svg class="placa-svg hero-pro" viewBox="0 0 %d %d" role="img" aria-label="Ilustración de una micro:bit V2 sobre la mesa '
-         'con dos cables de cocodrilo, LED, pulsadores y una resistencia">' % (W, H))
-    s += ('<defs><filter id="hpblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>'
-          '<filter id="hpshadow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="18"/></filter>'
-          '<radialGradient id="hpbg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff8ec"/><stop offset=".75" stop-color="#f7ead4"/><stop offset="1" stop-color="#f7ead4" stop-opacity="0"/></radialGradient>'
+    global S, X0, Y0
+    W, H = 720, 560
+    S, X0, Y0 = 0.78, 250, 236
+    s = ('<svg class="placa-svg hero-pro" viewBox="0 0 %d %d" role="img" aria-label="La micro:bit V2 muestra un corazón; alrededor, el mismo programa '
+         'en MakeCode, MicroBlocks y Python">' % (W, H))
+    s += ('<defs><filter id="hpblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>'
+          '<filter id="hpshadow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="16"/></filter>'
+          '<filter id="hpglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>'
+          '<radialGradient id="hpbg" cx=".5" cy=".55" r=".55"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#e6edf5"/><stop offset="1" stop-color="#e6edf5" stop-opacity="0"/></radialGradient>'
           '<linearGradient id="hpgold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6d985"/><stop offset="1" stop-color="#9c6f17"/></linearGradient>'
-          '<linearGradient id="hpmetal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8d939b"/><stop offset=".45" stop-color="#f1f3f5"/><stop offset="1" stop-color="#7c828a"/></linearGradient>'
-          '<linearGradient id="hpboot" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".25"/><stop offset=".35" stop-color="#fff" stop-opacity=".35"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></linearGradient>'
-          '<linearGradient id="hpres" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4e3bd"/><stop offset=".55" stop-color="#d9bd88"/><stop offset="1" stop-color="#a78755"/></linearGradient>'
           '</defs>')
-    # halo cálido y retícula de la mesa, en el mismo plano
-    s += '<ellipse cx="350" cy="330" rx="350" ry="230" fill="url(#hpbg)"/>'
-    s += '<g transform="%s" opacity=".55">' % M(0)
-    for u in range(-260, 900, 40):
-        for v in range(-120, 760, 40):
+    s += '<ellipse cx="360" cy="320" rx="360" ry="250" fill="url(#hpbg)"/>'
+    # retícula de puntos en el plano de la mesa
+    s += '<g transform="%s" opacity=".5">' % M(0)
+    for u in range(-300, 900, 40):
+        for v in range(-160, 700, 40):
             x, y = P(u, v, 0)
-            if ((x - 350) / 330.0) ** 2 + ((y - 330) / 215.0) ** 2 < 1:
-                s += '<circle cx="%d" cy="%d" r="2.2" fill="#d6bf94"/>' % (u, v)
+            if ((x - 360) / 340.0) ** 2 + ((y - 330) / 220.0) ** 2 < 1:
+                s += '<circle cx="%d" cy="%d" r="2" fill="#b8c4d2"/>' % (u, v)
     s += '</g>'
-    # la placa
+    # brillo del corazón y placa
+    gx, gy = P(270, 215, BT)
     s += _placa()
-    # cables y pinzas (3V y GND) hacia la derecha
-    s += _cable(370, '#c0392b', (980, 560), 'r') + _cable(470, '#262a30', (1000, 700), 'k')
-    # componentes delante, a la izquierda, desordenados
-    s += _resistencia(70, 570, 14)
-    s += _pulsador(-210, 500, '#e0a83a') + _led(-70, 700, -28, '#e74c3c', True) + _led(-250, 770, 20, '#27ae60')
-    s += _pulsador(130, 700, '#c0392b') + _led(320, 880, -70, '#2e86de', True)
+    s += '<ellipse cx="%.0f" cy="%.0f" rx="70" ry="44" fill="#ff3b5c" opacity=".22" filter="url(#hpglow)"/>' % (gx, gy)
+    # líneas de las tarjetas a la pantalla
+    for (x, y) in ((250, 160), (520, 150), (560, 400)):
+        s += '<path d="M%d %d Q %.0f %.0f %.0f %.0f" stroke="#15202b" stroke-width="1.6" stroke-dasharray="5 6" fill="none" opacity=".55"/>' % (
+            x, y, (x + gx) / 2, min(y, gy) - 30, gx, gy)
+    # tarjetas: el mismo programa en los tres editores
+    s += _tarjeta(4, 8, 220, 120, 'MakeCode', '#1E90FF',
+                  _bloque(14, 54, 120, '#1E90FF', 'al iniciar', hat=True) + _bloque(26, 84, 180, '#1E90FF', 'mostrar ícono', heart=True))
+    s += _tarjeta(430, 0, 226, 120, 'MicroBlocks', '#D18C25',
+                  _bloque(14, 54, 124, '#D18C25', 'al empezar', hat=True) + _bloque(26, 84, 186, '#4852BF', 'muestra imagen', heart=True))
+    py = ('<text x="16" y="60" font-size="12.5" fill="#15202b" font-family="ui-monospace,Consolas,monospace">'
+          '<tspan fill="#c2185b">from</tspan> microbit <tspan fill="#c2185b">import</tspan> *</text>'
+          '<text x="16" y="84" font-size="12.5" fill="#15202b" font-family="ui-monospace,Consolas,monospace">display.show(</text>'
+          '<text x="16" y="104" font-size="12.5" fill="#0f8a72" font-family="ui-monospace,Consolas,monospace">    Image.HEART)</text>')
+    s += _tarjeta(456, 396, 204, 120, 'Python', '#0f8a72', py)
     return s + '</svg>'

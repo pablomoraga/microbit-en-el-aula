@@ -203,3 +203,23 @@ document.querySelectorAll('.carr').forEach(function (c) {
   function mark() { var i = idx(); nums.forEach(function (a, j) { a.classList.toggle('on', i === j); }); }
   t.addEventListener('scroll', function () { clearTimeout(t._m); t._m = setTimeout(mark, 80); }); mark();
 });
+// índice por conceptos: filtro por etiqueta (hash) y por texto
+(function () {
+  var q = document.getElementById('cpt-q'); if (!q) return;
+  var bloques = [].slice.call(document.querySelectorAll('.cpt-b')), chips = [].slice.call(document.querySelectorAll('.cpt'));
+  function norm(t) { return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function mostrar(id, texto) {
+    bloques.forEach(function (b) {
+      var ok = id ? b.id === id : (!texto || norm(b.querySelector('h3').textContent).indexOf(norm(texto)) >= 0);
+      b.hidden = !ok;
+    });
+    chips.forEach(function (c) {
+      c.classList.toggle('on', !!id && c.dataset.c === id);
+      c.hidden = !id && texto && norm(c.textContent).indexOf(norm(texto)) < 0;
+    });
+  }
+  function desdeHash() { var h = decodeURIComponent(location.hash.slice(1)); if (h && document.getElementById(h)) { q.value = ''; mostrar(h); } else mostrar(null, q.value); }
+  q.addEventListener('input', function () { if (location.hash) history.replaceState(null, '', location.pathname); mostrar(null, q.value); });
+  document.getElementById('cpt-todos').addEventListener('click', function () { q.value = ''; history.replaceState(null, '', location.pathname); mostrar(null, ''); });
+  window.addEventListener('hashchange', desdeHash); desdeHash();
+})();

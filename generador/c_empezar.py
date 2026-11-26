@@ -80,7 +80,7 @@ page(S, 'bloques-y-texto', 'Bloques y texto', P(
         ['Errores de escritura', 'No hay: los bloques solo encajan si tienen sentido.', 'Una coma o una sangría mal puesta impiden que funcione.'],
         ['Qué recordar', 'Nada: todos los bloques están a la vista en la paleta.', 'Hay que conocer las instrucciones (o consultarlas).'],
         ['Programas largos', 'Ocupan mucho espacio en pantalla.', 'Son compactos, fáciles de copiar, buscar y compartir.'],
-        ['Edad recomendada', 'Desde 6-7 años.', 'Desde 11-12 años, mejor tras pasar por los bloques.'],
+        ['Cuándo usarlo', 'Para empezar a programar.', 'Cuando ya se domina la lógica de los bloques.'],
     ]) +
     h2('Los tres editores de este material') +
     tabla(['', 'MakeCode', 'MicroBlocks', 'Python'], [
@@ -127,7 +127,6 @@ page(S, 'como-usar', 'Cómo usar este material', P(
     ]) +
     h2('Qué significa cada marca') +
     ul(['<b>Dificultad</b> ★☆☆ a ★★★: lo exigente que es la práctica dentro de su bloque.',
-        '<b>Etapa</b>: Primaria 6-9, Primaria 10-12 o ESO. Es solo orientativa: cada docente la adapta a su grupo.',
         '<b>Conceptos</b>: las ideas de programación que se trabajan (bucles, variables, eventos…).']) +
     h2('Material necesario') +
     ul(['Una micro:bit V2 por pareja, con su cable USB (mejor si es de datos, no solo de carga).',

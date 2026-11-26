@@ -9,8 +9,8 @@ GRUPOS = {}
 
 def error(num, slug, title, nivel, etapa, debe, sintoma, pistas, explicacion, mal, bien, icono='lupa'):
     """mal y bien: tuplas (MakeCode, MicroBlocks, Python)."""
-    head = ('<div class="ficha"><span class="chip chip-num">%s</span><span class="chip">Dificultad %s</span><span class="chip">%s</span>'
-            '<span class="chip">%s 10-15 min</span><span class="chip chip-c">depurar</span></div>') % (e(num), NIVEL[nivel], e(ETAPA[etapa]), icon('reloj', 14))
+    head = ('<div class="ficha"><span class="chip chip-num">%s</span><span class="chip">Dificultad %s</span>'
+            '<span class="chip">%s 10-15 min</span><span class="chip chip-c">depurar</span></div>') % (e(num), NIVEL[nivel], icon('reloj', 14))
     body = head + '<div class="objetivo">%s<div><b>Lo que debería hacer</b><p>%s</p></div></div>' % (icon('diana', 28), debe)
     body += box('ojo', 'Lo que pasa', P(sintoma))
     body += '<h2>El programa con el error</h2>' + P('Pruébalo en el simulador o cárgalo en la placa. Lee el programa bloque a bloque y busca la diferencia entre lo que hace y lo que debería hacer.')

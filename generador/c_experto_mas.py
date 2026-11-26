@@ -130,7 +130,7 @@ practica(S, 'R6', 'mando-por-inclinacion', 'Mando por inclinación', 3, 'P2', '4
      'Con [[radio_recibir_numero]], muestra la [[flecha]] de cada código o [[borrar]] si llega un 0.',
      'Carga el mismo programa en las dos placas y comprueba qué flecha sale al inclinar hacia cada lado; si alguna va al revés, intercambia sus códigos.'],
     ['El mismo programa sirve de mando y de receptor: cada placa envía su inclinación y muestra la de la otra.',
-     'Para conducir un robot, el receptor no muestra flechas: mueve los motores según el código (por ejemplo, con la extensión del Cutebot o de Maqueen).',
+     'Para conducir un robot, el receptor no muestra flechas: mueve los motores según el código. Lo tienes hecho en el taller <a href="../talleres/cutebot-teledirigido.html">Cutebot: teledirigido por radio</a>.',
      'En MicroBlocks la inclinación va de −100 a 100; en MakeCode y Python, de −1024 a 1024.'],
     '''radio.setGroup(7)
 basic.forever(function () {

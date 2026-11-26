@@ -33,7 +33,7 @@ page(S, 'que-es-createai', 'IA y aprendizaje automático', P(
 
 page(S, 'primer-modelo', 'Mi primer modelo: aplaudir o saludar', P(
     'Entrenamos un modelo que distinga tres acciones (<b>aplaudir</b>, <b>saludar</b> y <b>quieto</b>) y lo usamos para que la micro:bit reaccione a cada una.') +
-    '<div class="ficha"><span class="chip">%s 2 sesiones</span><span class="chip">Primaria 10-12 · ESO</span><span class="chip chip-c">datos</span><span class="chip chip-c">entrenamiento</span><span class="chip chip-c">eventos</span></div>' % icon('reloj', 14) +
+    '<div class="ficha"><span class="chip">%s 2 sesiones</span><span class="chip">Primaria · ESO</span><span class="chip chip-c">datos</span><span class="chip chip-c">entrenamiento</span><span class="chip chip-c">eventos</span></div>' % icon('reloj', 14) +
     h2('1. Conectar la placa') +
     ol(['Abre <a href="https://createai.microbit.org" target="_blank" rel="noopener">createai.microbit.org</a> en Chrome o Edge y pulsa <b>Nuevo proyecto</b>.',
         'Sigue las instrucciones de la pantalla: CreateAI elige la conexión adecuada (Bluetooth o enlace de radio con una segunda placa).',

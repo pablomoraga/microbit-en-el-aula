@@ -6,6 +6,6 @@ Manual propio para aprender a programar la placa **micro:bit V2** con **MakeCode
 
 La web se construye automáticamente desde la carpeta `generador/` cada vez que se guarda un cambio. Para editarla, consulta **[GUIA-EDICION.md](GUIA-EDICION.md)**.
 
-© Pablo Moraga · Contenidos con licencia [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es).
+© Pablo Moraga · Contenidos con licencia [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.es).
 
 Las bibliotecas de MicroBlocks incluidas en `generador/microblocks/` son de MicroBlocks y se distribuyen con licencia MPL 2.0 (ver `LICENCIA-MPL-2.0.html`). micro:bit es una marca de la Micro:bit Educational Foundation; MakeCode es un proyecto de Microsoft. Este material es independiente.

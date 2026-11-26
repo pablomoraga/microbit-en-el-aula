@@ -6,7 +6,7 @@ from iconos import icon
 S = 'conoce'
 G1, G2 = 'La placa micro:bit V2', 'Los editores'
 GRUPOS = {
-    G1: P('La placa por delante y por detrás, sus pines, su ficha técnica y cómo cargar un programa.'),
+    G1: P('La placa por delante y por detrás, sus pines, su ficha técnica, las precauciones de uso y cómo cargar un programa.'),
     G2: P('MakeCode, MicroBlocks y Python: cómo es cada editor, cómo se organizan sus bloques o instrucciones y cómo ampliarlos con extensiones y bibliotecas.'),
 }
 
@@ -66,6 +66,21 @@ page(S, 'ficha-tecnica', 'Ficha técnica', P('Datos de la micro:bit V2 según la
     box('sabias', 'Modo reposo', P('Si mantienes pulsado el botón del reverso, el LED rojo se apaga y la placa queda en reposo, gastando muy poca energía. '
         'Una pulsación corta la despierta y el programa vuelve a empezar.')),
     group=G1, icono='chip')
+
+import precauciones as pc
+page(S, 'precauciones', 'Precauciones y cuidados', P(
+    'La micro:bit es resistente, pero con unos pocos hábitos dura muchos cursos. Repasa estas tarjetas con el grupo el primer día: '
+    'en verde, lo que conviene hacer; en rojo, lo que hay que evitar.') +
+    h2('Pilas y alimentación') + pc.tarjetas(pc.ALIMENTACION) +
+    h2('Cables y conexiones') + pc.tarjetas(pc.CONEXIONES) +
+    h2('Manipulación y almacenaje') + pc.tarjetas(pc.MANIPULAR) +
+    box('docente', 'Antes de la clase', ul([
+        'Comprueba que los cables USB son <b>de datos</b> (algunos solo cargan y la unidad MICROBIT no aparece).',
+        'Lleva pilas de repuesto del mismo tipo y retira las gastadas al terminar.',
+        'Revisa que no haya pinzas con la funda rota ni cables pelados.',
+        'En los robots, comprueba el interruptor y las pilas antes de repartirlos: muchas «averías» son pilas agotadas.'])) +
+    '<p class="fuente">Datos de alimentación y conexiones: páginas de %s.</p>' % pc.FUENTES,
+    group=G1, icono='aviso')
 
 page(S, 'cargar-un-programa', 'Cargar un programa en la placa', P(
     'El programa se escribe en el ordenador, pero tiene que llegar a la placa para funcionar sin él. Cada editor lo hace a su manera.') +

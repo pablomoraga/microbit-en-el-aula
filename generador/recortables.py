@@ -15,7 +15,7 @@ def _doc(titulo, figura, color, extra=''):
             '%s%s'
             '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="3" fill="#fff" stroke="#15202b" stroke-width=".5" stroke-dasharray="2 1.5"/>'
             '<text x="105" y="%.1f" text-anchor="middle" font-size="3.4" fill="#5b6675">ventana para la micro:bit (51,6 × 42 mm)</text>'
-            '<text x="105" y="288" text-anchor="middle" font-size="3" fill="#9aa1aa">© Pablo Moraga · CC BY-NC-ND 4.0</text></svg>') % (
+            '<text x="105" y="288" text-anchor="middle" font-size="3" fill="#9aa1aa">© Pablo Moraga · CC BY-NC 4.0</text></svg>') % (
         titulo, figura, extra, vx, vy, MB_W, MB_H, cy + MB_H / 2 + 6)
 
 def calabaza():

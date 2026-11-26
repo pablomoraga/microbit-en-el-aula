@@ -11,15 +11,15 @@ page(S, 'matematicas-con-microbit', 'Matemáticas con micro:bit', P(
     P('Las actividades de este apartado se organizan según los <b>sentidos matemáticos</b> del currículo de Matemáticas (LOMLOE) y se pueden usar como rincón de cálculo, '
       'como reto al terminar una tarea o como proyecto de clase.') +
     tabla(['Sentido', 'Actividad', 'Etapa'], [
-        ['Numérico', '<a href="sumas-con-dados.html">M9 · Sumas con dados</a>, <a href="cual-es-mayor.html">M10 · ¿Cuál es mayor?</a>, <a href="decenas-y-unidades.html">M11 · Decenas y unidades</a>', 'Primaria 6-9'],
+        ['Numérico', '<a href="sumas-con-dados.html">M9 · Sumas con dados</a>, <a href="cual-es-mayor.html">M10 · ¿Cuál es mayor?</a>, <a href="decenas-y-unidades.html">M11 · Decenas y unidades</a>', 'Primaria'],
         ['Numérico', '<a href="tablas-de-multiplicar.html">M1 · Tablas de multiplicar</a>, <a href="par-o-impar.html">M2 · ¿Par o impar?</a>', 'Primaria'],
-        ['Espacial', '<a href="figuras-geometricas.html">M12 · Figuras geométricas</a>', 'Primaria 6-9'],
-        ['Medida', '<a href="metros-y-centimetros.html">M13 · Metros y centímetros</a>', 'Primaria 10-12'],
-        ['Algebraico', '<a href="series-numericas.html">M14 · Series numéricas</a>', 'Primaria 10-12'],
-        ['Numérico', '<a href="fracciones-de-luz.html">M3 · Fracciones de luz</a>', 'Primaria 10-12'],
-        ['Espacial', '<a href="coordenadas.html">M4 · Caza de coordenadas</a>', 'Primaria 10-12 · ESO'],
+        ['Espacial', '<a href="figuras-geometricas.html">M12 · Figuras geométricas</a>', 'Primaria'],
+        ['Medida', '<a href="metros-y-centimetros.html">M13 · Metros y centímetros</a>', 'Primaria'],
+        ['Algebraico', '<a href="series-numericas.html">M14 · Series numéricas</a>', 'Primaria'],
+        ['Numérico', '<a href="fracciones-de-luz.html">M3 · Fracciones de luz</a>', 'Primaria'],
+        ['Espacial', '<a href="coordenadas.html">M4 · Caza de coordenadas</a>', 'Primaria · ESO'],
         ['Medida', '<a href="velocidad.html">M5 · ¿A qué velocidad vas?</a>', 'ESO'],
-        ['Algebraico', '<a href="numeros-binarios.html">M6 · Números binarios</a>', 'Primaria 10-12 · ESO'],
+        ['Algebraico', '<a href="numeros-binarios.html">M6 · Números binarios</a>', 'Primaria · ESO'],
         ['Estocástico', '<a href="probabilidad-del-dado.html">M7 · La probabilidad del dado</a>', 'ESO'],
         ['Estocástico', '<a href="media-de-temperaturas.html">M8 · Media de temperaturas</a>', 'ESO'],
     ]) +
@@ -61,7 +61,7 @@ while True:
         display.scroll(str(a) + "x" + str(b))
     if button_b.was_pressed():
         display.scroll(a * b)''',
-    ['Haz que solo pregunte la tabla del 7.', 'Cambia a sumas o restas para Primaria 6-9.', 'Cuenta los aciertos: el alumno pulsa el logotipo si acertó.'],
+    ['Haz que solo pregunte la tabla del 7.', 'Cambia a sumas o restas para empezar.', 'Cuenta los aciertos: el alumno pulsa el logotipo si acertó.'],
     icono='calculadora')
 
 # ------------------------------------------------------------------ M2

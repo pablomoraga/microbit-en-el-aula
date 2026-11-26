@@ -35,7 +35,7 @@ def tabla(head, rows, cls='tabla'):
 def kbd(t): return '<b class="blk">%s</b>' % t        # nombre de bloque dentro del texto
 
 NIVEL = {1: '★☆☆', 2: '★★☆', 3: '★★★'}
-ETAPA = {'P1': 'Primaria 6-9', 'P2': 'Primaria 10-12', 'ESO': 'ESO'}
+ETAPA = {'P1': 'Primaria', 'P2': 'Primaria', 'ESO': 'ESO'}   # dato interno; no se muestra (cada docente decide)
 
 # ------------------------------------------------------------------ Python
 PY_KW = r'\b(from|import|while|True|False|None|if|elif|else|for|in|def|return|and|or|not|break|continue|global|pass|range|lambda)\b'
@@ -127,8 +127,8 @@ def soluciones(name, mc=None, mb=None, py=None, pkgs=(), desc='', mc_nota=''):
 FICHAS = []
 def practica(section, num, slug, title, nivel, etapa, tiempo, conceptos, objetivo, pasos, pistas, mc, mb, py, ampliar,
              group=None, materiales=None, nota=None, explica=None, pkgs=(), icono='chip', mc_nota='', conexion=None):
-    head = ('<div class="ficha"><span class="chip chip-num">%s</span><span class="chip">Dificultad %s</span><span class="chip">%s</span>'
-            '<span class="chip">%s %s</span>%s</div>' % (e(num), NIVEL[nivel], e(ETAPA[etapa]), icon('reloj', 14), e(tiempo),
+    head = ('<div class="ficha"><span class="chip chip-num">%s</span><span class="chip">Dificultad %s</span>'
+            '<span class="chip">%s %s</span>%s</div>' % (e(num), NIVEL[nivel], icon('reloj', 14), e(tiempo),
                                                        ''.join('<span class="chip chip-c">%s</span>' % e(c) for c in conceptos)))
     body = head + '<div class="objetivo">%s<div><b>Objetivo</b><p>%s</p></div></div>' % (icon('diana', 28), objetivo)
     if materiales:
@@ -154,7 +154,7 @@ ESCENAS = {}          # slug -> función que dibuja la escena del proyecto
 def proyecto(section, slug, title, group, intro, materiales, conexiones, fases, mc=None, mb=None, py=None, pkgs=(),
              ampliar=None, docente=None, icono='chip', tiempo='60 min', etapa='P2', mc_nota='', extra=''):
     """Proyecto de taller o de modo experto, con fases."""
-    head = '<div class="ficha"><span class="chip">%s %s</span><span class="chip">%s</span></div>' % (icon('reloj', 14), e(tiempo), e(ETAPA[etapa]))
+    head = '<div class="ficha"><span class="chip">%s %s</span></div>' % (icon('reloj', 14), e(tiempo))
     body = head + P(intro)
     if slug in ESCENAS: body += ESCENAS[slug]()
     if materiales: body += box('material', 'Necesitas', ul(materiales))
