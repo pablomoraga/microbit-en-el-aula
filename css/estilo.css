@@ -345,3 +345,4 @@ a.chip-c{color:var(--ink);text-decoration:none}a.chip-c:hover{border-color:var(-
 .indice-py li{margin:2px 0}
 @media (max-width:600px){.indice-py ol{columns:1}}
 h2[id^="py-"]{scroll-margin-top:80px}
+.fuente.referencia{margin-top:22px;padding-top:12px;border-top:1px solid var(--line,#e2e6ea)}
