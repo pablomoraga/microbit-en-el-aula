@@ -117,7 +117,8 @@ page(S, 'pensamiento-computacional', 'Pensamiento computacional', P(
     icono='cerebro')
 
 page(S, 'como-usar', 'Cómo usar este material', P(
-    'El material está organizado de menos a más. No hace falta seguirlo entero: cada docente puede elegir las prácticas que encajen con su grupo.') +
+    'El material está pensado sobre todo para <b>Primaria, de 1.º a 6.º</b>. Algunas actividades llevan la marca ESO: sirven como reto para el alumnado más avanzado de 5.º y 6.º o como continuación en Secundaria.',
+    'Está organizado de menos a más. No hace falta seguirlo entero: cada docente puede elegir las prácticas que encajen con su grupo.') +
     tabla(['Apartado', 'Para qué', 'Etapa'], [
         ['<a href="../conoce/index.html">Conoce micro:bit</a>', 'Conocer la placa y los editores', 'Todas'],
         ['<a href="../comenzamos/index.html">Comenzamos</a>', '30 prácticas guiadas en 6 bloques', 'Primaria (bloques 1-4) y ESO (todas)'],

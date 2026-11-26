@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Registro de páginas y utilidades para escribir el contenido."""
-import html, re, urllib.parse
+import html, os, re, urllib.parse
 import makecode, mbk
+from bloques import expand, SELECTOR
 from iconos import icon
 
 PAGES = []      # dict(section, group, slug, title, body, kind, meta)
@@ -80,10 +81,27 @@ def panel_microblocks(src, name, desc=''):
         lib_txt = '<p class="ext">%s Usa las bibliotecas %s. Al abrir el proyecto se cargan solas.</p>' % (
             icon('pieza', 18), ', '.join('<b>%s</b>' % e(mbk.tr(l)) for l in libs))
     open_url = 'https://microblocks.fun/run/microblocks.html?lang=es&project=' + urllib.parse.quote(SITE_URL + 'programas/microblocks/' + name + '.ubp', safe='')
+    html_blocks = mbk.render(src)
+    MBPNG[name] = dict(html=html_blocks, text=mbk.script_text(src))
+    png = os.path.join(MBPNG_DIR, name + '.png')
+    if os.path.exists(png):
+        w, h = _png_size(png)
+        vista = ('<figure class="mb-png"><img src="{{ROOT}}img/microblocks/%s.png" width="%d" height="%d" alt="Programa de MicroBlocks: %s" draggable="true" loading="lazy">'
+                 '<figcaption>%s <b>Arrastra esta imagen</b> al área de programación de MicroBlocks y aparecerán los bloques (también puedes guardarla y soltarla después).</figcaption></figure>') % (
+            name, w // 2, h // 2, e(desc), icon('bloques2', 16))
+    else:
+        vista = html_blocks
     return ('%s%s<p class="acciones"><a class="btn-sec" href="%s" target="_blank" rel="noopener">%s Abrir en MicroBlocks</a> '
             '<a class="btn-sec" href="{{ROOT}}programas/microblocks/%s.ubp" download>%s Descargar .ubp</a></p>'
             '<p class="hint">Abre MicroBlocks en Chrome o Edge. Si pregunta si quieres actualizar una biblioteca a una versión nueva, pulsa <b>Sí</b>.</p>') % (
-        mbk.render(src), lib_txt, e(open_url), icon('externo', 16), name, icon('descarga', 16))
+        vista, lib_txt, e(open_url), icon('externo', 16), name, icon('descarga', 16))
+
+MBPNG = {}
+MBPNG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'estaticos', 'img', 'microblocks')
+
+def _png_size(path):
+    b = open(path, 'rb').read(24)
+    return int.from_bytes(b[16:20], 'big'), int.from_bytes(b[20:24], 'big')
 
 def panel_python(src, name):
     PY[name] = src.strip() + '\n'
@@ -108,17 +126,19 @@ def soluciones(name, mc=None, mb=None, py=None, pkgs=(), desc='', mc_nota=''):
 # ------------------------------------------------------------------ prácticas
 FICHAS = []
 def practica(section, num, slug, title, nivel, etapa, tiempo, conceptos, objetivo, pasos, pistas, mc, mb, py, ampliar,
-             group=None, materiales=None, nota=None, explica=None, pkgs=(), icono='chip', mc_nota=''):
+             group=None, materiales=None, nota=None, explica=None, pkgs=(), icono='chip', mc_nota='', conexion=None):
     head = ('<div class="ficha"><span class="chip chip-num">%s</span><span class="chip">Dificultad %s</span><span class="chip">%s</span>'
             '<span class="chip">%s %s</span>%s</div>' % (e(num), NIVEL[nivel], e(ETAPA[etapa]), icon('reloj', 14), e(tiempo),
                                                        ''.join('<span class="chip chip-c">%s</span>' % e(c) for c in conceptos)))
     body = head + '<div class="objetivo">%s<div><b>Objetivo</b><p>%s</p></div></div>' % (icon('diana', 28), objetivo)
     if materiales:
         body += box('material', 'Necesitas', ul(materiales))
-    body += '<h2>Paso a paso</h2>' + ol(pasos)
+    if conexion:
+        body += '<h2>Conexiones</h2>' + conexion
+    body += '<h2>Paso a paso</h2>' + SELECTOR + ol([expand(x) for x in pasos])
     if nota:
         body += nota
-    body += '<details class="ayuda"><summary>%s Ayuda: pistas</summary>%s</details>' % (icon('salvavidas', 18), ul(pistas))
+    body += '<details class="ayuda"><summary>%s Ayuda: pistas</summary>%s</details>' % (icon('salvavidas', 18), ul([expand(x) for x in pistas]))
     body += ('<details class="ayuda sol"><summary>%s Una solución posible</summary><p class="hint">Elige el editor con el que trabajas: '
              'la web lo recordará en las demás prácticas.</p>%s%s</details>' % (
                  icon('check', 18), soluciones(slug, mc, mb, py, pkgs, title, mc_nota), ('<p>%s</p>' % explica) if explica else ''))
@@ -136,7 +156,7 @@ def proyecto(section, slug, title, group, intro, materiales, conexiones, fases, 
     body = head + P(intro)
     if materiales: body += box('material', 'Necesitas', ul(materiales))
     if conexiones: body += '<h2>Conexiones</h2>' + conexiones
-    if fases: body += '<h2>Paso a paso</h2>' + ol(fases)
+    if fases: body += '<h2>Paso a paso</h2>' + SELECTOR + ol([expand(x) for x in fases])
     body += extra
     if mc or mb or py:
         body += '<h2>Programa</h2>' + soluciones(slug, mc, mb, py, pkgs, title, mc_nota)
@@ -146,7 +166,8 @@ def proyecto(section, slug, title, group, intro, materiales, conexiones, fases, 
 
 def anatomia(img, alt, puntos, pie=''):
     """Captura real de un editor con sus partes numeradas (x e y en % de la imagen) y una leyenda debajo."""
-    marks = ''.join('<span class="anat-pt" style="left:%s%%;top:%s%%">%d</span>' % (x, y, i + 1) for i, (x, y, t, d) in enumerate(puntos))
+    marks = ''.join(('<span class="anat-pt" tabindex="0" style="left:%s%%;top:%s%%" aria-label="%s">%d'
+                     '<span class="anat-tip%s"><b>%s</b>%s</span></span>') % (x, y, e(t), i + 1, ' izq' if x > 60 else '', t, d) for i, (x, y, t, d) in enumerate(puntos))
     ley = ''.join('<li><span class="n">%d</span><b>%s</b>%s</li>' % (i + 1, t, d) for i, (x, y, t, d) in enumerate(puntos))
     return ('<figure class="captura"><div class="anat-wrap"><img src="{{ROOT}}img/editores/%s" alt="%s" loading="lazy">%s</div>'
             '%s</figure><ol class="leyenda">%s</ol>') % (img, e(alt), marks, ('<figcaption>%s</figcaption>' % pie) if pie else '', ley)

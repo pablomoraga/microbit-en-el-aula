@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from common import page, P, ul, ol, box, tabla, h2, h3, py_html, e, anatomia
-import makecode, mbk, placa
+import makecode, mbk, placa, visual
 from iconos import icon
 
 S = 'conoce'
@@ -69,17 +69,32 @@ page(S, 'ficha-tecnica', 'Ficha técnica', P('Datos de la micro:bit V2 según la
 
 page(S, 'cargar-un-programa', 'Cargar un programa en la placa', P(
     'El programa se escribe en el ordenador, pero tiene que llegar a la placa para funcionar sin él. Cada editor lo hace a su manera.') +
-    h2('MakeCode y Python: el archivo .hex') +
-    ol(['Conecta la micro:bit con el cable USB. En el ordenador aparece una unidad llamada <b>MICROBIT</b>, como si fuera un pendrive.',
-        'En MakeCode pulsa <b>Descargar</b>; en el editor de Python, <b>Guardar</b>. Se descarga un archivo con extensión <b>.hex</b>.',
-        'Arrastra el archivo .hex a la unidad MICROBIT. El LED amarillo parpadea mientras se copia y el programa empieza solo.']) +
-    P('Con <b>Chrome o Edge</b> es más rápido: conecta la placa al editor (en MakeCode, el botón de los tres puntos junto a Descargar › <b>Conectar dispositivo</b>; '
-      'en Python, <b>Enviar a micro:bit</b>). A partir de ahí cada descarga se envía directamente a la placa.') +
+    h2('MakeCode: descargar y arrastrar') +
+    visual.pasos([
+        (visual.usb(), 'Conecta la placa', 'Usa un cable USB <b>de datos</b>. En el ordenador aparece una unidad llamada <b>MICROBIT</b>, como si fuera un pendrive.'),
+        (visual.recorte('makecode.jpg', 0, 425, 280, 50, alt='Botón Descargar de MakeCode'), 'Pulsa «Descargar»', 'Está abajo a la izquierda. Se descarga un archivo con extensión <b>.hex</b>: es tu programa.'),
+        (visual.arrastrar(), 'Arrastra el .hex a MICROBIT', 'Abre la carpeta de Descargas y arrastra el archivo a la unidad MICROBIT. El LED amarillo del reverso parpadea mientras se copia.'),
+        (visual.funciona(), '¡Ya funciona!', 'Al terminar la copia, el programa empieza solo. Seguirá en la placa aunque la desconectes y le pongas pilas.'),
+    ]) +
+    h2('MakeCode: más rápido con Chrome o Edge') +
+    visual.pasos([
+        (visual.recorte('makecode-conectar.jpg', 0, 340, 420, 135, alt='Menú de los tres puntos con Conectar dispositivo'), 'Pulsa los tres puntos', 'Junto a «Descargar» se abre un menú. Elige <b>Conectar dispositivo</b>.'),
+        (visual.usb(), 'Elige tu micro:bit', 'El navegador muestra una ventana con las placas conectadas: selecciona la tuya y pulsa <b>Conectar</b>.'),
+        (visual.funciona(), 'Descarga directa', 'A partir de ahora, cada vez que pulses <b>Descargar</b> el programa pasa directamente a la placa, sin arrastrar nada.'),
+    ]) +
+    h2('Python') +
+    visual.pasos([
+        (visual.recorte('python.jpg', 40, 425, 560, 50, alt='Botones Enviar a micro:bit, Guardar y Abrir del editor de Python'), 'Enviar o guardar',
+         '<b>Enviar a micro:bit</b> pasa el programa a la placa conectada (Chrome o Edge). <b>Guardar</b> descarga el .hex para arrastrarlo a MICROBIT, como en MakeCode.'),
+    ]) +
     h2('MicroBlocks: programación en vivo') +
-    ol(['Abre <a href="https://microblocks.fun/run/microblocks.html" target="_blank" rel="noopener">el editor de MicroBlocks</a> en Chrome o Edge, o instala la aplicación.',
-        'La primera vez hay que instalar el firmware de MicroBlocks en la placa: menú del <b>engranaje</b> › <b>actualiza firmware de la placa</b>, elige micro:bit y sigue las instrucciones.',
-        'Pulsa <b>Conecta</b>, elige <b>USB</b> y selecciona la placa. Cuando el botón se pone verde, ya estás en vivo.',
-        'Haz clic en un bloque y se ejecuta al momento en la placa. Los programas se guardan en la micro:bit y siguen funcionando al desconectarla.']) +
+    visual.pasos([
+        (visual.recorte('microblocks-firmware.jpg', 100, 0, 260, 100, alt='Menú del engranaje de MicroBlocks con actualiza firmware de la placa'), 'Instala el firmware (solo la primera vez)',
+         'Con la placa conectada, abre el <b>engranaje</b> › <b>actualiza firmware de la placa</b>, elige micro:bit y sigue las instrucciones.'),
+        (visual.recorte('microblocks-conecta.jpg', 560, 0, 240, 70, alt='Menú Conecta de MicroBlocks'), 'Conecta', 'Pulsa <b>Conecta</b> › <b>conecta (USB)</b> y elige tu placa. El icono se pone verde: ya estás en vivo.'),
+        (visual.recorte('microblocks.jpg', 300, 60, 320, 230, alt='Programa en MicroBlocks'), 'Programa en vivo',
+         'Haz clic en un guion y se ejecuta al momento en la placa. El programa queda guardado en la micro:bit y sigue funcionando al desconectarla.'),
+    ]) +
     box('ojo', 'Si cambias de editor', P('El firmware de MicroBlocks y los programas de MakeCode o Python no conviven: al cargar un .hex de MakeCode se borra MicroBlocks, '
         'y para volver a MicroBlocks hay que reinstalar su firmware. Es un paso de un minuto, pero conviene saberlo antes de la clase.')) +
     box('idea', 'Sin placa', P('MakeCode y el editor de Python tienen <b>simulador</b>: una micro:bit en pantalla que responde a los botones, al movimiento y a los sensores. '
@@ -260,9 +275,16 @@ page(S, 'extensiones', 'Extensiones y bibliotecas', P(
     'Los editores traen los bloques de la placa, pero cuando conectamos un robot, una tira de luces o un kit hacen falta bloques nuevos. '
     'En MakeCode se llaman <b>extensiones</b>; en MicroBlocks, <b>bibliotecas</b>; en Python, <b>módulos</b>.') +
     h2('Añadir una extensión en MakeCode') +
-    ol(['Pulsa <b>Extensiones</b>, al final de la lista de categorías.',
-        'Escribe el nombre en el buscador (por ejemplo, <i>neopixel</i>, <i>servo</i> o <i>cutebot</i>) o pega la dirección de GitHub que indique el fabricante.',
-        'Elige la extensión. Aparece una categoría nueva con sus bloques. La extensión se guarda dentro del proyecto.']) +
+    visual.pasos([
+        (visual.recorte('makecode.jpg', 270, 40, 140, 330, alt='Lista de categorías de MakeCode con Extensiones al final'), 'Pulsa «Extensiones»',
+         'Está al final de la lista de categorías, con un signo +.'),
+        (visual.recorte('makecode-extensiones.jpg', 0, 0, 800, 475, alt='Ventana de extensiones de MakeCode'), 'Se abre la ventana de extensiones',
+         'Arriba hay un buscador y debajo, extensiones recomendadas por temas: luces, ciencia, robótica, juegos…'),
+        (visual.recorte('makecode-buscar-extension.jpg', 0, 40, 800, 370, alt='Búsqueda de la extensión cutebot'), 'Busca y elige',
+         'Escribe el nombre (por ejemplo, <i>cutebot</i>) o pega la dirección de GitHub que indique el fabricante, y pulsa la tarjeta de la extensión.'),
+        (visual.recorte('makecode-extension-anadida.jpg', 270, 40, 530, 380, alt='Categoría CuteBot nueva con sus bloques'), 'Ya tienes bloques nuevos',
+         'Aparece una categoría nueva con sus bloques (aquí, <b>CuteBot</b>; también se ha añadido <b>Neopixel</b>, que la necesita). La extensión se guarda dentro del proyecto.'),
+    ]) +
     tabla(['Extensión', 'Para qué', 'Dónde se usa en este material'], [
         ['neopixel', 'Tiras y anillos de LED de colores', 'Talleres y Para celebrar'],
         ['servo', 'Servomotores', 'Talleres'],
@@ -274,8 +296,17 @@ page(S, 'extensiones', 'Extensiones y bibliotecas', P(
     box('ojo', 'Solo extensiones de confianza', P('Usa las extensiones que aparecen en el buscador o las que indica el fabricante de tu kit en su documentación. '
         'Si una extensión no funciona, revisa que es la de tu modelo: hay robots con varias versiones y cada una tiene la suya.')) +
     h2('Añadir una biblioteca en MicroBlocks') +
-    P('Pulsa <b>Añadir biblioteca</b> bajo las categorías y elige una de las carpetas (Sensores, Robots, Kits y placas…). Las bibliotecas también se pueden arrastrar desde un archivo .ubl. '
-      'Hay bibliotecas para Cutebot y Maqueen, entre otras.') +
+    visual.pasos([
+        (visual.recorte('microblocks.jpg', 0, 190, 130, 90, alt='Sección Bibliotecas con Añadir biblioteca'), 'Pulsa «Añadir biblioteca»',
+         'Está debajo de las categorías, en la sección <b>Bibliotecas</b>. Ahí aparecen también las que ya están cargadas.'),
+        (visual.recorte('microblocks-bibliotecas.jpg', 210, 25, 380, 295, alt='Ventana de bibliotecas de MicroBlocks'), 'Elige una biblioteca',
+         'Las más usadas están a la vista: <b>Sensores básicos</b>, <b>Pantalla LED</b>, <b>NeoPíxeles</b>, <b>Radio</b>, <b>Politonos</b>, <b>Servomotores</b> y <b>Tonos</b>. '
+         'Las demás están en carpetas (Sensores, Robots, Kits y placas…). Selecciónala y pulsa <b>Abre</b>.'),
+        (visual.recorte('microblocks.jpg', 0, 200, 130, 80, alt='Bibliotecas cargadas'), 'Nuevos bloques',
+         'La biblioteca aparece en la lista y sus bloques se ven al pulsarla. Se guarda dentro del proyecto.'),
+    ]) +
+    box('idea', 'Más fácil todavía', P('Los programas de este material ya llevan sus bibliotecas: si abres un proyecto con <b>Abrir en MicroBlocks</b> o arrastras su imagen, '
+        'las bibliotecas se cargan solas. Para los robots y kits (Cutebot, Maqueen…), la biblioteca correspondiente está en las carpetas de la ventana.')) +
     h2('Módulos de Python') +
     P('En Python se escribe <code>import</code> al principio: <code>import music</code>, <code>import radio</code>, <code>import neopixel</code>, <code>import random</code>. '
       'La pestaña <b>API</b> del editor lista todos los módulos disponibles.'),

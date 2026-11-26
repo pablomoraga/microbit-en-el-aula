@@ -19,8 +19,11 @@ def _edge(x0, y0, w):
         out += '<text x="%.1f" y="%d" text-anchor="middle" font-size="12" font-weight="700" fill="%s">%s</text>' % (cx, y0 + 43, BOARD, lab)
     return out
 
+TIPS = {}
 def _call(n, x, y):
-    return ('<g class="pt"><circle cx="%d" cy="%d" r="13" fill="#ff5a36" stroke="#fff" stroke-width="2.5"/>'
+    tip = TIPS.get(n)
+    t = '<title>%s</title>' % tip if tip else ''
+    return ('<g class="pt">' + t + '<circle cx="%d" cy="%d" r="13" fill="#ff5a36" stroke="#fff" stroke-width="2.5"/>'
             '<text x="%d" y="%d" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">%d</text></g>' % (x, y, x, y + 4.5, n))
 
 CORAZON = {(0, 1), (0, 3), (1, 0), (1, 1), (1, 2), (1, 3), (1, 4), (2, 0), (2, 1), (2, 2), (2, 3), (2, 4), (3, 1), (3, 2), (3, 3), (4, 2)}
@@ -303,3 +306,7 @@ def hero():
           '<rect x="312" y="403" width="36" height="14" rx="6" fill="#d9c39a" stroke="%s" stroke-width="1"/>'
           '<path d="M320 403v14M327 403v14M334 403v14M341 403v14" stroke-width="3" stroke="#b5482e"/></g>') % ink
     return s + '</g></svg>'
+
+
+for _i, (_t, _d) in enumerate(LEYENDA_FRENTE + LEYENDA_REVES, 1):
+    TIPS[_i] = '%s. %s' % (_t, _d)

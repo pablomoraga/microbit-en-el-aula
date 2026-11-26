@@ -318,6 +318,21 @@ def ubp(src, description=''):
         out.append('')
     return '\n'.join(out)
 
+def script_text(src):
+    """Texto que MicroBlocks guarda dentro de una imagen PNG de guiones (trozo tEXt con la clave «script»).
+    Al soltar la imagen en el editor, se pegan los guiones y se cargan las bibliotecas indicadas en «depends»."""
+    libs = used_libraries(src)
+    out = ['GP Script']
+    if libs:
+        out.append('depends ' + ' '.join("'%s'" % l.replace("'", "''") for l in libs))
+    out.append('')
+    for i, part in enumerate(re.split(r'\n---+\n', src.strip())):
+        out.append('script %d %d {' % (10 + (i % 2) * 360, 10 + (i // 2) * 260))
+        out.append(part.strip())
+        out.append('}')
+        out.append('')
+    return '\n'.join(out)
+
 def used_libraries(src):
     scripts = parse_program(src)
     names = []

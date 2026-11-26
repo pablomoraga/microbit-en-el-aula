@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Talleres: proyectos tipo y kits de ELECFREAKS y DFRobot."""
+import conexiones, kits
 from common import page, proyecto, P, ul, ol, box, tabla, h2, kbd
 import makecode
 
@@ -19,7 +20,7 @@ proyecto(S, 'invernadero-inteligente', 'Invernadero inteligente', G1,
     'Un invernadero de cartón o una caja de plástico transparente que vigila sus plantas: mide la humedad de la tierra, la temperatura y la luz, '
     'avisa cuando hay que regar y abre una ventana con un servo si hace demasiado calor.',
     ['micro:bit V2 con portapilas', 'Dos clavos para medir la humedad (práctica S1) o un sensor de humedad del suelo', 'Microservo SG90', 'Cables de cocodrilo', 'Caja, cartón y una planta'],
-    tabla(['Componente', 'Conexión'], [['Clavos de humedad', 'uno a 3V, el otro a P1'], ['Servo (ventana)', 'señal a P0, rojo a 3V, marrón a GND']]),
+    conexiones.invernadero() + tabla(['Componente', 'Conexión'], [['Clavos de humedad', 'uno a 3V, el otro a P1'], ['Servo (ventana)', 'señal a P0, rojo a 3V, marrón a GND']]),
     ['Construye el invernadero y fija la placa en un lugar visible.', 'Programa la lectura de la humedad y elige el umbral (con tierra seca y regada).',
      'Si la tierra está seca, muestra una gota y pita.', 'Si la temperatura supera 28 °C, abre la ventana (servo a 90°); si baja de 24 °C, ciérrala.',
      'Con A, muestra la temperatura; con B, la humedad.'],
@@ -144,7 +145,7 @@ while True:
 proyecto(S, 'semaforo-inteligente', 'Cruce con semáforo inteligente', G1,
     'Un cruce de maqueta con semáforo de coches (LED externos) y pulsador de peatones (botón A). Al pulsar, el semáforo de coches pasa a rojo y la pantalla muestra al peatón cruzando.',
     ['micro:bit', 'LED rojo, amarillo y verde con resistencias de 220 Ω', 'Cables de cocodrilo', 'Maqueta de cartón'],
-    tabla(['LED', 'Pin'], [['Rojo', 'P0'], ['Amarillo', 'P1'], ['Verde', 'P2'], ['Patas cortas', 'GND']]),
+    conexiones.semaforo() + tabla(['LED', 'Pin'], [['Rojo', 'P0'], ['Amarillo', 'P1'], ['Verde', 'P2'], ['Patas cortas', 'GND']]),
     ['Monta los LED como en la práctica C2.', 'Por defecto, el semáforo de coches está en verde.',
      'Al pulsar A: amarillo 2 s, rojo, muestra el muñeco y cuenta atrás de 5 s para los peatones.', 'Vuelve a verde.'],
     mc='''pins.digitalWritePin(DigitalPin.P2, 1)
@@ -481,7 +482,7 @@ page(S, 'extensiones-de-los-kits', 'Extensiones y bibliotecas de los kits', P(
 proyecto(S, 'taller-cutebot', 'Cutebot: sigue la línea y esquiva obstáculos', G2,
     'Cutebot es un coche robot de ELECFREAKS con dos motores, sensor de ultrasonidos, dos sensores de línea y faros de colores. En este taller lo programamos para seguir una línea negra y para frenar ante obstáculos.',
     ['Robot Cutebot con su micro:bit', 'Pilas para el robot', 'Cinta aislante negra sobre un suelo claro (circuito)'],
-    tabla(['Elemento', 'Dónde está'], [['Sensores de línea', 'Abajo, delante (P13 izquierdo y P14 derecho)'], ['Ultrasonidos', 'Delante (P8 y P12)'], ['Faros RGB', 'Controlados por la placa del robot (I2C)']]),
+    kits.cutebot() + tabla(['Elemento', 'Dónde está'], [['Sensores de línea', 'Abajo, delante (P13 izquierdo y P14 derecho)'], ['Ultrasonidos', 'Delante (P8 y P12)'], ['Faros RGB', 'Controlados por la placa del robot (I2C)']]),
     ['Añade la extensión <b>cutebot</b>.', 'Prueba los motores: avanza 2 segundos y para.',
      'Con A, activa el modo <b>seguir la línea</b>: si los dos sensores ven línea, recto; si solo la ve el izquierdo, gira a la izquierda; si solo el derecho, a la derecha.',
      'Si un obstáculo está a menos de 10 cm, para y enciende los faros en rojo.', 'Con B, detén el robot.'],
@@ -517,7 +518,7 @@ basic.forever(function () {
 proyecto(S, 'taller-maqueen', 'Maqueen: robot que esquiva obstáculos', G2,
     'Maqueen (Lite) es un robot de DFRobot para la micro:bit. Lo programamos para avanzar, detectar obstáculos con el ultrasonido, encender sus LED y girar para esquivarlos.',
     ['Robot Maqueen con su micro:bit y el sensor de ultrasonidos montado', 'Pilas para el robot', 'Cajas o libros como obstáculos'],
-    None,
+    kits.maqueen_lite(),
     ['Añade la extensión <b>maqueen</b>.', 'Lee la distancia del ultrasonido y muéstrala para comprobar que funciona.',
      'Si la distancia es mayor que 15 cm, avanza con los LED apagados.', 'Si es menor, enciende los LED, retrocede un poco y gira hacia un lado.'],
     mc='''basic.forever(function () {
@@ -542,7 +543,7 @@ proyecto(S, 'taller-maqueen', 'Maqueen: robot que esquiva obstáculos', G2,
 proyecto(S, 'taller-maqueen-plus', 'Maqueen Plus V2: seguidor de línea', G2,
     'Maqueen Plus V2 tiene cinco sensores de línea, faros, LED RGB y conector para ultrasonidos. Lo programamos para seguir una línea con el sensor central y los dos interiores.',
     ['Robot Maqueen Plus V2 con su micro:bit', 'Pilas para el robot', 'Circuito de cinta negra'],
-    None,
+    kits.maqueen_plus(),
     ['Añade la extensión pegando <code>https://github.com/DFRobot/pxt-DFRobot_MaqueenPlus_v20</code> en el buscador de extensiones.',
      'Al iniciar, llama a %s.' % kbd('I2CInit'),
      'Si el sensor central (M) ve la línea (vale 1), avanza recto.',
@@ -566,7 +567,7 @@ basic.forever(function () {
 proyecto(S, 'taller-wonder-building', 'Wonder Building Kit: la moto', G2,
     'El Wonder Building Kit de ELECFREAKS combina piezas de construcción compatibles con LEGO, la placa de expansión WuKong y motores. Construimos la moto del caso 1 de su guía y la programamos con los botones.',
     ['Wonder Building Kit (placa WuKong, motores y piezas)', 'micro:bit', 'Instrucciones de montaje del caso «The Motorcycle» en el wiki de ELECFREAKS'],
-    tabla(['Componente', 'Puerto de la WuKong'], [['Motor 1', 'M1'], ['Motor 2', 'M2']]),
+    kits.wonder_moto() + tabla(['Componente', 'Puerto de la WuKong'], [['Motor 1', 'M1'], ['Motor 2', 'M2']]),
     ['Monta la moto siguiendo las instrucciones del wiki de ELECFREAKS.', 'Añade la extensión <b>wukong</b>.',
      'Con A, los dos motores avanzan; con B, retroceden; con A+B, se paran.', 'Muestra una flecha con el sentido de la marcha.'],
     mc='''input.onButtonPressed(Button.A, function () {
@@ -590,7 +591,7 @@ input.onButtonPressed(Button.AB, function () {
 proyecto(S, 'taller-smart-agriculture', 'Smart Agriculture Kit: riego automático', G2,
     'El Smart Agriculture Kit de ELECFREAKS incluye la placa de expansión IoT:bit y sensores para proyectos de agricultura. Montamos un riego automático: si la tierra está seca, un servo abre la válvula; el nivel del depósito se muestra en la pantalla.',
     ['Smart Agriculture Kit (IoT:bit, sensor de humedad del suelo, sensor de nivel de agua, servo 180°)', 'micro:bit', 'Maceta y un depósito de agua'],
-    tabla(['Componente', 'Puerto de la IoT:bit'], [['Sensor de humedad del suelo', 'P1'], ['Sensor de nivel de agua', 'P2'], ['Servo', 'P9']]),
+    kits.smart_agri() + tabla(['Componente', 'Puerto de la IoT:bit'], [['Sensor de humedad del suelo', 'P1'], ['Sensor de nivel de agua', 'P2'], ['Servo', 'P9']]),
     ['Conecta los sensores y el servo como en la tabla (igual que el caso 1 de la guía del kit).', 'Añade la extensión <b>iot-environment-kit</b>.',
      'Muestra el nivel del depósito con un gráfico de barras.', 'Si la humedad del suelo baja de 50, gira el servo para regar; si no, ciérralo.'],
     mc='''basic.forever(function () {

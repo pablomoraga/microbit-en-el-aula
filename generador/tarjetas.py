@@ -3,6 +3,7 @@
 build.py escribe el HTML; herramientas/tarjetas_pdf.py lo convierte en PDF con Chrome o Edge."""
 import os, html, re
 import common, makecode
+from bloques import expand
 from iconos import logo_lapiz
 e = html.escape
 
@@ -24,10 +25,11 @@ ol,ul{margin:0;padding-left:6mm}li{margin:.7mm 0}
 .bloques{background:#fff;border:.4mm solid #d5dbe3;border-radius:3mm;padding:2mm;display:flex;align-items:center;justify-content:center;height:66mm}
 .bloques img{max-width:100%;max-height:62mm;object-fit:contain}
 .pie{position:absolute;left:12mm;right:12mm;bottom:4mm;font:7.5pt Consolas,monospace;color:#7a8592;border-top:1px solid #d5dbe3;padding-top:1.2mm;display:flex;justify-content:space-between}
-.mat{font-size:9.5pt;color:#5b6675;margin:2mm 0 0}'''
+.mat{font-size:9.5pt;color:#5b6675;margin:2mm 0 0}
+.e-mb,.e-py{display:none}.bq{display:inline-block;background:var(--c);color:#fff;font-weight:700;font-size:.86em;padding:.2mm 2mm .5mm;border-radius:1.4mm;white-space:nowrap}'''
 
 def _front(f, logo):
-    pasos = ''.join('<li>%s</li>' % p for p in f['pasos'])
+    pasos = ''.join('<li>%s</li>' % expand(p) for p in f['pasos'])
     mat = ('<p class="mat"><b>Necesitas:</b> %s</p>' % ', '.join(f['materiales'])) if f['materiales'] else ''
     return ('<div class="t"><div class="banda"><img src="%s" alt=""><div><div class="num">PRÁCTICA %s</div><div class="grupo">%s</div></div>'
             '<div class="chips"><span>%s</span><span>%s</span><span>%s</span></div></div>'
@@ -36,7 +38,7 @@ def _front(f, logo):
         logo, e(f['num']), e(f['group'] or ''), common.NIVEL[f['nivel']], e(common.ETAPA[f['etapa']]), e(f['tiempo']), e(f['title']), f['objetivo'], mat, pasos)
 
 def _back(f, imgdir):
-    pistas = ''.join('<li>%s</li>' % p for p in f['pistas'])
+    pistas = ''.join('<li>%s</li>' % expand(p) for p in f['pistas'])
     amp = ''.join('<li>%s</li>' % p for p in f['ampliar'])
     img = ''
     if f['mc'] and os.path.exists(os.path.join(makecode.IMG, f['mc'] + '.webp')):

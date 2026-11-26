@@ -2,6 +2,7 @@
 """Modo experto: juegos, retos, cables de cocodrilo y sensores."""
 from common import practica, P, ul, box, kbd, tabla
 from c_comenzamos import bm, pyimg, mcleds
+import conexiones
 
 S = 'experto'
 J, R, C, SE = 'Juegos', 'Retos', 'Cables de cocodrilo', 'Sensores externos'
@@ -19,8 +20,8 @@ GRUPOS = {
 practica(S, 'J1', 'atrapa-la-estrella', 'Atrapa la estrella', 3, 'P2', '45 min', ['juego', 'coordenadas', 'variables'],
     'Mover una cesta (el LED de abajo) con A y B para atrapar la estrella que cae. Cada estrella atrapada suma un punto; si se escapa tres veces, fin del juego.',
     ['Variables: <i>cesta</i> (columna de la cesta), <i>x</i> e <i>y</i> (posición de la estrella), <i>puntos</i> y <i>vidas</i>.',
-     'A mueve la cesta a la izquierda y B a la derecha, sin salirse de la pantalla.',
-     'En el bucle principal: borra, dibuja la cesta y la estrella, espera y baja la estrella una fila.',
+     'En [[boton]] A, la cesta va a la izquierda y en B a la derecha; con [[si]] evita que se salga.',
+     'En [[para_siempre]]: [[borrar]], [[graficar]] la cesta y la estrella, [[pausa]] y [[cambiar]] y por 1.',
      'Cuando la estrella llega abajo: si está en la columna de la cesta, suma un punto; si no, resta una vida. Después vuelve arriba en una columna al azar.',
      'Cuando las vidas lleguen a 0, muestra los puntos.'],
     ['Las coordenadas van de 0 a 4 (en MicroBlocks, de 1 a 5). La cesta siempre está en la última fila.',
@@ -91,8 +92,8 @@ display.scroll("Puntos " + str(puntos))''',
 
 practica(S, 'J2', 'patata-caliente', 'Patata caliente', 2, 'P1', '25 min', ['juego', 'azar', 'tiempo'],
     'La placa es una patata caliente que pasa de mano en mano: suena un tic-tac y, tras un tiempo al azar, «explota». Quien la tenga en ese momento, pierde.',
-    ['Al pulsar A, guarda un tiempo al azar entre 5 y 15 segundos.',
-     'Mientras no se acabe el tiempo, muestra la patata y haz tic-tac con un pitido corto cada medio segundo.',
+    ['En [[boton]] (A), guarda un tiempo límite con [[azar]] entre 5000 y 15 000 ms.',
+     'Con [[mientras]] no se acabe el tiempo ([[tiempo]]), muestra la patata y un [[tono]] corto cada medio segundo.',
      'Cuando se acabe, muestra una calavera y toca un sonido largo.',
      'Sentaos en corro y pasad la placa a quien tengáis al lado en cada tic.'],
     ['Usa el cronómetro (MicroBlocks) o el tiempo de ejecución (MakeCode y Python) para saber cuánto ha pasado.',
@@ -126,9 +127,9 @@ while True:
 
 practica(S, 'J3', 'duelo-de-reflejos', 'Duelo de reflejos', 2, 'P2', '30 min', ['juego', 'condicionales', 'azar'],
     'Dos jugadores, una placa: cada uno pone el dedo cerca de su botón. Cuando aparece el corazón, gana quien pulse primero. Si alguien pulsa antes de tiempo, pierde.',
-    ['Al tocar el logotipo, muestra una cuenta atrás y espera un tiempo al azar.',
+    ['En [[logo]], haz una cuenta atrás y una [[pausa]] de [[azar]] entre 1000 y 5000 ms.',
      'Durante la espera, si alguien pulsa, pierde por tramposo (lo resolvemos en el ¿Y si…?).',
-     'Muestra el corazón y espera a que se pulse A o B.',
+     'Muestra el corazón y espera con [[esperar_hasta]] [[boton_pulsado]] [[o]] botón B.',
      'Muestra la letra del ganador y un sonido de victoria.'],
     ['En MakeCode, un %s espera mientras ninguno de los dos botones esté pulsado.' % kbd('mientras'),
      'En MicroBlocks: %s con una condición «botón A o botón B».' % kbd('espera hasta que')],
@@ -263,9 +264,9 @@ display.scroll(len(secuencia) - 1)''',
 practica(S, 'R1', 'reloj-de-arena', 'Reloj de arena', 2, 'P2', '25 min', ['bucles', 'tiempo'],
     'Hacer un reloj de arena de 25 segundos: cada segundo se enciende un LED nuevo. Al llenarse la pantalla, suena una alarma. Agitando la placa se reinicia.',
     ['Piensa cómo recorrer los 25 LED en orden (pista: práctica 21).',
-     'Espera un segundo entre LED y LED.',
+     'Usa dos [[para_indice]] con [[graficar]] y una [[pausa]] de 1000 ms.',
      'Al terminar, toca la alarma.',
-     'Haz que agitar la placa vuelva a empezar.'],
+     'Mete todo en [[agitar]] para volver a empezar.'],
     ['¿Cuántos segundos tiene que esperar cada LED si quieres un reloj de 1 minuto? 60 / 25 = 2,4 s.'],
     '''input.onGesture(Gesture.Shake, function () {
     basic.clearScreen()
@@ -295,7 +296,7 @@ while True:
 practica(S, 'R2', 'termometro-maximo-minimo', 'Termómetro de máximas y mínimas', 3, 'ESO', '30 min', ['variables', 'sensores', 'comparar'],
     'Registrar la temperatura más alta y la más baja de un día: A muestra la máxima, B la mínima y A+B reinicia los registros.',
     ['Al iniciar, guarda la temperatura actual en <i>maxima</i> y en <i>minima</i>.',
-     'Cada segundo, compara la temperatura actual: si es mayor que la máxima, actualiza la máxima; si es menor que la mínima, actualiza la mínima.',
+     'En [[para_siempre]], compara [[temperatura]]: con [[si]] es [[mayor]] que la máxima, [[fijar]] la máxima; si es [[menor]] que la mínima, la mínima.',
      'Programa los botones para consultar y reiniciar.',
      'Deja la placa junto a una ventana durante la jornada.'],
     ['Este es el algoritmo clásico para encontrar el mayor y el menor de una serie de datos.'],
@@ -344,8 +345,8 @@ while True:
 
 practica(S, 'R3', 'contador-de-palmadas', 'Contador de palmadas', 2, 'P2', '25 min', ['micrófono', 'variables'],
     'Contar palmadas con el micrófono de la V2 y mostrar el total. Con A se pone a cero.',
-    ['Detecta un sonido fuerte (una palmada).',
-     'Suma 1 a la variable <i>palmadas</i> y muestra el número.',
+    ['Usa [[sonido_alto]] para detectar una palmada.',
+     '[[cambiar]] palmadas por 1 y [[mostrar_numero]].',
      'Con A, vuelve a cero.',
      'Comprueba si cuenta bien 10 palmadas seguidas. ¿Y si alguien grita?'],
     ['En MakeCode: %s con la opción «alto». En MicroBlocks, la biblioteca Micrófono tiene %s.' % (kbd('al detectar el sonido alto'), kbd('recuento de palmadas')),
@@ -377,9 +378,9 @@ while True:
 practica(S, 'R4', 'canica', 'La canica', 3, 'ESO', '35 min', ['acelerómetro', 'coordenadas', 'límites'],
     'Mover un LED por la pantalla inclinando la placa, como una canica sobre una mesa, sin que se salga de los bordes.',
     ['Guarda la posición de la canica en <i>x</i> e <i>y</i>, empezando en el centro.',
-     'Si la placa se inclina a la derecha, suma 1 a x; a la izquierda, resta 1. Haz lo mismo con y (adelante y atrás).',
+     'Con [[si_no]] y [[inclinacion]]: si se inclina a la derecha, [[cambiar]] x por 1; a la izquierda, por −1. Igual con y.',
      'Limita x e y para que no se salgan de la pantalla.',
-     'Borra y dibuja la canica en su nueva posición.'],
+     '[[borrar]] y [[graficar]] la canica en su nueva posición.'],
     ['Usa un umbral para que la canica no se mueva con temblores pequeños.',
      'Para limitar: «si x > 4, x = 4» y «si x < 0, x = 0». En Python: <code>min(4, max(0, x))</code>.'],
     '''let x = 2
@@ -426,7 +427,7 @@ practica(S, 'C1', 'piano-de-frutas', 'Piano de frutas', 2, 'P1', '40 min', ['pin
     'Convertir tres frutas (o plastilina, o papel de aluminio) en teclas de piano conectadas a P0, P1 y P2.',
     ['Conecta un cable de cocodrilo de P0 a una fruta, otro de P1 a otra y otro de P2 a la tercera.',
      'Conecta un cuarto cable a GND y sujeta su pinza con la mano (o pégala a tu muñeca).',
-     'Programa que, al tocar cada fruta, suene una nota distinta y aparezca su letra.',
+     'Usa [[pin_tocado]] para cada fruta, con [[mostrar_caracter]] y una [[nota]] distinta.',
      'Tocad una canción sencilla.'],
     ['Tu cuerpo cierra el circuito entre GND y el pin. Sin tocar GND, no funciona.',
      'En MakeCode: %s. En MicroBlocks: %s (biblioteca TouchPin).' % (kbd('al presionarse pin P0'), kbd('pin 0 touched'))],
@@ -457,13 +458,13 @@ while True:
         display.show("G")
         music.pitch(392, 300)''',
     ['Prueba con otros materiales: ¿cuáles conducen y cuáles no?', 'Haced una orquesta: cada pareja con un instrumento distinto.'],
-    group=C, icono='cocodrilo', materiales=[COCO + ' (4)', 'Tres frutas, plastilina o trozos de papel de aluminio'])
+    conexion=conexiones.piano(), group=C, icono='cocodrilo', materiales=[COCO + ' (4)', 'Tres frutas, plastilina o trozos de papel de aluminio'])
 
 practica(S, 'C2', 'semaforo-de-led', 'Semáforo de LED', 2, 'P2', '40 min', ['salidas digitales', 'secuencia'],
     'Montar un semáforo con tres LED (rojo, amarillo y verde) conectados a P0, P1 y P2, y programar su secuencia.',
     ['Cada LED tiene una pata larga (+) y una corta (−). Conecta la pata larga de cada LED a su pin a través de una resistencia de 220 Ω.',
      'Une todas las patas cortas a GND.',
-     'Programa la secuencia: verde 4 s, amarillo 1 s, rojo 4 s, y vuelta a empezar.',
+     'En [[para_siempre]], programa la secuencia con [[pin_escribir]] y [[pausa]]: verde 4 s, amarillo 1 s, rojo 4 s.',
      'En cada fase enciende solo el LED que corresponde (1) y apaga los demás (0).'],
     ['En MakeCode: %s (Pines). En MicroBlocks: %s (Pines), con el interruptor verde para encender.' % (kbd('escritura digital pin P0 a 1'), kbd('pon pin digital 0 a')),
      'Si un LED no se enciende, dale la vuelta: puede estar al revés.'],
@@ -494,7 +495,7 @@ while True:
     pin0.write_digital(1)
     sleep(4000)''',
     ['Añade un pulsador de peatones: al pulsar A, el semáforo pasa a rojo antes.', 'Muestra en la pantalla un muñeco andando cuando el semáforo esté en rojo para los coches.'],
-    group=C, icono='semaforo',
+    conexion=conexiones.semaforo(), group=C, icono='semaforo',
     materiales=[COCO + ' (6)', 'Tres LED: rojo, amarillo y verde', 'Tres resistencias de 220 Ω'])
 
 practica(S, 'C3', 'juego-del-pulso', 'El juego del pulso', 3, 'P2', '50 min', ['entradas', 'variables', 'construcción'],
@@ -502,7 +503,7 @@ practica(S, 'C3', 'juego-del-pulso', 'El juego del pulso', 3, 'P2', '50 min', ['
     ['Dobla un alambre (o una tira de papel de aluminio sobre cartón) con curvas y fíjalo a una base. Conéctalo a GND.',
      'Haz una anilla con otro trozo de alambre y conéctala a P0.',
      'Cuando la anilla toque el camino, el circuito se cierra: P0 detecta el contacto.',
-     'Programa: en cada roce suma un fallo, pita y muestra el número de fallos.',
+     'En [[pin_tocado]] (P0), [[cambiar]] fallos por 1, un [[tono]] y [[mostrar_numero]].',
      'Con A reinicia la partida.'],
     ['Usa el evento de pin presionado de P0: funciona porque el alambre une P0 con GND.',
      'Añade una espera tras cada roce para que un solo toque no cuente varias veces.'],
@@ -532,7 +533,7 @@ while True:
         fallos = 0
         display.show(Image.HAPPY)''',
     ['Pon una zona de meta conectada a P1: al llegar, muestra los fallos y el tiempo.', 'Haz un ranking de la clase.'],
-    group=C, icono='cocodrilo',
+    conexion=conexiones.pulso(), group=C, icono='cocodrilo',
     materiales=[COCO + ' (2)', 'Alambre rígido (o papel de aluminio y cartón)', 'Plastilina o una base de corcho para sujetarlo'],
     explica='En MicroBlocks y Python leemos el pin en modo digital con resistencia interna hacia arriba (pull up): vale 1 en reposo y 0 cuando la anilla toca el alambre unido a GND.')
 
@@ -540,7 +541,7 @@ practica(S, 'C4', 'alarma-de-puerta', 'Alarma de puerta', 3, 'ESO', '45 min', ['
     'Vigilar una puerta o una caja: dos láminas de aluminio se tocan cuando está cerrada. Si se abre, salta la alarma.',
     ['Pega una lámina de aluminio en el marco y otra en la puerta (o la tapa de una caja), de modo que se toquen al cerrar.',
      'Conecta una lámina a P1 y la otra a GND.',
-     'Lee P1 en modo digital con resistencia interna hacia arriba: con la puerta cerrada vale 0; abierta, 1.',
+     'Lee P1 con [[pin_digital]] (con resistencia interna hacia arriba): con la puerta cerrada vale 0; abierta, 1.',
      'Si vale 1, muestra una cara sorprendida y haz sonar una sirena; si vale 0, muestra el sí.',
      'Con A, activa o desactiva la vigilancia.'],
     ['Esto es un <b>interruptor</b> hecho a mano: dos conductores que se tocan o se separan.',
@@ -577,15 +578,15 @@ while True:
         music.pitch(880, 250)
         music.pitch(660, 250)''',
     ['Avisa por radio a otra placa en lugar de pitar (alarma silenciosa).', 'Cuenta cuántas veces se ha abierto la puerta durante el recreo.'],
-    group=C, icono='casa', materiales=[COCO + ' (2)', 'Papel de aluminio y cinta adhesiva', 'Una caja con tapa o una puerta'])
+    conexion=conexiones.alarma(), group=C, icono='casa', materiales=[COCO + ' (2)', 'Papel de aluminio y cinta adhesiva', 'Una caja con tapa o una puerta'])
 
 # =================================================================== Sensores externos
 practica(S, 'S1', 'humedad-de-la-tierra', 'Humedad de la tierra', 2, 'P2', '45 min', ['entradas analógicas', 'umbral'],
     'Saber si una planta necesita agua midiendo con dos clavos cuánto conduce la tierra: la tierra húmeda conduce más.',
     ['Clava dos clavos (o dos tornillos) en la maceta, separados unos 3 cm.',
      'Conecta un clavo a 3V y el otro a P1.',
-     'Lee P1 en modo analógico (de 0 a 1023) y explora los valores con la tierra seca y recién regada.',
-     'Si el valor baja del umbral, muestra una cara triste y avisa con un pitido; si no, una cara contenta.'],
+     'Lee P1 con [[pin_leer]] (de 0 a 1023) y explora los valores con la tierra seca y recién regada.',
+     'Con [[si_no]]: si el valor es [[menor]] que el umbral, cara triste y un [[tono]]; si no, cara contenta.'],
     ['Cuanta más agua, más corriente llega a P1 y mayor es el valor.',
      'Los clavos se oxidan con el tiempo: para medidas largas, sácalos de la tierra entre medida y medida o usa un sensor de humedad comercial.'],
     '''basic.forever(function () {
@@ -610,12 +611,12 @@ while True:
         display.show(Image.HAPPY)
     sleep(2000)''',
     ['Registra la humedad cada hora durante una semana y haz una gráfica.', 'Compara macetas con distintos tipos de tierra.'],
-    group=SE, icono='planta', materiales=[COCO + ' (2)', 'Dos clavos o tornillos', 'Una maceta con tierra'])
+    conexion=conexiones.humedad(), group=SE, icono='planta', materiales=[COCO + ' (2)', 'Dos clavos o tornillos', 'Una maceta con tierra'])
 
 practica(S, 'S2', 'potenciometro', 'El potenciómetro', 2, 'P2', '35 min', ['entradas analógicas', 'reescalar'],
     'Usar un potenciómetro (una rueda giratoria) como mando: al girarlo, una barra sube y baja en la pantalla y el tono cambia.',
     ['El potenciómetro tiene tres patas: conecta las de los extremos a 3V y GND, y la del centro a P2.',
-     'Lee P2 en modo analógico y comprueba que va de 0 a 1023 al girar.',
+     'Lee P2 con [[pin_leer]] y comprueba que va de 0 a 1023 al girar.',
      'Dibuja una barra con el valor (MakeCode: gráfico de barras).',
      'Al pulsar A, toca una nota cuya frecuencia dependa del valor.'],
     ['Un potenciómetro es un <b>divisor de tensión</b>: según la posición, a P2 le llega más o menos tensión.',
@@ -641,13 +642,13 @@ while True:
         music.pitch(200 + valor * 800 // 1023, 300)
     sleep(100)''',
     ['Usa el potenciómetro para controlar la velocidad del juego «Atrapa la estrella».', 'Haz un theremín: que suene sin parar con el tono del potenciómetro.'],
-    group=SE, icono='sensor', materiales=[COCO + ' (3)', 'Un potenciómetro de 10 kΩ'])
+    conexion=conexiones.potenciometro(), group=SE, icono='sensor', materiales=[COCO + ' (3)', 'Un potenciómetro de 10 kΩ'])
 
 practica(S, 'S3', 'servo-que-saluda', 'Servo que saluda', 3, 'ESO', '40 min', ['servomotor', 'salidas analógicas'],
     'Mover un pequeño servomotor (SG90) con los botones: A lo lleva a un lado, B al otro y el logotipo lo hace saludar.',
     ['Conecta el servo: cable marrón (o negro) a GND, rojo a 3V y naranja (señal) a P0.',
-     'Con A, gira el servo a 0°; con B, a 180°.',
-     'Con el logotipo, hazlo saludar: alterna entre 45° y 135° tres veces.',
+     'En [[boton]] (A), [[servo]] a 0°; en B, a 180°.',
+     'En [[logo]], con [[repetir]] 3 veces, alterna el [[servo]] entre 45° y 135°.',
      'Pega un brazo de cartulina al servo para que se vea mejor el movimiento.'],
     ['Un servo no gira sin parar: va al ángulo que le pidas y se queda ahí.',
      'MicroBlocks usa ángulos de −90 a 90 (0 es el centro).',
@@ -687,6 +688,6 @@ while True:
             angulo(135)
             sleep(300)''',
     ['Usa el potenciómetro para mover el servo a mano.', 'Construye una barrera de aparcamiento que se abre al pulsar A.'],
-    group=SE, icono='servo', materiales=[COCO + ' (3) o cables macho para el conector del servo', 'Un microservo SG90'],
+    conexion=conexiones.servo(), group=SE, icono='servo', materiales=[COCO + ' (3) o cables macho para el conector del servo', 'Un microservo SG90'],
     nota=box('ojo', 'Alimentación', P('Un microservo SG90 suele funcionar con los 3 V de la micro:bit si se alimenta con pilas nuevas o USB, pero si se reinicia la placa o tiembla, '
         'usa una placa de expansión con alimentación propia. No conectes servos grandes directamente.')))

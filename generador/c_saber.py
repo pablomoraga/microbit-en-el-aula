@@ -66,7 +66,24 @@ GUIAS = [
     ('Proyectos en Instructables', 'https://www.instructables.com/search/?q=microbit&projects=all', 'Miles de proyectos de la comunidad (en inglés) para inspirarse.'),
     ('Wiki de ELECFREAKS', 'https://wiki.elecfreaks.com/en/microbit/', 'Guías y casos de Cutebot, Wonder Building Kit, Smart Agriculture Kit y más.'),
     ('Wiki de DFRobot', 'https://wiki.dfrobot.com', 'Documentación de Maqueen, Maqueen Plus y sus sensores.'),
+    ('Programamos la microbit (jajulca.net)', 'https://www.jajulca.net/microbit/index.html', 'Retos de micro:bit del IES Aricel: gráficos, sensores, juegos, radio y estación meteorológica.'),
 ]
+PEDRO = [
+    ('Retos de micro:bit con MicroBlocks', 'https://pedroruizf.github.io/retos_microbit_microblocks/index.html', 'Retos con animaciones, pulsadores, sensores, servos y radio, con sus ficheros de programa.'),
+    ('Retos con robot Maqueen', 'https://pedroruizf.github.io/maqueen_retos/', 'Motores, neopíxeles, ultrasonidos, mando IR, seguidor de línea, evita-obstáculos y control por radio.'),
+    ('Programación y robótica', 'https://github.com/pedroruizf/programacionyrobotica', 'Repositorio con materiales de programación y robótica.'),
+    ('GitHub de Pedro Ruiz', 'https://github.com/pedroruizf', 'Todos sus recursos educativos publicados.'),
+]
+CREDITOS = ul([
+    '<b>Bloques de MakeCode</b>: las imágenes las dibuja el propio editor MakeCode de Microsoft (makecode.microbit.org) a partir del código de cada práctica.',
+    '<b>MicroBlocks</b>: los nombres de los bloques salen de su traducción oficial al español y los proyectos incluyen sus bibliotecas oficiales, distribuidas con licencia MPL 2.0.',
+    '<b>Capturas de los editores</b>: MakeCode, MicroBlocks y el editor de Python de la Micro:bit Educational Foundation, hechas con fines educativos para explicar su uso.',
+    '<b>Datos técnicos de la placa</b>: documentación oficial de micro:bit (microbit.org y tech.microbit.org).',
+    '<b>Kits y robots</b>: datos, puertos y funciones tomados del wiki de ELECFREAKS, del wiki de DFRobot y del código de sus extensiones oficiales de MakeCode. Las ilustraciones son esquemas propios.',
+    '<b>Inteligencia artificial</b>: según la guía de usuario oficial de micro:bit CreateAI.',
+    '<b>Recursos recomendados</b>: los retos de Pedro Ruiz (pedroruizf) y de jajulca.net se citan como referencia y enlace. Este material no reproduce sus contenidos; si en el futuro se adapta alguno, se indicará en la propia actividad.',
+    'Ilustraciones, iconos, prácticas, programas y textos: elaboración propia de Pablo Moraga (CC BY-NC-ND 4.0).',
+])
 PROPIOS = [
     ('Conoce micro:bit', 'https://pablomoraga.github.io/conocemicrobit/', 'La placa V2 y misiones con MakeCode (eXeLearning).'),
     ('Taller micro:bit', 'https://pablomoraga.github.io/tallermicrobit/', 'Taller con misiones y un proyecto simulado.'),
@@ -78,4 +95,5 @@ PROPIOS = [
     ('Impresión 3D Código 4.0', 'https://pablomoraga.github.io/impresion-3d-codigo-4.0/', 'Manual de diseño e impresión 3D en el aula.'),
 ]
 page(S, 'enlaces', 'Enlaces y recursos', h2('Oficiales') + enlaces(OFICIAL) + h2('Guías y comunidad') + enlaces(GUIAS) +
-    h2('Mis recursos') + enlaces(PROPIOS), icono='enlace')
+    h2('Recursos de Pedro Ruiz') + enlaces(PEDRO) + h2('Mis recursos') + enlaces(PROPIOS), icono='enlace')
+page(S, 'creditos', 'Créditos y licencias', P('Este material es de elaboración propia. Estas son las fuentes y herramientas utilizadas:') + CREDITOS, icono='libro')
