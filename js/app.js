@@ -25,15 +25,17 @@
     tabs.querySelectorAll('.tab-bar button').forEach(function (x) { x.setAttribute('aria-selected', x.getAttribute('data-t') === t ? 'true' : 'false'); });
     tabs.querySelectorAll('.tab-panel').forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-t') === t); });
   }
-  document.querySelectorAll('.tabs').forEach(function (tabs) {
-    activate(tabs, pref || 'makecode');
-    tabs.querySelectorAll('.tab-bar button').forEach(function (btn) {
-      btn.onclick = function () {
-        var t = btn.getAttribute('data-t'); try { localStorage.setItem(ED, t); } catch (e) {}
-        document.querySelectorAll('.tabs').forEach(function (x) { activate(x, t); });
-      };
-    });
+  // un solo editor para toda la web: pestañas de solución, selector «Trabajo con» y bloques del paso a paso
+  function setEditor(t, guardar) {
+    if (guardar) { try { localStorage.setItem(ED, t); } catch (e) {} }
+    document.documentElement.setAttribute('data-ed', t);
+    document.querySelectorAll('.tabs').forEach(function (x) { activate(x, t); });
+    document.querySelectorAll('.ed-sel button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-t') === t ? 'true' : 'false'); });
+  }
+  document.querySelectorAll('.tab-bar button, .ed-sel button').forEach(function (btn) {
+    btn.onclick = function () { setEditor(btn.getAttribute('data-t'), true); };
   });
+  setEditor(pref || 'makecode', false);
   // botones de copiar
   document.querySelectorAll('button.copiar').forEach(function (b) {
     b.onclick = function () {
